@@ -29,8 +29,11 @@
 <p>This is a hands-on VS Code and GitHub Copilot lab about cutting AI slop with chat <strong>slash commands</strong>. You&#39;ll practice:</p>
 <ul>
 <li>built-in commands such as <code>/plan</code>, <code>/compact</code>, <code>/clear</code>, <code>/fork</code>, <code>/tools</code>, <code>/troubleshoot</code>, and <code>/disableAutoApprove</code></li>
-<li><strong>12 custom commands</strong> shipped as prompt files: <code>/clarify</code>, <code>/spec</code>, <code>/ground</code>, <code>/deps-check</code>, <code>/deslop</code>, <code>/verify</code>, <code>/root-cause</code>, <code>/pre-commit</code>, <code>/fail-paths</code>, <code>/simplify</code>, <code>/scope</code>, and <code>/handoff</code></li>
+<li><strong>12 lab commands</strong> shipped as prompt files in this folder: <code>/clarify</code>, <code>/spec</code>, <code>/ground</code>, <code>/deps-check</code>, <code>/deslop</code>, <code>/verify</code>, <code>/root-cause</code>, <code>/pre-commit</code>, <code>/fail-paths</code>, <code>/simplify</code>, <code>/scope</code>, and <code>/handoff</code></li>
 </ul>
+<blockquote>
+<p><strong>Lab commands are not built in.</strong> They aren&#39;t part of VS Code, GitHub Copilot, or <a href="https://github.com/github/spec-kit">Spec Kit</a>. VS Code adds them to the <code>/</code> menu only when this <code>commands</code> folder is the folder you open and the chat session is Local. If <code>/clarify</code> doesn&#39;t appear, see <a href="COMMANDS.html#if-a-lab-command-doesnt-appear">If a lab command doesn&#39;t appear</a>.</p>
+</blockquote>
 <p>The lab includes:</p>
 <ul>
 <li><strong>8 independent exercises</strong> with real checks</li>
@@ -48,7 +51,7 @@
 </ul>
 <p>The guide, the studio, the exercises, and <code>npm test</code> need <strong>no npm install</strong>. Copilot still needs its normal sign-in and network access.</p>
 <ol>
-<li><p>In VS Code, use <strong>File &gt; Open Folder</strong> and open this <code>Anti-Ai-Slop\commands</code> folder, not its parent. VS Code loads the 12 custom commands from <a href="github/prompts/index.html">.github/prompts</a> only when this folder is the workspace root.</p>
+<li><p>In VS Code, use <strong>File &gt; Open Folder</strong> and open this <code>Anti-Ai-Slop\commands</code> folder, not the repository root or a parent. From the repository root you can run <code>code commands</code>. VS Code loads the 12 lab commands from <a href="github/prompts/index.html">.github/prompts</a> only when this folder is the folder you opened.</p>
 </li>
 <li><p>Open the Command Studio. It runs offline from a local file:</p>
 <pre><code class="language-powershell">npm.cmd run studio
@@ -58,7 +61,7 @@
 <pre><code class="language-powershell">npm.cmd run demo
 </code></pre>
 </li>
-<li><p>In the Chat view, set the <strong>Session Target</strong> to <strong>Local</strong> and use agent mode. Type <code>/</code>, and the <code>/clarify</code> command appears next to the built-ins. Paste the prompt from the guide and answer the questions the agent asks, in your own words. The guide doesn&#39;t automate or simulate Copilot.</p>
+<li><p>In the Chat view, set the <strong>Session Target</strong> to <strong>Local</strong> and use agent mode. Type <code>/clarify</code>. It appears in the <code>/</code> menu because VS Code loaded <a href="github/prompts/clarify.prompt.html">.github/prompts/clarify.prompt.md</a> from this folder, not because it&#39;s built in. If it&#39;s missing, see <a href="COMMANDS.html#if-a-lab-command-doesnt-appear">If a lab command doesn&#39;t appear</a>. Paste the prompt from the guide and answer the questions the agent asks, in your own words. The guide doesn&#39;t automate or simulate Copilot.</p>
 </li>
 <li><p>Check your work:</p>
 <pre><code class="language-powershell">npm.cmd run check -- 01-clarify-before-code
@@ -153,7 +156,7 @@
 </tr>
 <tr>
 <td><strong>2 Try it</strong></td>
-<td>A simulated chat box. Type <code>/</code> to open the palette, use the arrow keys, then press Tab or Enter to pick a command. Custom commands show their real prompt file and a scripted sample answer. Built-ins explain what they do, show their aliases, and warn when a command removes a safety checkpoint (<code>/autoApprove</code>, alias <code>/yolo</code>).</td>
+<td>A simulated chat box. Type <code>/</code> to open the palette, use the arrow keys, then press Tab or Enter to pick a command. Lab commands show their real prompt file, a &quot;not built in&quot; note, and a scripted sample answer. Built-ins explain what they do, show their aliases, and warn when a command removes a safety checkpoint (<code>/autoApprove</code>, alias <code>/yolo</code>).</td>
 </tr>
 <tr>
 <td><strong>3 Mission</strong></td>
@@ -284,13 +287,14 @@
 <p>The same setup, baseline, check, guide, and studio actions are also listed under <strong>Tasks: Run Task</strong> in VS Code. Reset is available only from the guide, and only after you type <code>reset &lt;exercise-id&gt;</code>. It recreates that one learner copy and nothing else.</p>
 <h2 id="how-slash-commands-work-in-vs-code">How slash commands work in VS Code</h2>
 <ul>
-<li><strong>Built-ins</strong> ship with VS Code chat. Type <code>/</code> in the Chat view to list them.</li>
-<li><strong>Custom commands</strong> are <code>*.prompt.md</code> files in <code>.github/prompts</code>. The file&#39;s <code>name</code> becomes the <code>/command</code>.<ul>
+<li><strong>Built-ins</strong> ship with VS Code chat and work in any folder. Type <code>/</code> in the Chat view to list them.</li>
+<li><strong>Lab commands</strong> are <code>*.prompt.md</code> files in this folder&#39;s <code>.github/prompts</code>. The file&#39;s <code>name</code> becomes the <code>/command</code>. They aren&#39;t built in: they exist only where the files are, and they run only in Local sessions.<ul>
 <li>The frontmatter sets <code>description</code>, <code>argument-hint</code>, <code>agent</code>, and <code>tools</code>.</li>
 <li>The body is the procedure the agent follows.</li>
 <li>Text you type after the command is passed in as the request.</li>
 </ul>
 </li>
+<li><strong>Not Spec Kit:</strong> <a href="https://github.com/github/spec-kit">Spec Kit</a> installs its own <code>speckit</code>-prefixed commands, such as <code>/speckit.clarify</code>, when you run <code>specify init</code>. This lab doesn&#39;t use Spec Kit, and its <code>/clarify</code> is unrelated.</li>
 <li><strong>Tool limits:</strong> each lab command declares only the tools its job needs. For example, <code>/clarify</code> and <code>/deslop</code> are read-only, and <code>/verify</code> can run commands but can&#39;t edit files. <code>npm.cmd run validate</code> enforces those limits. See <a href="COMMANDS.html#what-each-custom-command-is-allowed-to-do">what each custom command is allowed to do</a>.</li>
 <li><strong>Recommendations:</strong> <a href="../../../commands/.vscode/settings.json">.vscode/settings.json</a> sets <code>chat.promptFilesRecommendations</code> so <code>/clarify</code>, <code>/ground</code>, <code>/verify</code>, and <code>/handoff</code> can be offered as suggestions in a new chat. Check how your VS Code version handles that setting.</li>
 </ul>
@@ -300,7 +304,7 @@
 <li>GIFs, studio scenes, and sample answers are labeled <strong>illustrative</strong>. Terminal check output in the final frames is real. Your own Copilot session will differ, and that&#39;s the point: check it.</li>
 <li><code>/autoApprove</code> (alias <code>/yolo</code>) removes a human checkpoint. The lab lists it so you can recognize it, but teaches <code>/disableAutoApprove</code> instead. Use auto-approval only in a disposable, sandboxed workspace.</li>
 <li>No productivity statistics are claimed. <a href="VERIFICATION.html">VERIFICATION.md</a> records only what was actually run.</li>
-<li>Command names were checked against the live VS Code and GitHub docs listed in <a href="../../../commands/sources.json">sources.json</a>. Re-run that check with <code>npm.cmd run verify:sources</code>.</li>
+<li>Built-in and Copilot app command names were checked against the live VS Code and GitHub docs listed in <a href="../../../commands/sources.json">sources.json</a>. Re-run that check with <code>npm.cmd run verify:sources</code>. The 12 lab commands are this lab&#39;s own prompt files, so <code>npm.cmd run validate</code> checks them against the files instead.</li>
 </ul>
 <h2 id="for-maintainers">For maintainers</h2>
 <p>Regenerating media and running the browser checks needs the dev dependencies:</p>

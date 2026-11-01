@@ -16,8 +16,14 @@ export function renderCommandsBlock() {
   const prompts = loadPrompts();
   const out = [BEGIN, ''];
 
-  out.push('## Custom commands in this lab (prompt files)', '');
-  out.push(`These ${registry.custom.length} commands live in [.github/prompts](.github/prompts). Type \`/\` in the VS Code Chat view (Session Target: Local) to run them.`, '');
+  const lab = registry.labCommands;
+  out.push('## Lab commands (prompt files, not built in)', '');
+  out.push(`> **${lab.headline}** ${lab.summary}`);
+  out.push('>');
+  out.push(`> ${lab.where} See the [VS Code prompt files documentation](${lab.promptFilesDoc}).`);
+  out.push('>');
+  out.push(`> ${lab.notSpecKit.replace('Spec Kit installs', `[Spec Kit](${lab.specKitDoc}) installs`)}`, '');
+  out.push(`These ${registry.custom.length} commands live in [.github/prompts](.github/prompts). With this folder open and the Chat view's Session Target set to Local, type \`/\` to run them. If one doesn't appear, see [If a lab command doesn't appear](#if-a-lab-command-doesnt-appear).`, '');
   out.push('| Command | Mechanism | Access | Slop it fixes | Evidence it must return |');
   out.push('|---|---|---|---|---|');
   for (const entry of registry.custom) {

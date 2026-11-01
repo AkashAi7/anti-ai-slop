@@ -5,13 +5,17 @@ import { catalog, exercise, root, setup, reset, runChecks, verifyBaseline, isMai
 
 export function describeCommands(item, registry = JSON.parse(readFileSync(join(root, 'commands.json'), 'utf8'))) {
   const width = Math.max(...item.commands.map((name) => name.length)) + 2;
-  return item.commands.map((name) => {
+  const lines = item.commands.map((name) => {
     const custom = registry.custom.find((entry) => entry.name === name);
-    if (custom) return `/${name.padEnd(width)}custom    ${custom.file} (${custom.access})`;
+    if (custom) return `/${name.padEnd(width)}lab       ${custom.file} (${custom.access})`;
     const builtIn = registry.builtIns.find((entry) => entry.name === name || entry.aliases?.includes(name));
     if (builtIn) return `/${name.padEnd(width)}built-in  ${builtIn.purpose}`;
     throw new Error(`Command /${name} is not in commands.json.`);
-  }).join('\n');
+  });
+  if (item.commands.some((name) => registry.custom.some((entry) => entry.name === name))) {
+    lines.push('', `${registry.labCommands.headline} "lab" commands are this folder's prompt files, so they load only with the commands folder open.`);
+  }
+  return lines.join('\n');
 }
 
 export async function runDemo(input = process.stdin, output = process.stdout) {

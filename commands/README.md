@@ -5,7 +5,9 @@
 This is a hands-on VS Code and GitHub Copilot lab about cutting AI slop with chat **slash commands**. You'll practice:
 
 - built-in commands such as `/plan`, `/compact`, `/clear`, `/fork`, `/tools`, `/troubleshoot`, and `/disableAutoApprove`
-- **12 custom commands** shipped as prompt files: `/clarify`, `/spec`, `/ground`, `/deps-check`, `/deslop`, `/verify`, `/root-cause`, `/pre-commit`, `/fail-paths`, `/simplify`, `/scope`, and `/handoff`
+- **12 lab commands** shipped as prompt files in this folder: `/clarify`, `/spec`, `/ground`, `/deps-check`, `/deslop`, `/verify`, `/root-cause`, `/pre-commit`, `/fail-paths`, `/simplify`, `/scope`, and `/handoff`
+
+> **Lab commands are not built in.** They aren't part of VS Code, GitHub Copilot, or [Spec Kit](https://github.com/github/spec-kit). VS Code adds them to the `/` menu only when this `commands` folder is the folder you open and the chat session is Local. If `/clarify` doesn't appear, see [If a lab command doesn't appear](COMMANDS.md#if-a-lab-command-doesnt-appear).
 
 The lab includes:
 
@@ -27,7 +29,7 @@ A command tells the agent which procedure to follow and what evidence to return.
 
 The guide, the studio, the exercises, and `npm test` need **no npm install**. Copilot still needs its normal sign-in and network access.
 
-1. In VS Code, use **File > Open Folder** and open this `Anti-Ai-Slop\commands` folder, not its parent. VS Code loads the 12 custom commands from [.github/prompts](.github/prompts) only when this folder is the workspace root.
+1. In VS Code, use **File > Open Folder** and open this `Anti-Ai-Slop\commands` folder, not the repository root or a parent. From the repository root you can run `code commands`. VS Code loads the 12 lab commands from [.github/prompts](.github/prompts) only when this folder is the folder you opened.
 2. Open the Command Studio. It runs offline from a local file:
 
    ```powershell
@@ -40,7 +42,7 @@ The guide, the studio, the exercises, and `npm test` need **no npm install**. Co
    npm.cmd run demo
    ```
 
-4. In the Chat view, set the **Session Target** to **Local** and use agent mode. Type `/`, and the `/clarify` command appears next to the built-ins. Paste the prompt from the guide and answer the questions the agent asks, in your own words. The guide doesn't automate or simulate Copilot.
+4. In the Chat view, set the **Session Target** to **Local** and use agent mode. Type `/clarify`. It appears in the `/` menu because VS Code loaded [.github/prompts/clarify.prompt.md](.github/prompts/clarify.prompt.md) from this folder, not because it's built in. If it's missing, see [If a lab command doesn't appear](COMMANDS.md#if-a-lab-command-doesnt-appear). Paste the prompt from the guide and answer the questions the agent asks, in your own words. The guide doesn't automate or simulate Copilot.
 5. Check your work:
 
    ```powershell
@@ -83,7 +85,7 @@ Each GIF replays one exercise, from the slop to the command flow to the evidence
 | Mode | What you do |
 | --- | --- |
 | **1 Watch** | Step through or play the five walkthroughs. These are the same scenes the GIFs are recorded from. |
-| **2 Try it** | A simulated chat box. Type `/` to open the palette, use the arrow keys, then press Tab or Enter to pick a command. Custom commands show their real prompt file and a scripted sample answer. Built-ins explain what they do, show their aliases, and warn when a command removes a safety checkpoint (`/autoApprove`, alias `/yolo`). |
+| **2 Try it** | A simulated chat box. Type `/` to open the palette, use the arrow keys, then press Tab or Enter to pick a command. Lab commands show their real prompt file, a "not built in" note, and a scripted sample answer. Built-ins explain what they do, show their aliases, and warn when a command removes a safety checkpoint (`/autoApprove`, alias `/yolo`). |
 | **3 Mission** | 14 slop smells. Pick the command that fixes each one, then read why. |
 | **4 Commands** | Search and filter all 43 commands (31 built-ins plus 12 prompt files) by mechanism and kind. Every card has a **Try it** button and a docs link. |
 
@@ -127,11 +129,12 @@ The same setup, baseline, check, guide, and studio actions are also listed under
 
 ## How slash commands work in VS Code
 
-- **Built-ins** ship with VS Code chat. Type `/` in the Chat view to list them.
-- **Custom commands** are `*.prompt.md` files in `.github/prompts`. The file's `name` becomes the `/command`.
+- **Built-ins** ship with VS Code chat and work in any folder. Type `/` in the Chat view to list them.
+- **Lab commands** are `*.prompt.md` files in this folder's `.github/prompts`. The file's `name` becomes the `/command`. They aren't built in: they exist only where the files are, and they run only in Local sessions.
   - The frontmatter sets `description`, `argument-hint`, `agent`, and `tools`.
   - The body is the procedure the agent follows.
   - Text you type after the command is passed in as the request.
+- **Not Spec Kit:** [Spec Kit](https://github.com/github/spec-kit) installs its own `speckit`-prefixed commands, such as `/speckit.clarify`, when you run `specify init`. This lab doesn't use Spec Kit, and its `/clarify` is unrelated.
 - **Tool limits:** each lab command declares only the tools its job needs. For example, `/clarify` and `/deslop` are read-only, and `/verify` can run commands but can't edit files. `npm.cmd run validate` enforces those limits. See [what each custom command is allowed to do](COMMANDS.md#what-each-custom-command-is-allowed-to-do).
 - **Recommendations:** [.vscode/settings.json](.vscode/settings.json) sets `chat.promptFilesRecommendations` so `/clarify`, `/ground`, `/verify`, and `/handoff` can be offered as suggestions in a new chat. Check how your VS Code version handles that setting.
 
@@ -142,7 +145,7 @@ To reuse the commands in your own repository, copy the prompt files and follow [
 - GIFs, studio scenes, and sample answers are labeled **illustrative**. Terminal check output in the final frames is real. Your own Copilot session will differ, and that's the point: check it.
 - `/autoApprove` (alias `/yolo`) removes a human checkpoint. The lab lists it so you can recognize it, but teaches `/disableAutoApprove` instead. Use auto-approval only in a disposable, sandboxed workspace.
 - No productivity statistics are claimed. [VERIFICATION.md](VERIFICATION.md) records only what was actually run.
-- Command names were checked against the live VS Code and GitHub docs listed in [sources.json](sources.json). Re-run that check with `npm.cmd run verify:sources`.
+- Built-in and Copilot app command names were checked against the live VS Code and GitHub docs listed in [sources.json](sources.json). Re-run that check with `npm.cmd run verify:sources`. The 12 lab commands are this lab's own prompt files, so `npm.cmd run validate` checks them against the files instead.
 
 ## For maintainers
 

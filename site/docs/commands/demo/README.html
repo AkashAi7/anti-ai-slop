@@ -34,9 +34,9 @@
 <p>Nothing here needs network access except the Copilot chat itself.</p>
 <h2 id="before-the-audience-arrives">Before the audience arrives</h2>
 <ol>
-<li><p>Open <code>Anti-Ai-Slop\commands</code> as the VS Code workspace root.</p>
+<li><p>Open <code>Anti-Ai-Slop\commands</code> as the VS Code workspace root, not the repository root.</p>
 </li>
-<li><p>In the Chat view, set <strong>Session Target</strong> to <strong>Local</strong>, choose agent mode, and type <code>/</code> to confirm that <code>/fail-paths</code> and <code>/verify</code> appear.</p>
+<li><p>In the Chat view, set <strong>Session Target</strong> to <strong>Local</strong>, choose agent mode, and type <code>/</code> to confirm that <code>/fail-paths</code> and <code>/verify</code> appear. Say out loud that these are the lab&#39;s prompt files, not built-in commands: they only appear because this folder is open.</p>
 </li>
 <li><p>Prepare a fresh copy of exercise 03. If <code>work/03-prove-it-with-tests</code> already exists from a rehearsal, run <code>npm.cmd run demo</code>, pick 03, and use <code>reset</code>.</p>
 <pre><code class="language-powershell">npm.cmd run setup -- 03-prove-it-with-tests
@@ -66,7 +66,7 @@
 <tr>
 <td>2-5</td>
 <td><strong>Try it</strong> (press <code>2</code>). Type <code>/</code>, arrow to <code>/verify</code>, press Tab to fill it in, then press Enter. Scroll through the reply, which shows the prompt file and a sample answer</td>
-<td>&quot;A custom command is a prompt file. It sets the tools (<code>/verify</code> can run commands but can&#39;t edit), the steps, the evidence format (command, exit code, observed result), and the stop conditions: it never says &#39;should pass&#39; without an exit code.&quot;</td>
+<td>&quot;A lab command is a prompt file in this repo, not a VS Code built-in. It sets the tools (<code>/verify</code> can run commands but can&#39;t edit), the steps, the evidence format (command, exit code, observed result), and the stop conditions: it never says &#39;should pass&#39; without an exit code.&quot;</td>
 </tr>
 <tr>
 <td>5</td>
@@ -130,8 +130,8 @@
 <td>Walk through the transcript, then run <code>npm.cmd run check -- 03-prove-it-with-tests --solution</code> and say plainly that this is the <strong>reference solution</strong>, not a live agent result</td>
 </tr>
 <tr>
-<td>Custom commands are missing from <code>/</code></td>
-<td>Check that the workspace root is <code>commands</code> and the Session Target is Local, then start a new chat. See <a href="../labs/facilitator.html#recovery-without-cheating">Recovery</a></td>
+<td>Lab commands are missing from <code>/</code></td>
+<td>Check that the open folder is <code>commands</code> (not the repository root) and the Session Target is Local, then run <code>/prompts</code> and check that the lab&#39;s prompt files are listed. See <a href="../COMMANDS.html#if-a-lab-command-doesnt-appear">If a lab command doesn&#39;t appear</a></td>
 </tr>
 <tr>
 <td>You have more time</td>

@@ -9,7 +9,7 @@ These four exercises teach the four habits that prevent the most common slop:
 
 Each exercise is independent. Do them in any order.
 
-Before you start, open `Anti-Ai-Slop\commands` as the VS Code workspace root and set the Chat view's **Session Target** to **Local**. Type `/` in chat and confirm that `/clarify`, `/ground`, `/fail-paths`, and `/handoff` appear. If they don't, see [Recovery](facilitator.md#recovery-without-cheating).
+Before you start, open `Anti-Ai-Slop\commands` as the VS Code workspace root (not the repository root) and set the Chat view's **Session Target** to **Local**. Type `/` in chat and confirm that `/clarify`, `/ground`, `/fail-paths`, and `/handoff` appear. These are this lab's prompt files, not built-in commands, so they appear only with this folder open. If they don't, see [If a lab command doesn't appear](../COMMANDS.md#if-a-lab-command-doesnt-appear).
 
 | Exercise | Command flow | Slop it removes | Evidence to keep |
 | --- | --- | --- | --- |

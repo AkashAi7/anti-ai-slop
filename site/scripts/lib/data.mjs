@@ -59,6 +59,7 @@ export function loadCommandsLab() {
     id: 'commands',
     asOf: registry.asOf,
     surface: registry.surface,
+    labCommands: registry.labCommands,
     accessClasses: registry.accessClasses,
     disclaimer: media.disclaimer,
     mechanisms,

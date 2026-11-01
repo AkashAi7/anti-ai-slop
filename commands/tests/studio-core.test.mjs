@@ -26,7 +26,9 @@ test('every registry command is in the studio with the right kind', () => {
     assert.ok(command.body.startsWith(`# /${command.name}`), `${command.name} body comes from its prompt file`);
     assert.ok(command.tools.length > 0);
     assert.ok(DATA.samples[command.name], `${command.name} has a sample answer`);
+    assert.match(command.availability, /not built in/, `${command.name} must not look like a built-in`);
   }
+  assert.equal(DATA.registry.labCommands.headline, 'Lab commands are not built in.');
 });
 
 test('palette filtering ranks exact, prefix, alias, then text matches', () => {

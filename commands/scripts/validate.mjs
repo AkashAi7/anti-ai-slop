@@ -43,6 +43,18 @@ for (const entry of registry.custom) {
 for (const mechanism of mechanisms) {
   assert.ok(registry.custom.some((entry) => entry.mechanism === mechanism) || registry.builtIns.some((entry) => entry.mechanism === mechanism));
 }
+// Lab commands must never read as Copilot built-ins or Spec Kit commands.
+const lab = registry.labCommands;
+assert.ok(lab && typeof lab === 'object', 'commands.json needs a labCommands note');
+assert.equal(lab.headline, 'Lab commands are not built in.');
+for (const key of ['summary', 'where', 'notSpecKit']) assert.ok(String(lab[key] || '').trim(), `labCommands.${key} is required`);
+assert.match(lab.summary, /\.github\/prompts/);
+assert.match(lab.where, /Local/);
+assert.ok(lab.notSpecKit.includes('Spec Kit installs'), 'labCommands.notSpecKit must say what Spec Kit installs');
+assert.equal(lab.promptFilesDoc, 'https://code.visualstudio.com/docs/agent-customization/prompt-files');
+assert.equal(lab.specKitDoc, 'https://github.com/github/spec-kit');
+assert.ok(Array.isArray(lab.troubleshoot) && lab.troubleshoot.length >= 3 && lab.troubleshoot.every((step) => step.trim()));
+for (const name of customNames) assert.ok(!/^speckit/i.test(name), `/${name} must not look like a Spec Kit command`);
 
 // ---------- Prompt files ----------
 const promptDir = join(root, '.github', 'prompts');
@@ -185,6 +197,20 @@ for (const path of files(root).filter((file) => extname(file) === '.md')) {
     }
     links++;
   }
+}
+
+// ---------- Lab command wording ----------
+// /clarify and friends are this lab's prompt files. The docs must never present them as built-ins or Spec Kit commands.
+const labReadme = readFileSync(join(root, 'README.md'), 'utf8');
+assert.ok(commandsDoc.includes("## If a lab command doesn't appear"), 'COMMANDS.md needs the "If a lab command doesn\'t appear" section');
+for (const [rel, text] of [['README.md', labReadme], ['COMMANDS.md', commandsDoc]]) {
+  assert.match(text, /not built in/i, `${rel} must say lab commands are not built in`);
+  assert.match(text, /Spec Kit/, `${rel} must distinguish lab commands from Spec Kit`);
+  assert.match(text, /#if-a-lab-command-doesnt-appear/, `${rel} must link the troubleshooting section`);
+}
+for (const path of files(root).filter((file) => extname(file) === '.md')) {
+  const text = readFileSync(path, 'utf8');
+  assert.ok(!/(?:next to|alongside) the built-ins/i.test(text), `${relative(root, path)}: don't say lab commands sit "next to the built-ins"; say they are prompt files that are not built in`);
 }
 
 console.log(`Validated ${registry.builtIns.length} built-in and ${registry.custom.length} custom commands, ${promptFiles.length} prompt files, `

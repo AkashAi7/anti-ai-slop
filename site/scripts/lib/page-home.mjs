@@ -40,7 +40,7 @@ ${player(file, commands.tour, 'Command Studio tour')}
 <thead><tr><th scope="col"><span class="sr-only">Topic</span></th><th scope="col"><a href="${to(PAGES.commands)}">Commands lab</a></th><th scope="col"><a href="${to(PAGES.skills)}">Skills lab</a></th></tr></thead>
 <tbody>
 <tr><th scope="row">You type</th><td><code>/plan</code>, <code>/verify</code>, <code>/handoff</code>: chat slash commands</td><td><code>/grill-me</code>, <code>/evidence-first</code>: agent skills</td></tr>
-<tr><th scope="row">What ships</th><td>${commands.custom.length} custom commands as prompt files, plus a guide to ${commands.builtIns.length} built-ins (${commandCount} in all)</td><td>${skills.skills.length} reusable skills in <code>.github/skills</code></td></tr>
+<tr><th scope="row">What ships</th><td>${commands.custom.length} lab commands as prompt files (not built in), plus a guide to ${commands.builtIns.length} built-ins (${commandCount} in all)</td><td>${skills.skills.length} reusable skills in <code>.github/skills</code></td></tr>
 <tr><th scope="row">Exercises</th><td>${commands.exercises.length}: ${track(commands, 'beginner')} beginner, ${track(commands, 'advanced')} advanced</td><td>${skills.exercises.length}: ${track(skills, 'beginner')} beginner, ${track(skills, 'advanced')} advanced</td></tr>
 <tr><th scope="row">Walkthroughs</th><td>${commands.gifCount} GIFs</td><td>${skills.gifCount} GIFs</td></tr>
 <tr><th scope="row">Interactive demo</th><td>The Command Studio in your browser, plus a terminal guide</td><td>A terminal guide (<code>npm run demo</code>)</td></tr>

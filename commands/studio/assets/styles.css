@@ -171,6 +171,7 @@ body.capture .caret { animation: none; }
 .try-log .msg.agent pre { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 10px; overflow: auto; font: 13px/1.45 var(--mono); white-space: pre-wrap; max-height: 320px; }
 .try-log .label { font: 12px var(--mono); text-transform: uppercase; color: var(--muted); margin: 8px 0 4px; display: block; }
 .try-log .caution { color: var(--warn); }
+.try-log .note { border-left: 3px solid var(--accent); padding: 4px 0 4px 10px; color: var(--text); }
 .try-form { display: flex; gap: 8px; align-items: flex-start; }
 .input-wrap { position: relative; flex: 1; }
 .palette {

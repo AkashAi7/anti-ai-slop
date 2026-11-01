@@ -4,7 +4,8 @@ Use this guide to run the Commands lab as a workshop of 60 to 90 minutes, or as 
 
 ## Prepare
 
-- Open `Anti-Ai-Slop\commands` as its own VS Code workspace root, not the parent folder. The 12 custom commands in [.github/prompts](../.github/prompts) load only from the workspace root.
+- Open `Anti-Ai-Slop\commands` as its own VS Code workspace root, not the repository root or a parent folder. The 12 lab commands in [.github/prompts](../.github/prompts) load only from the folder you open.
+- Tell participants up front that `/clarify`, `/spec`, `/verify`, and the other lab commands are **not built in**. They are this lab's prompt files, not VS Code, Copilot, or Spec Kit commands, so they appear only in this folder. Built-ins such as `/plan`, `/clear`, and `/tools` work anywhere.
 - Confirm that Node.js 22.20 or later is installed and that participants have Copilot access their organization allows.
 - Explain tool approval, workspace trust, and the Chat view's **Session Target**. This lab expects **Local**.
 - Run `npm.cmd test`. Every defective baseline should report its expected failures, and every reference solution should pass.
@@ -55,14 +56,14 @@ These counts were observed with `npm.cmd run check -- <id> --baseline` and `--so
 
 ## Recovery without cheating
 
-- **Custom commands don't appear when you type `/`:**
-  1. Check that the workspace root is the `commands` folder.
-  2. Check that the **Session Target** is **Local** and the chat is in agent mode.
-  3. Start a fresh chat.
-  4. Check whether organization policy disables prompt files.
-  5. Check whether a personal prompt file uses the same name.
+- **Lab commands don't appear when you type `/`:**
+  1. Check that the open folder is `commands` itself, not the repository root. The root has no `.github/prompts`.
+  2. Check that the **Session Target** is **Local** and the chat is in agent mode. Prompt files don't run in other harnesses.
+  3. Start a fresh chat and type the full name, such as `/clarify`.
+  4. Run `/prompts` to open the Configure Prompt Files menu, check that the lab's prompt files are listed, and look for a personal prompt file with the same name.
+  5. In the Chat view, open the **...** menu and select **Show Agent Debug Logs** to see prompt file discovery errors.
 
-  Don't pretend a pasted prompt proves that the command loaded.
+  Don't pretend a pasted prompt proves that the command loaded. Full steps: [If a lab command doesn't appear](../COMMANDS.md#if-a-lab-command-doesnt-appear).
 - **The agent guesses instead of asking:** stop it, run `/clarify` again, and tell it to wait for answers.
 - **The agent edits `checks.mjs` or weakens a test:** reject the edit. The checks are the referee, not part of the exercise.
 - **The agent opens `solution/`:** say so, and move that participant to a different exercise. That result isn't unaided.
@@ -77,7 +78,7 @@ These counts were observed with `npm.cmd run check -- <id> --baseline` and `--so
 The Node test suite can't observe VS Code itself. Record these yourself:
 
 1. Open `Anti-Ai-Slop\commands` as the workspace root, and start a fresh chat with **Session Target: Local** in agent mode.
-2. Type `/` and confirm that all 12 custom commands appear: `/clarify`, `/spec`, `/ground`, `/deps-check`, `/deslop`, `/verify`, `/root-cause`, `/pre-commit`, `/fail-paths`, `/simplify`, `/scope`, and `/handoff`.
+2. Type `/` and confirm that all 12 lab commands appear: `/clarify`, `/spec`, `/ground`, `/deps-check`, `/deslop`, `/verify`, `/root-cause`, `/pre-commit`, `/fail-paths`, `/simplify`, `/scope`, and `/handoff`. Then run `/prompts` and confirm that each one comes from this folder's `.github/prompts`.
 3. Run `/clarify` on exercise 01. Confirm that it asks at most 5 questions, proposes a default for each, waits, and writes no code.
 4. Run `/verify` on any exercise. Confirm that it ran real commands, that each command shows an exit code, and that the verdict is VERIFIED or NOT VERIFIED.
 5. Confirm that a read-only command (`/ground` or `/deslop`) doesn't edit files, even when you ask it to.
@@ -91,7 +92,7 @@ Observed record template. Don't include participant names, tokens, or private ch
 Date:
 VS Code version / Copilot Chat version:
 Session Target / agent:
-12 custom commands visible in / menu: yes/no (missing: )
+12 lab commands visible in / menu with the commands folder open: yes/no (missing: )
 /clarify waited for answers: yes/no
 /verify reported commands with exit codes: yes/no
 Read-only command refused edits: yes/no

@@ -8,7 +8,7 @@ Hands-on GitHub Copilot labs for asking better questions, grounding changes in t
 
 | Folder | Contents |
 | --- | --- |
-| [commands](commands/README.md) | 12 custom slash commands, a reference for 31 built-ins, 8 exercises, 6 GIFs, and an interactive browser Command Studio |
+| [commands](commands/README.md) | 12 lab slash commands (this repo's prompt files, not Copilot built-ins), a reference for 31 built-ins, 8 exercises, 6 GIFs, and an interactive browser Command Studio |
 | [skills](skills/README.md) | 12 reusable agent skills, 8 exercises, 4 GIFs, and an interactive terminal guide |
 | [site](site/README.md) | The GitHub Pages website, full-screen walkthroughs, and HTML versions of the lab guides |
 
@@ -36,7 +36,9 @@ Choose **one** lab:
 
 ### Commands
 
-Open the downloaded `commands` folder itself with **VS Code > File > Open Folder**. Do not open only the repository root: the lab's `.github/prompts` must be in the active workspace.
+Open the downloaded `commands` folder itself with **VS Code > File > Open Folder**, or run `code commands` from the repository root. Do not open only the repository root: VS Code reads prompt files from `.github/prompts` in the folder you open, and the root has none.
+
+> **`/clarify`, `/spec`, `/verify`, and the other lab commands are not built in.** They are prompt files in [commands/.github/prompts](commands/.github/prompts), so they appear only with the `commands` folder open in a **Local** chat session. They are also not [Spec Kit](https://github.com/github/spec-kit) commands; Spec Kit installs its own `speckit`-prefixed commands. If a lab command is missing, see [If a lab command doesn't appear](commands/COMMANDS.md#if-a-lab-command-doesnt-appear).
 
 In the integrated terminal:
 
@@ -54,7 +56,7 @@ npm.cmd run check -- 01-clarify-before-code
 
 ### Skills
 
-Open the downloaded `skills` folder itself in a separate VS Code window, so `.github/skills` belongs to the active workspace.
+Open the downloaded `skills` folder itself in a separate VS Code window, so `.github/skills` belongs to the active workspace. Skills such as `/grill-me` are this repo's agent skills, not Copilot built-ins, so they load only from that folder.
 
 ```powershell
 node --version

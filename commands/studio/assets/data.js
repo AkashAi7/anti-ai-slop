@@ -9,6 +9,21 @@ globalThis.STUDIO_DATA = {
       "howTo": "In the Chat view, set the Session Target to Local. Prompt files and most commands in this lab run only with Local.",
       "doc": "https://code.visualstudio.com/docs/agents/run/agent-harnesses"
     },
+    "labCommands": {
+      "headline": "Lab commands are not built in.",
+      "summary": "`/clarify`, `/spec`, and the other lab commands are prompt files that this repository ships in `.github/prompts`.",
+      "where": "VS Code reads workspace prompt files from the `.github/prompts` folder of the folder you open, and runs them only in Local chat sessions. Open this `commands` folder itself (or a repository you copied the prompt files into). The anti-ai-slop repository root has no `.github/prompts` folder, so opening the repository root or a parent folder does not load them.",
+      "notSpecKit": "They are not Spec Kit commands. Spec Kit installs its own `speckit`-prefixed commands when you run `specify init`. This lab does not use Spec Kit.",
+      "promptFilesDoc": "https://code.visualstudio.com/docs/agent-customization/prompt-files",
+      "specKitDoc": "https://github.com/github/spec-kit",
+      "troubleshoot": [
+        "Open the `commands` folder itself as the workspace, for example with `code commands` from the repository root.",
+        "Set the Session Target in the Chat view to Local. Prompt files do not run in Copilot CLI or other harnesses.",
+        "Type `/` followed by the command name, for example `/clarify`, in the chat input.",
+        "Run `/prompts` to open the Configure Prompt Files menu and check that the lab's prompt files are listed.",
+        "Still missing? In the Chat view, select the `...` menu, then Show Agent Debug Logs to see prompt file discovery errors. `/troubleshoot` can also help."
+      ]
+    },
     "mechanisms": [
       {
         "id": "plan",
@@ -272,7 +287,7 @@ globalThis.STUDIO_DATA = {
         "name": "prompts",
         "mechanism": "diagnose",
         "purpose": "Configure prompt files.",
-        "antiSlop": "Confirms which prompt files (custom /commands) were discovered and where they come from.",
+        "antiSlop": "Opens the prompt file menu so you can confirm the lab's prompt files (custom /commands) were discovered, instead of guessing.",
         "usage": "/prompts",
         "availability": "Local and Copilot",
         "doc": "https://code.visualstudio.com/docs/agent-customization/prompt-files"

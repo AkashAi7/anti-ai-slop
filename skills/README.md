@@ -105,7 +105,7 @@ Edit only the learner copy and allowed task files. Keep acceptance checks unchan
 
 ## Skill discovery and reuse
 
-The actual skills live in [.github/skills](.github/skills). In a fresh chat, type `/grill-me` and verify that the skill is available. If absent:
+The actual skills live in [.github/skills](.github/skills). They are this lab's own files (some adapted from public skill collections; see [third-party notices](THIRD-PARTY-NOTICES.md)), not commands built into VS Code, GitHub Copilot, or Spec Kit. They are available only where the skill folders are. In a fresh chat, type `/grill-me` and verify that the skill is available. If absent:
 
 - Confirm this lab is the open workspace root and the intended Copilot harness is selected.
 - Inspect **Chat > Open Customizations > Skills** and restart the chat after adding skills.

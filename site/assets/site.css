@@ -163,6 +163,9 @@ tbody th { font-weight: 600; white-space: nowrap; }
 td .flow { margin: 0; }
 
 /* Command catalog */
+.callout { margin: 0 0 24px; padding: 12px var(--pad); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--radius); background: var(--panel); max-width: 90ch; }
+.callout p { margin: 0 0 8px; }
+.callout p:last-child { margin-bottom: 0; }
 .legend { margin: 0 0 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); padding: 14px var(--pad); }
 .legend summary { cursor: pointer; font-weight: 600; }
 .legend dl { display: grid; gap: 6px; margin: 12px 0 0; }

@@ -23,7 +23,7 @@
 <div class="intro-text">
 <p class="eyebrow">Commands lab</p>
 <h1>Type <code>/</code>. Pick a contract. Get evidence back.</h1>
-<p class="lead">Practice cutting AI slop with VS Code chat slash commands: built-ins such as <code>/plan</code>, <code>/compact</code>, and <code>/disableAutoApprove</code>, plus 12 custom commands shipped as prompt files.</p>
+<p class="lead">Practice cutting AI slop with VS Code chat slash commands: built-ins such as <code>/plan</code>, <code>/compact</code>, and <code>/disableAutoApprove</code>, plus 12 lab commands such as <code>/clarify</code> and <code>/verify</code>. The lab commands are prompt files in this repository, not built into VS Code or Copilot.</p>
 <div class="actions">
 <a class="button primary" href="../commands/studio/index.html">Open the Command Studio</a>
 <a class="button" href="docs/commands/README.html">Read the lab guide</a>
@@ -39,7 +39,7 @@
 </figure>
 </div>
 <ul class="facts">
-<li><strong>43</strong> commands: 31 built-in, 12 prompt files</li>
+<li><strong>43</strong> commands: 31 built-in, 12 lab prompt files</li>
 <li><strong>8</strong> exercises with real checks</li>
 <li><strong>6</strong> GIF walkthroughs</li>
 <li><strong>14</strong> slop smells in Mission mode</li>
@@ -56,13 +56,23 @@
 cd anti-ai-slop/commands</code></pre>
 <p class="note">Already cloned? Open the <code>commands</code> folder in your existing copy. ZIP downloads extract to <code>anti-ai-slop-main</code>; open its <code>commands</code> folder instead.</p>
 <ol class="steps">
-<li>In VS Code, use <strong>File &gt; Open Folder</strong> and open the downloaded <code>commands</code> folder, not its parent. VS Code loads the custom commands from <code>.github/prompts</code> only when this folder is the workspace root. Run the following commands in that folder's integrated terminal.</li>
+<li>In VS Code, use <strong>File &gt; Open Folder</strong> and open the downloaded <code>commands</code> folder, not the repository root or any parent folder. The lab commands are prompt files in <code>commands/.github/prompts</code>, and VS Code loads them only when this folder is the workspace root. Run the following commands in that folder's integrated terminal.</li>
 <li>Open the Command Studio. It runs offline from a local file.<pre class="cmd"><code>npm.cmd run studio</code></pre></li>
 <li>Start the terminal guide, choose <code>01-clarify-before-code</code>, then run <code>setup</code>, <code>baseline</code>, and <code>prompt</code>.<pre class="cmd"><code>npm.cmd run demo</code></pre></li>
-<li>In the Chat view, set the <strong>Session Target</strong> to <strong>Local</strong> and use agent mode. Type <code>/</code> and <code>/clarify</code> appears next to the built-ins. Paste the prompt and answer the agent's questions in your own words.</li>
+<li>In the Chat view, set the <strong>Session Target</strong> to <strong>Local</strong> and use agent mode. Type <code>/clarify</code>. It runs the lab's <code>clarify.prompt.md</code>; it isn't a built-in or a Spec Kit command. Paste the prompt and answer the agent's questions in your own words.</li>
 <li>Check your work.<pre class="cmd"><code>npm.cmd run check -- 01-clarify-before-code</code></pre></li>
 </ol>
 <p class="note">On shells other than PowerShell, use <code>npm</code> in place of <code>npm.cmd</code>.</p>
+<h3 id="lab-missing">If a lab command doesn't appear</h3>
+<p>Built-ins such as <code>/plan</code> and <code>/clear</code> don't depend on these files. The lab commands need VS Code to find the prompt files. Check these in order:</p>
+<ol class="steps">
+<li>Open the <code>commands</code> folder itself as the workspace, for example with <code>code commands</code> from the repository root.</li>
+<li>Set the Session Target in the Chat view to Local. Prompt files do not run in Copilot CLI or other harnesses.</li>
+<li>Type <code>/</code> followed by the command name, for example <code>/clarify</code>, in the chat input.</li>
+<li>Run <code>/prompts</code> to open the Configure Prompt Files menu and check that the lab&#39;s prompt files are listed.</li>
+<li>Still missing? In the Chat view, select the <code>...</code> menu, then Show Agent Debug Logs to see prompt file discovery errors. <code>/troubleshoot</code> can also help.</li>
+</ol>
+<p>More detail: <a href="docs/commands/COMMANDS.html#if-a-lab-command-doesnt-appear">If a lab command doesn't appear</a> in the command reference.</p>
 </section>
 
 <section class="section wrap" id="studio" aria-labelledby="studio-title">
@@ -73,7 +83,7 @@ cd anti-ai-slop/commands</code></pre>
 <thead><tr><th scope="col">Mode</th><th scope="col">What you do</th></tr></thead>
 <tbody>
 <tr><td><a href="../commands/studio/index.html#watch/plan">1 Watch</a></td><td>Step through or play the 5 walkthroughs. These are the scenes the GIFs are recorded from.</td></tr>
-<tr><td><a href="../commands/studio/index.html#try">2 Try it</a></td><td>A simulated chat box. Type <code>/</code> to open the palette, then press Tab to fill in a command and Enter to send it. Custom commands show their real prompt file and a scripted sample answer.</td></tr>
+<tr><td><a href="../commands/studio/index.html#try">2 Try it</a></td><td>A simulated chat box. Type <code>/</code> to open the palette, then press Tab to fill in a command and Enter to send it. Lab commands show their real prompt file, a "not built in" note, and a scripted sample answer.</td></tr>
 <tr><td><a href="../commands/studio/index.html#mission">3 Mission</a></td><td>14 slop smells. Pick the command that fixes each one, then read why.</td></tr>
 <tr><td><a href="../commands/studio/index.html#commands">4 Commands</a></td><td>Search and filter all 43 commands by mechanism and kind.</td></tr>
 </tbody>
@@ -163,7 +173,9 @@ cd anti-ai-slop/commands</code></pre>
 
 <section class="section wrap" id="catalog" aria-labelledby="catalog-title">
 <h2 id="catalog-title">Commands by mechanism</h2>
-<p>The 12 lab commands are prompt files in <code>.github/prompts</code>, and each one declares only the tools its job needs. The 31 built-ins ship with VS Code chat. Registry as of 2026-10-30.</p>
+<p>The 31 built-ins ship with VS Code chat. The 12 lab commands are this repository's prompt files in <code>commands/.github/prompts</code>, and each one declares only the tools its job needs. Registry as of 2026-10-30.</p>
+<div class="callout" role="note"><p><strong>Lab commands are not built in.</strong> <code>/clarify</code>, <code>/spec</code>, and the other lab commands are prompt files that this repository ships in <code>.github/prompts</code>. VS Code reads workspace prompt files from the <code>.github/prompts</code> folder of the folder you open, and runs them only in Local chat sessions. Open this <code>commands</code> folder itself (or a repository you copied the prompt files into). The anti-ai-slop repository root has no <code>.github/prompts</code> folder, so opening the repository root or a parent folder does not load them. <a href="https://code.visualstudio.com/docs/agent-customization/prompt-files">VS Code prompt files docs</a></p>
+<p>They are not Spec Kit commands. Spec Kit installs its own <code>speckit</code>-prefixed commands when you run <code>specify init</code>. This lab does not use Spec Kit. <a href="https://github.com/github/spec-kit">About Spec Kit</a> · <a href="#lab-missing">If a lab command doesn't appear</a></p></div>
 <details class="legend"><summary>What the access classes mean</summary><dl><div><dt>read-only</dt><dd>Reads and searches only. Cannot edit files or run commands.</dd></div><div><dt>runs-commands</dt><dd>Runs terminal commands (each still needs your approval). Cannot edit files.</dd></div><div><dt>writes-artifact</dt><dd>Writes one named Markdown artifact. Instructed not to touch code.</dd></div><div><dt>edits-code</dt><dd>Edits code and runs tests. Keep approvals on.</dd></div></dl></details>
 <div class="filters" data-catalog-filters hidden>
 <div class="filter-search"><label for="cmd-search">Filter commands</label><input id="cmd-search" type="search" placeholder="Try verify, context, or yolo" autocomplete="off" spellcheck="false"></div>
@@ -177,15 +189,17 @@ cd anti-ai-slop/commands</code></pre>
 <p class="smell"><strong>Slop smell:</strong> Code arrives before anyone agreed what done means. Assumptions stay silent.</p>
 <ul class="cmds">
 <li class="cmd-card" data-kind="custom" data-search="clarify surface ambiguities and silent assumptions before any code is written. asks at most 5 questions. silent assumptions baked into code. at most 5 questions, each with a reason and a proposed default, plus an assumptions table. no code. read-only">
-<div class="cmd-head"><code class="cmd-name">/clarify</code><span class="badge lab">Lab command</span><span class="badge">read-only</span></div>
+<div class="cmd-head"><code class="cmd-name">/clarify</code><span class="badge lab">Lab prompt file</span><span class="badge">read-only</span></div>
 <p>Surface ambiguities and silent assumptions before any code is written. Asks at most 5 questions.</p>
 <dl class="cmd-facts"><div><dt>Slop it targets</dt><dd>Silent assumptions baked into code.</dd></div><div><dt>Evidence you get back</dt><dd>At most 5 questions, each with a reason and a proposed default, plus an assumptions table. No code.</dd></div></dl>
+<p class="cmd-meta">Where: Local chat with this lab's <code>commands</code> folder open · not built into VS Code or Copilot</p>
 <p class="cmd-more"><a href="docs/commands/github/prompts/clarify.prompt.html">Read the prompt file<span class="sr-only">: /clarify</span></a></p>
 </li>
 <li class="cmd-card" data-kind="custom" data-search="spec turn an agreed request into a short, testable spec with acceptance criteria and real verification commands. &quot;done&quot; that nobody can test. goal, non-goals, given/when/then acceptance criteria, edge cases, and real verification commands. undecided items marked open. read-only">
-<div class="cmd-head"><code class="cmd-name">/spec</code><span class="badge lab">Lab command</span><span class="badge">read-only</span></div>
+<div class="cmd-head"><code class="cmd-name">/spec</code><span class="badge lab">Lab prompt file</span><span class="badge">read-only</span></div>
 <p>Turn an agreed request into a short, testable spec with acceptance criteria and real verification commands.</p>
 <dl class="cmd-facts"><div><dt>Slop it targets</dt><dd>&quot;Done&quot; that nobody can test.</dd></div><div><dt>Evidence you get back</dt><dd>Goal, non-goals, Given/When/Then acceptance criteria, edge cases, and real verification commands. Undecided items marked OPEN.</dd></div></dl>
+<p class="cmd-meta">Where: Local chat with this lab's <code>commands</code> folder open · not built into VS Code or Copilot</p>
 <p class="cmd-more"><a href="docs/commands/github/prompts/spec.prompt.html">Read the prompt file<span class="sr-only">: /spec</span></a></p>
 </li>
 <li class="cmd-card" data-kind="built-in" data-search="plan research and propose an implementation plan. puts a reviewable plan in front of you before any edit, while wrong assumptions are still cheap to fix.">
@@ -207,15 +221,17 @@ cd anti-ai-slop/commands</code></pre>
 <p class="smell"><strong>Slop smell:</strong> Invented helpers, guessed config keys, and packages nobody checked.</p>
 <ul class="cmds">
 <li class="cmd-card" data-kind="custom" data-search="ground map what a change needs to what already exists in the repo, with file:line evidence. flags invented helpers, config keys, and apis. invented helpers, config keys, and apis. a need / status / evidence table with file:line for every exists or similar row. read-only">
-<div class="cmd-head"><code class="cmd-name">/ground</code><span class="badge lab">Lab command</span><span class="badge">read-only</span></div>
+<div class="cmd-head"><code class="cmd-name">/ground</code><span class="badge lab">Lab prompt file</span><span class="badge">read-only</span></div>
 <p>Map what a change needs to what already exists in the repo, with file:line evidence. Flags invented helpers, config keys, and APIs.</p>
 <dl class="cmd-facts"><div><dt>Slop it targets</dt><dd>Invented helpers, config keys, and APIs.</dd></div><div><dt>Evidence you get back</dt><dd>A Need / Status / Evidence table with file:line for every EXISTS or SIMILAR row.</dd></div></dl>
+<p class="cmd-meta">Where: Local chat with this lab's <code>commands</code> folder open · not built into VS Code or Copilot</p>
 <p class="cmd-more"><a href="docs/commands/github/prompts/ground.prompt.html">Read the prompt file<span class="sr-only">: /ground</span></a></p>
 </li>
 <li class="cmd-card" data-kind="custom" data-search="deps-check verify every import, package, and api member against the manifest, the standard library, or official docs. never installs anything. hallucinated packages, invented api members, and trivial dependencies. an import / kind / api / verdict table. anything unverifiable is marked unverified. nothing is installed. read-only">
-<div class="cmd-head"><code class="cmd-name">/deps-check</code><span class="badge lab">Lab command</span><span class="badge">read-only</span></div>
+<div class="cmd-head"><code class="cmd-name">/deps-check</code><span class="badge lab">Lab prompt file</span><span class="badge">read-only</span></div>
 <p>Verify every import, package, and API member against the manifest, the standard library, or official docs. Never installs anything.</p>
 <dl class="cmd-facts"><div><dt>Slop it targets</dt><dd>Hallucinated packages, invented API members, and trivial dependencies.</dd></div><div><dt>Evidence you get back</dt><dd>An Import / Kind / API / Verdict table. Anything unverifiable is marked UNVERIFIED. Nothing is installed.</dd></div></dl>
+<p class="cmd-meta">Where: Local chat with this lab's <code>commands</code> folder open · not built into VS Code or Copilot</p>
 <p class="cmd-more"><a href="docs/commands/github/prompts/deps-check.prompt.html">Read the prompt file<span class="sr-only">: /deps-check</span></a></p>
 </li>
 <li class="cmd-card" data-kind="built-in" data-search="init generate or update workspace instructions in a local agent session. records real build, test, and layout conventions so every session starts grounded.">
@@ -243,27 +259,31 @@ cd anti-ai-slop/commands</code></pre>
 <p class="smell"><strong>Slop smell:</strong> &quot;All tests pass&quot; with no command output, tests that cannot fail, and symptom patches.</p>
 <ul class="cmds">
 <li class="cmd-card" data-kind="custom" data-search="deslop review a change for ai-slop patterns (swallowed errors, fake tests, duplicate helpers, debug prints, narrating comments) and report findings only. swallowed errors, fake tests, duplicate helpers, debug prints, and narrating comments. a findings table with file:line, pattern, why it matters, and the smallest fix. no edits. read-only">
-<div class="cmd-head"><code class="cmd-name">/deslop</code><span class="badge lab">Lab command</span><span class="badge">read-only</span></div>
+<div class="cmd-head"><code class="cmd-name">/deslop</code><span class="badge lab">Lab prompt file</span><span class="badge">read-only</span></div>
 <p>Review a change for AI-slop patterns (swallowed errors, fake tests, duplicate helpers, debug prints, narrating comments) and report findings only.</p>
 <dl class="cmd-facts"><div><dt>Slop it targets</dt><dd>Swallowed errors, fake tests, duplicate helpers, debug prints, and narrating comments.</dd></div><div><dt>Evidence you get back</dt><dd>A findings table with file:line, pattern, why it matters, and the smallest fix. No edits.</dd></div></dl>
+<p class="cmd-meta">Where: Local chat with this lab's <code>commands</code> folder open · not built into VS Code or Copilot</p>
 <p class="cmd-more"><a href="docs/commands/github/prompts/deslop.prompt.html">Read the prompt file<span class="sr-only">: /deslop</span></a></p>
 </li>
 <li class="cmd-card" data-kind="custom" data-search="verify run the real checks and report only what was observed - command, exit code, result. ends with verified or not verified. &quot;should work&quot; and &quot;all tests pass&quot; with no evidence. command, exit code, and observed result for every check, then claims vs evidence, then verified or not verified. runs-commands">
-<div class="cmd-head"><code class="cmd-name">/verify</code><span class="badge lab">Lab command</span><span class="badge">runs-commands</span></div>
+<div class="cmd-head"><code class="cmd-name">/verify</code><span class="badge lab">Lab prompt file</span><span class="badge">runs-commands</span></div>
 <p>Run the real checks and report only what was observed - command, exit code, result. Ends with VERIFIED or NOT VERIFIED.</p>
 <dl class="cmd-facts"><div><dt>Slop it targets</dt><dd>&quot;Should work&quot; and &quot;all tests pass&quot; with no evidence.</dd></div><div><dt>Evidence you get back</dt><dd>Command, exit code, and observed result for every check, then claims vs evidence, then VERIFIED or NOT VERIFIED.</dd></div></dl>
+<p class="cmd-meta">Where: Local chat with this lab's <code>commands</code> folder open · not built into VS Code or Copilot</p>
 <p class="cmd-more"><a href="docs/commands/github/prompts/verify.prompt.html">Read the prompt file<span class="sr-only">: /verify</span></a></p>
 </li>
 <li class="cmd-card" data-kind="custom" data-search="root-cause reproduce a bug, test at most 3 hypotheses, and confirm the root cause before any fix. rejects special-casing the reported input. special-casing the reported input instead of fixing the defect. a reproduction, at most 3 hypotheses, the confirmed cause, and a proposed fix plus regression tests. no edits. runs-commands">
-<div class="cmd-head"><code class="cmd-name">/root-cause</code><span class="badge lab">Lab command</span><span class="badge">runs-commands</span></div>
+<div class="cmd-head"><code class="cmd-name">/root-cause</code><span class="badge lab">Lab prompt file</span><span class="badge">runs-commands</span></div>
 <p>Reproduce a bug, test at most 3 hypotheses, and confirm the root cause before any fix. Rejects special-casing the reported input.</p>
 <dl class="cmd-facts"><div><dt>Slop it targets</dt><dd>Special-casing the reported input instead of fixing the defect.</dd></div><div><dt>Evidence you get back</dt><dd>A reproduction, at most 3 hypotheses, the confirmed cause, and a proposed fix plus regression tests. No edits.</dd></div></dl>
+<p class="cmd-meta">Where: Local chat with this lab's <code>commands</code> folder open · not built into VS Code or Copilot</p>
 <p class="cmd-more"><a href="docs/commands/github/prompts/root-cause.prompt.html">Read the prompt file<span class="sr-only">: /root-cause</span></a></p>
 </li>
 <li class="cmd-card" data-kind="custom" data-search="fail-paths enumerate edge cases and failure paths, write tests for them, and run them. never weakens an assertion to get green. happy-path-only tests. an edge-case table, new tests, and the observed test run. assertions are never weakened. edits-code">
-<div class="cmd-head"><code class="cmd-name">/fail-paths</code><span class="badge lab">Lab command</span><span class="badge">edits-code</span></div>
+<div class="cmd-head"><code class="cmd-name">/fail-paths</code><span class="badge lab">Lab prompt file</span><span class="badge">edits-code</span></div>
 <p>Enumerate edge cases and failure paths, write tests for them, and run them. Never weakens an assertion to get green.</p>
 <dl class="cmd-facts"><div><dt>Slop it targets</dt><dd>Happy-path-only tests.</dd></div><div><dt>Evidence you get back</dt><dd>An edge-case table, new tests, and the observed test run. Assertions are never weakened.</dd></div></dl>
+<p class="cmd-meta">Where: Local chat with this lab's <code>commands</code> folder open · not built into VS Code or Copilot</p>
 <p class="cmd-more"><a href="docs/commands/github/prompts/fail-paths.prompt.html">Read the prompt file<span class="sr-only">: /fail-paths</span></a></p>
 </li>
 <li class="cmd-card" data-kind="built-in" data-search="fix suggest a fix for a problem in your code. aims the agent at one concrete problem instead of an open-ended rewrite. follow it with /verify.">
@@ -291,21 +311,24 @@ cd anti-ai-slop/commands</code></pre>
 <p class="smell"><strong>Slop smell:</strong> A one-line fix rewrites five files, changes a public API, or edits frozen code.</p>
 <ul class="cmds">
 <li class="cmd-card" data-kind="custom" data-search="scope write scope.md - a short contract of allowed changes, forbidden paths, frozen api, done-when, and rollback - before any edit. scope creep and drive-by edits. a scope.md of at most 40 lines: allowed changes, forbidden paths, frozen api, done-when, and rollback. writes-artifact">
-<div class="cmd-head"><code class="cmd-name">/scope</code><span class="badge lab">Lab command</span><span class="badge">writes-artifact</span></div>
+<div class="cmd-head"><code class="cmd-name">/scope</code><span class="badge lab">Lab prompt file</span><span class="badge">writes-artifact</span></div>
 <p>Write SCOPE.md - a short contract of allowed changes, forbidden paths, frozen API, done-when, and rollback - before any edit.</p>
 <dl class="cmd-facts"><div><dt>Slop it targets</dt><dd>Scope creep and drive-by edits.</dd></div><div><dt>Evidence you get back</dt><dd>A SCOPE.md of at most 40 lines: allowed changes, forbidden paths, frozen API, done-when, and rollback.</dd></div></dl>
+<p class="cmd-meta">Where: Local chat with this lab's <code>commands</code> folder open · not built into VS Code or Copilot</p>
 <p class="cmd-more"><a href="docs/commands/github/prompts/scope.prompt.html">Read the prompt file<span class="sr-only">: /scope</span></a></p>
 </li>
 <li class="cmd-card" data-kind="custom" data-search="simplify remove duplication, dead code, and speculative abstraction without changing behavior. tests must be green before and after. speculative abstraction and duplicate code. tests green before and after, with a list of each removal and why behavior is unchanged. edits-code">
-<div class="cmd-head"><code class="cmd-name">/simplify</code><span class="badge lab">Lab command</span><span class="badge">edits-code</span></div>
+<div class="cmd-head"><code class="cmd-name">/simplify</code><span class="badge lab">Lab prompt file</span><span class="badge">edits-code</span></div>
 <p>Remove duplication, dead code, and speculative abstraction without changing behavior. Tests must be green before and after.</p>
 <dl class="cmd-facts"><div><dt>Slop it targets</dt><dd>Speculative abstraction and duplicate code.</dd></div><div><dt>Evidence you get back</dt><dd>Tests green before and after, with a list of each removal and why behavior is unchanged.</dd></div></dl>
+<p class="cmd-meta">Where: Local chat with this lab's <code>commands</code> folder open · not built into VS Code or Copilot</p>
 <p class="cmd-more"><a href="docs/commands/github/prompts/simplify.prompt.html">Read the prompt file<span class="sr-only">: /simplify</span></a></p>
 </li>
 <li class="cmd-card" data-kind="custom" data-search="pre-commit final gate before a commit - checks scope, debug output, secrets, stubs, skipped tests, and real test results. ends with ready or not ready. debug output, stubs, secrets, and skipped tests reaching a commit. a checklist with evidence per line, then ready or not ready. nothing is edited or committed. runs-commands">
-<div class="cmd-head"><code class="cmd-name">/pre-commit</code><span class="badge lab">Lab command</span><span class="badge">runs-commands</span></div>
+<div class="cmd-head"><code class="cmd-name">/pre-commit</code><span class="badge lab">Lab prompt file</span><span class="badge">runs-commands</span></div>
 <p>Final gate before a commit - checks scope, debug output, secrets, stubs, skipped tests, and real test results. Ends with READY or NOT READY.</p>
 <dl class="cmd-facts"><div><dt>Slop it targets</dt><dd>Debug output, stubs, secrets, and skipped tests reaching a commit.</dd></div><div><dt>Evidence you get back</dt><dd>A checklist with evidence per line, then READY or NOT READY. Nothing is edited or committed.</dd></div></dl>
+<p class="cmd-meta">Where: Local chat with this lab's <code>commands</code> folder open · not built into VS Code or Copilot</p>
 <p class="cmd-more"><a href="docs/commands/github/prompts/pre-commit.prompt.html">Read the prompt file<span class="sr-only">: /pre-commit</span></a></p>
 </li>
 <li class="cmd-card" data-kind="built-in" data-search="tools configure tools for a local chat. turn off tools a task does not need, so the agent cannot wander into the terminal or the web.">
@@ -351,9 +374,10 @@ cd anti-ai-slop/commands</code></pre>
 <p class="smell"><strong>Slop smell:</strong> Long chats drift, stale decisions leak into new work, and nobody can resume.</p>
 <ul class="cmds">
 <li class="cmd-card" data-kind="custom" data-search="handoff write handoff.md - goal, state, decisions, evidence, open questions, next steps - so a fresh chat can continue without this one. context rot and lost decisions between sessions. a handoff.md of at most 60 lines whose every path exists. missing evidence says &quot;not run&quot;. writes-artifact">
-<div class="cmd-head"><code class="cmd-name">/handoff</code><span class="badge lab">Lab command</span><span class="badge">writes-artifact</span></div>
+<div class="cmd-head"><code class="cmd-name">/handoff</code><span class="badge lab">Lab prompt file</span><span class="badge">writes-artifact</span></div>
 <p>Write HANDOFF.md - goal, state, decisions, evidence, open questions, next steps - so a fresh chat can continue without this one.</p>
 <dl class="cmd-facts"><div><dt>Slop it targets</dt><dd>Context rot and lost decisions between sessions.</dd></div><div><dt>Evidence you get back</dt><dd>A HANDOFF.md of at most 60 lines whose every path exists. Missing evidence says &quot;not run&quot;.</dd></div></dl>
+<p class="cmd-meta">Where: Local chat with this lab's <code>commands</code> folder open · not built into VS Code or Copilot</p>
 <p class="cmd-more"><a href="docs/commands/github/prompts/handoff.prompt.html">Read the prompt file<span class="sr-only">: /handoff</span></a></p>
 </li>
 <li class="cmd-card" data-kind="built-in" data-search="compact compact conversation context. summarizes earlier turns so stale detail stops crowding out the current task.">
@@ -428,10 +452,10 @@ cd anti-ai-slop/commands</code></pre>
 <p class="why">Confirms which skills can load. See the sibling skills lab.</p>
 <p class="cmd-meta">Example: <code>/skills</code><br>Where: Local · <a href="https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet">VS Code docs<span class="sr-only"> for /skills</span></a></p>
 </li>
-<li class="cmd-card" data-kind="built-in" data-search="prompts configure prompt files. confirms which prompt files (custom /commands) were discovered and where they come from.">
+<li class="cmd-card" data-kind="built-in" data-search="prompts configure prompt files. opens the prompt file menu so you can confirm the lab&#39;s prompt files (custom /commands) were discovered, instead of guessing.">
 <div class="cmd-head"><code class="cmd-name">/prompts</code><span class="badge">Built-in</span></div>
 <p>Configure prompt files.</p>
-<p class="why">Confirms which prompt files (custom /commands) were discovered and where they come from.</p>
+<p class="why">Opens the prompt file menu so you can confirm the lab&#39;s prompt files (custom /commands) were discovered, instead of guessing.</p>
 <p class="cmd-meta">Example: <code>/prompts</code><br>Where: Local and Copilot · <a href="https://code.visualstudio.com/docs/agent-customization/prompt-files">VS Code docs<span class="sr-only"> for /prompts</span></a></p>
 </li>
 <li class="cmd-card" data-kind="built-in" data-search="create-agent generate a custom agent in a local agent session. packages a role with a narrow tool list.">

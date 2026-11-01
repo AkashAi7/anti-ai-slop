@@ -114,6 +114,8 @@ try {
     await page.waitForFunction((n) => document.querySelectorAll('#try-log .msg.agent').length > n, before);
     const reply = await page.locator('#try-log .msg.agent').last().textContent();
     assert.match(reply, /\/verify - prompt file/);
+    assert.match(reply, /Lab commands are not built in\./);
+    assert.match(reply, /not a VS Code, Copilot, or Spec Kit command/);
     assert.match(reply, /\.github\/prompts\/verify\.prompt\.md/);
     assert.match(reply, /illustrative/);
     assert.match(reply, /all tests pass/);

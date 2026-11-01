@@ -15,16 +15,16 @@ This file lists only what was actually run and observed. Anything not run is lis
 | `npm.cmd run validate` | Pass: registry, prompt-file frontmatter and tool limits, scenes, docs, and every Markdown link and anchor |
 | `npm.cmd run smoke` | 21 passed, with no console errors, page errors, or network requests |
 | `npm.cmd run verify:assets` | All 6 GIFs decoded and checked: frame count, looping, 1280x720 size, hash, distinct frames, posters, and transcripts |
-| `npm.cmd run verify:sources` | 5 live documentation sources, every expected command name found |
+| `npm.cmd run verify:sources` | 5 live documentation sources, every expected string found |
 | `npm.cmd run studio -- --print` | Printed a `file:///` URL to `studio/index.html` |
 
 `verify:sources` fetched these pages:
 
 | Source | Strings found |
 | --- | --- |
-| [VS Code AI features cheat sheet](https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet) | 30 |
+| [VS Code AI features cheat sheet](https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet) | 31 |
 | [VS Code approvals](https://code.visualstudio.com/docs/agents/run/approvals) | 5 |
-| [VS Code prompt files](https://code.visualstudio.com/docs/agent-customization/prompt-files) | 5 |
+| [VS Code prompt files](https://code.visualstudio.com/docs/agent-customization/prompt-files) | 6 |
 | [VS Code agent harnesses](https://code.visualstudio.com/docs/agents/run/agent-harnesses) | 3 |
 | [GitHub Copilot app slash commands](https://docs.github.com/en/copilot/reference/github-copilot-app-reference/slash-commands) | 12 |
 
@@ -54,7 +54,7 @@ Observed with `node scripts/check.mjs <id> --baseline` and `--solution`. In base
 | [verify.gif](assets/gifs/verify.gif) | 15 | 191 KiB |
 | [contain.gif](assets/gifs/contain.gif) | 15 | 192 KiB |
 | [context.gif](assets/gifs/context.gif) | 15 | 183 KiB |
-| [studio-tour.gif](assets/gifs/studio-tour.gif) | 11 | 275 KiB |
+| [studio-tour.gif](assets/gifs/studio-tour.gif) | 11 | 287 KiB |
 
 The posters were opened and inspected visually: `plan-after.png` and `studio-tour.png`. The GIFs and studio scenes are **illustrative**. They aren't recordings of Copilot output.
 
@@ -63,6 +63,7 @@ The posters were opened and inspected visually: `plan-after.png` and `studio-tou
 None of these were run while preparing this record. Use the [live VS Code checklist](labs/facilitator.md#live-vs-code-checklist) to record them.
 
 - That the 12 prompt files appear in the VS Code chat `/` menu, and run with their declared tool limits, in a live Copilot session.
+- That opening the repository root or a parent folder, instead of `commands`, hides the lab commands. This follows from the documented `.github/prompts` workspace location, but it wasn't observed live.
 - That `/disableAutoApprove` requires approval for the next action.
 - How `chat.promptFilesRecommendations` in `.vscode/settings.json` behaves in your VS Code version.
 - Any participant's end-to-end exercise result with Copilot.

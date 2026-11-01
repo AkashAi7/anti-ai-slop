@@ -321,6 +321,7 @@
         const sample = DATA.samples[command.name];
         reply.append(
           el('h3', { text: `/${command.name} - prompt file (${command.access})` }),
+          el('p', { className: 'note', text: `${DATA.registry.labCommands.headline} /${command.name} is one of this lab's prompt files, so VS Code lists it only when the commands folder is open in a Local chat. It is not a VS Code, Copilot, or Spec Kit command.` }),
           el('p', { text: command.purpose }),
           ...field('Runs from', el('code', { text: command.file })),
           ...field('Fixes this slop', el('p', { text: command.slop })),
@@ -444,14 +445,14 @@
     $('cmd-list').replaceChildren(...matches.map((command) => el('article', { className: 'card' }, [
       el('h3', {}, [
         `/${command.name}`,
-        el('span', { className: `kind ${command.kind === 'custom' ? 'custom' : ''}`, text: command.kind === 'custom' ? 'prompt file' : 'built-in' }),
+        el('span', { className: `kind ${command.kind === 'custom' ? 'custom' : ''}`, text: command.kind === 'custom' ? 'lab prompt file' : 'built-in' }),
         el('span', { className: `chip mech-${command.mechanism}`, text: mechanismTitle(command.mechanism) }),
         command.caution ? el('span', { className: 'kind caution', text: 'caution' }) : null,
       ]),
       el('p', { text: command.purpose }),
       el('p', { className: 'slop', text: command.kind === 'custom' ? `Slop it fixes: ${command.slop}` : command.antiSlop }),
       el('p', { className: 'meta', text: command.kind === 'custom'
-        ? `${command.file} - ${command.access}`
+        ? `${command.file} - ${command.access} - not built in`
         : `${command.availability}${command.aliases.length ? ` - alias ${command.aliases.map((a) => `/${a}`).join(', ')}` : ''}` }),
       el('div', { className: 'actions' }, [
         el('button', { type: 'button', onclick: () => { setMode('try'); respond(`/${command.name}`); input.focus(); } }, 'Try it'),
@@ -464,7 +465,7 @@
   chipGroup($('cmd-mech'), [{ id: 'all', label: 'All mechanisms' }].concat(
     DATA.registry.mechanisms.map((m) => ({ id: m.id, label: m.title }))), 'mechanism');
   chipGroup($('cmd-kind'), [
-    { id: 'all', label: 'All kinds' }, { id: 'custom', label: 'Prompt files (12)' }, { id: 'built-in', label: 'Built-in' },
+    { id: 'all', label: 'All kinds' }, { id: 'custom', label: 'Lab prompt files (12)' }, { id: 'built-in', label: 'Built-in' },
   ], 'kind');
 
   const app = DATA.registry.copilotApp;

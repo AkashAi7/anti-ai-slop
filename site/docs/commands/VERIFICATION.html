@@ -58,7 +58,7 @@
 </tr>
 <tr>
 <td><code>npm.cmd run verify:sources</code></td>
-<td>5 live documentation sources, every expected command name found</td>
+<td>5 live documentation sources, every expected string found</td>
 </tr>
 <tr>
 <td><code>npm.cmd run studio -- --print</code></td>
@@ -75,7 +75,7 @@
 </thead>
 <tbody><tr>
 <td><a href="https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet">VS Code AI features cheat sheet</a></td>
-<td>30</td>
+<td>31</td>
 </tr>
 <tr>
 <td><a href="https://code.visualstudio.com/docs/agents/run/approvals">VS Code approvals</a></td>
@@ -83,7 +83,7 @@
 </tr>
 <tr>
 <td><a href="https://code.visualstudio.com/docs/agent-customization/prompt-files">VS Code prompt files</a></td>
-<td>5</td>
+<td>6</td>
 </tr>
 <tr>
 <td><a href="https://code.visualstudio.com/docs/agents/run/agent-harnesses">VS Code agent harnesses</a></td>
@@ -183,7 +183,7 @@
 <tr>
 <td><a href="../../../commands/assets/gifs/studio-tour.gif">studio-tour.gif</a></td>
 <td>11</td>
-<td>275 KiB</td>
+<td>287 KiB</td>
 </tr>
 </tbody></table></div>
 <p>The posters were opened and inspected visually: <code>plan-after.png</code> and <code>studio-tour.png</code>. The GIFs and studio scenes are <strong>illustrative</strong>. They aren&#39;t recordings of Copilot output.</p>
@@ -191,6 +191,7 @@
 <p>None of these were run while preparing this record. Use the <a href="labs/facilitator.html#live-vs-code-checklist">live VS Code checklist</a> to record them.</p>
 <ul>
 <li>That the 12 prompt files appear in the VS Code chat <code>/</code> menu, and run with their declared tool limits, in a live Copilot session.</li>
+<li>That opening the repository root or a parent folder, instead of <code>commands</code>, hides the lab commands. This follows from the documented <code>.github/prompts</code> workspace location, but it wasn&#39;t observed live.</li>
 <li>That <code>/disableAutoApprove</code> requires approval for the next action.</li>
 <li>How <code>chat.promptFilesRecommendations</code> in <code>.vscode/settings.json</code> behaves in your VS Code version.</li>
 <li>Any participant&#39;s end-to-end exercise result with Copilot.</li>

@@ -86,12 +86,13 @@
         <aside class="try-help">
           <h2>How this maps to VS Code</h2>
           <ol>
-            <li>Open the <code>commands</code> folder as the workspace root.</li>
+            <li>Open the <code>commands</code> folder itself (not the repository root) as the workspace.</li>
             <li>In the Chat view, set the Session Target to <strong>Local</strong>.</li>
-            <li>Type <kbd>/</kbd>. Built-in commands and the 12 prompt files in <code>.github/prompts</code> appear.</li>
+            <li>Type <kbd>/</kbd>. Built-in commands appear in any folder. The 12 lab commands appear only because this folder's <code>.github/prompts</code> has their prompt files.</li>
             <li>Pick one and add the task after it, like <code>/verify all tests pass</code>.</li>
           </ol>
-          <p>Here, a custom command shows its real prompt file and a scripted sample answer. A built-in shows what it does and why it reduces slop.</p>
+          <p><strong>Lab commands are not built in.</strong> They are not VS Code, Copilot, or Spec Kit commands. If one is missing, run <code>/prompts</code> in VS Code and check that the lab's prompt files are listed.</p>
+          <p>Here, a lab command shows its real prompt file and a scripted sample answer. A built-in shows what it does and why it reduces slop.</p>
           <p class="muted">Nothing is sent to a model. Sample answers are illustrative.</p>
         </aside>
       </div>

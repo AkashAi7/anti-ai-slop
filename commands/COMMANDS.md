@@ -3,12 +3,16 @@
 Every `/command` in this lab is an anti-slop checkpoint. Each one has a job ("ask before code", "prove it exists", "show the exit code"), and each makes the agent return evidence you can check. This page lists the commands, the order to use them in, and what each one is allowed to touch.
 
 - **Built-in commands** ship with VS Code chat. Type `/` in the Chat view to see them.
-- **Custom commands** are the 12 prompt files in [.github/prompts](.github/prompts). VS Code shows them in the same `/` menu when this folder is open as the workspace.
+- **Lab commands** (`/clarify`, `/spec`, `/ground`, and 9 more) are **not built in**. They are the 12 prompt files in [.github/prompts](.github/prompts), written for this lab. VS Code adds them to the `/` menu only when this `commands` folder is the folder you opened. They are also not [Spec Kit](https://github.com/github/spec-kit) commands; Spec Kit installs its own `speckit`-prefixed commands, and this lab doesn't use it.
 - **Where they run:** the VS Code Chat view with the **Session Target set to Local**. Prompt files and most built-ins run only with the Local harness.
+
+If a lab command doesn't show up when you type `/`, see [If a lab command doesn't appear](#if-a-lab-command-doesnt-appear).
 
 Back to the [lab README](README.md).
 
 ## Command flows that beat slop
+
+In these flows, `/clarify`, `/spec`, `/ground`, `/deps-check`, `/root-cause`, `/fail-paths`, `/deslop`, `/simplify`, `/verify`, `/pre-commit`, `/scope`, and `/handoff` are this lab's prompt files. Every other command is a VS Code built-in.
 
 | Situation | Flow | Why |
 |---|---|---|
@@ -36,9 +40,15 @@ Approvals are a VS Code setting, not a prompt-file feature. `/disableAutoApprove
 
 <!-- BEGIN GENERATED: commands.json - run npm run build:docs -->
 
-## Custom commands in this lab (prompt files)
+## Lab commands (prompt files, not built in)
 
-These 12 commands live in [.github/prompts](.github/prompts). Type `/` in the VS Code Chat view (Session Target: Local) to run them.
+> **Lab commands are not built in.** `/clarify`, `/spec`, and the other lab commands are prompt files that this repository ships in `.github/prompts`.
+>
+> VS Code reads workspace prompt files from the `.github/prompts` folder of the folder you open, and runs them only in Local chat sessions. Open this `commands` folder itself (or a repository you copied the prompt files into). The anti-ai-slop repository root has no `.github/prompts` folder, so opening the repository root or a parent folder does not load them. See the [VS Code prompt files documentation](https://code.visualstudio.com/docs/agent-customization/prompt-files).
+>
+> They are not Spec Kit commands. [Spec Kit](https://github.com/github/spec-kit) installs its own `speckit`-prefixed commands when you run `specify init`. This lab does not use Spec Kit.
+
+These 12 commands live in [.github/prompts](.github/prompts). With this folder open and the Chat view's Session Target set to Local, type `/` to run them. If one doesn't appear, see [If a lab command doesn't appear](#if-a-lab-command-doesnt-appear).
 
 | Command | Mechanism | Access | Slop it fixes | Evidence it must return |
 |---|---|---|---|---|
@@ -148,7 +158,7 @@ Slop smell: Guessing why a prompt, tool, or customization did not load.
 | [`/models`](https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet) | Open the model picker. | Makes the model choice explicit and repeatable. | `/models` | Local |
 | [`/agents`](https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet) | Configure custom agents. | Shows which agent personas exist and what tools they hold. | `/agents` | Local |
 | [`/skills`](https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet) | Configure agent skills. | Confirms which skills can load. See the sibling skills lab. | `/skills` | Local |
-| [`/prompts`](https://code.visualstudio.com/docs/agent-customization/prompt-files) | Configure prompt files. | Confirms which prompt files (custom /commands) were discovered and where they come from. | `/prompts` | Local and Copilot |
+| [`/prompts`](https://code.visualstudio.com/docs/agent-customization/prompt-files) | Configure prompt files. | Opens the prompt file menu so you can confirm the lab's prompt files (custom /commands) were discovered, instead of guessing. | `/prompts` | Local and Copilot |
 | [`/create-agent`](https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet) | Generate a custom agent in a local agent session. | Packages a role with a narrow tool list. | `/create-agent read-only reviewer that cites file:line` | Local agent session |
 | [`/create-skill`](https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet) | Generate an agent skill in a local agent session. | Captures a workflow the agent can load on demand. | `/create-skill evidence-first completion reports` | Local agent session |
 | [`/create-prompt`](https://code.visualstudio.com/docs/agent-customization/prompt-files) | Generate a prompt file in a local agent session. | Turns a good prompt you keep retyping into a reusable /command. | `/create-prompt review a diff for swallowed errors` | Local agent session |
@@ -200,11 +210,25 @@ tools: ['read/readFile', 'execute/runInTerminal']   # inside its access class
 
 The body is limited to 80 lines. A short prompt with explicit stop conditions produces less slop than a long, clever one.
 
+## If a lab command doesn't appear
+
+The lab commands are prompt files, so VS Code has to find and load them. Built-ins such as `/plan` and `/clear` don't depend on any of this. Work through these checks in order:
+
+1. **Open the right folder.** VS Code reads workspace prompt files from `.github/prompts` in the folder you open. Open this `commands` folder itself, for example by running `code commands` from the repository root. The repository root has no `.github/prompts` folder, so opening the root or a parent folder doesn't load the lab commands.
+2. **Use a Local session.** In the Chat view, set the **Session Target** to **Local**. Prompt files run only in Local sessions, not in Copilot CLI or other harnesses.
+3. **Type the full name.** Type `/` followed by the command name, for example `/clarify`, in the chat input.
+4. **Ask VS Code what it loaded.** Run the built-in `/prompts` to open the **Configure Prompt Files** menu, and check that the lab's prompt files are listed.
+5. **Read the discovery log.** In the Chat view, select the **...** menu, then **Show Agent Debug Logs** to see prompt file discovery errors. The built-in `/troubleshoot` can also help.
+
+Spec Kit isn't involved. Commands such as `/speckit.clarify` (listed in [Maestro's Spec Kit command docs](https://docs.runmaestro.ai/speckit-commands)) belong to Spec Kit, which adds them to a project when you run `specify init`. They are unrelated to this lab's `/clarify`.
+
 ## Use these commands in your own repository
 
 1. Copy the prompt files you want from [.github/prompts](.github/prompts) into your repository's `.github/prompts/` folder.
-2. Open that repository in VS Code, set the Chat view's Session Target to Local, and type `/`. The commands appear next to the built-ins.
+2. Open that repository in VS Code, set the Chat view's Session Target to Local, and type `/`. VS Code lists the copied prompt files in the `/` menu with the built-in commands. They still aren't built-ins; they work only where the files are.
 3. Optionally, suggest some of them in the chat input. This lab's [.vscode/settings.json](.vscode/settings.json) uses `chat.promptFilesRecommendations` for `/clarify`, `/ground`, `/verify`, and `/handoff`. Check the [prompt files documentation](https://code.visualstudio.com/docs/agent-customization/prompt-files) for the current format of that setting before you rely on it.
 4. Change the `## Steps` sections to use your real test and build commands. Leave the `## Stop conditions` sections alone.
+
+To use a command in every workspace instead, create it as a user-level prompt file with the **Chat: New Prompt File** command and paste in the file's contents. See the [prompt files documentation](https://code.visualstudio.com/docs/agent-customization/prompt-files) for user-profile locations.
 
 Custom command names avoid the skill names in the sibling [skills lab](../skills/README.md), so both labs can sit in one workspace without collisions.

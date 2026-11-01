@@ -5,7 +5,7 @@
       "id": "vscode-cheat-sheet",
       "url": "https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet",
       "covers": "Built-in chat commands except auto-approval commands",
-      "expect": ["10/28/2026", "/plan", "/explain", "/fix", "/tests", "/setupTests", "/doc", "/new", "/newNotebook", "/compact", "/fork", "/clear", "/rename", "/help", "/models", "/tools", "/init", "/instructions", "/create-instructions", "/agents", "/skills", "/prompts", "/hooks", "/create-agent", "/create-skill", "/create-prompt", "/create-hook", "/troubleshoot", "/debug", "/sandbox"]
+      "expect": ["10/28/2026", "/plan", "/explain", "/fix", "/tests", "/setupTests", "/doc", "/new", "/newNotebook", "/compact", "/fork", "/clear", "/rename", "/help", "/models", "/tools", "/init", "/instructions", "/create-instructions", "/agents", "/skills", "/prompts", "/hooks", "/create-agent", "/create-skill", "/create-prompt", "/create-hook", "/troubleshoot", "/debug", "/sandbox", "Invoke an agent skill or reusable prompt by name."]
     },
     {
       "id": "vscode-approvals",
@@ -16,8 +16,8 @@
     {
       "id": "vscode-prompt-files",
       "url": "https://code.visualstudio.com/docs/agent-customization/prompt-files",
-      "covers": "Prompt file location, frontmatter fields, and recommendations setting",
-      "expect": ["10/28/2026", ".prompt.md", ".github/prompts", "argument-hint", "chat.promptFilesRecommendations"]
+      "covers": "Prompt file location, frontmatter fields, Local-only support, and recommendations setting",
+      "expect": ["10/28/2026", ".prompt.md", ".github/prompts", "argument-hint", "chat.promptFilesRecommendations", "Prompt files run only in Local harness sessions in the Chat view."]
     },
     {
       "id": "vscode-agent-harnesses",

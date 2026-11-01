@@ -10,8 +10,8 @@ Nothing here needs network access except the Copilot chat itself.
 
 ## Before the audience arrives
 
-1. Open `Anti-Ai-Slop\commands` as the VS Code workspace root.
-2. In the Chat view, set **Session Target** to **Local**, choose agent mode, and type `/` to confirm that `/fail-paths` and `/verify` appear.
+1. Open `Anti-Ai-Slop\commands` as the VS Code workspace root, not the repository root.
+2. In the Chat view, set **Session Target** to **Local**, choose agent mode, and type `/` to confirm that `/fail-paths` and `/verify` appear. Say out loud that these are the lab's prompt files, not built-in commands: they only appear because this folder is open.
 3. Prepare a fresh copy of exercise 03. If `work/03-prove-it-with-tests` already exists from a rehearsal, run `npm.cmd run demo`, pick 03, and use `reset`.
 
    ```powershell
@@ -31,7 +31,7 @@ Nothing here needs network access except the Copilot chat itself.
 | Minute | Show | Say |
 | --- | --- | --- |
 | 0-2 | Studio **Watch → Verify**, played through. Or show [verify.gif](../assets/gifs/verify.gif) | "This test has passed since the day it was written, because `assert.ok(parseDuration('1h30m'))` can't fail. That's slop: it looks like coverage and proves nothing. This walkthrough is illustrative, but the check output at the end is real." |
-| 2-5 | **Try it** (press `2`). Type `/`, arrow to `/verify`, press Tab to fill it in, then press Enter. Scroll through the reply, which shows the prompt file and a sample answer | "A custom command is a prompt file. It sets the tools (`/verify` can run commands but can't edit), the steps, the evidence format (command, exit code, observed result), and the stop conditions: it never says 'should pass' without an exit code." |
+| 2-5 | **Try it** (press `2`). Type `/`, arrow to `/verify`, press Tab to fill it in, then press Enter. Scroll through the reply, which shows the prompt file and a sample answer | "A lab command is a prompt file in this repo, not a VS Code built-in. It sets the tools (`/verify` can run commands but can't edit), the steps, the evidence format (command, exit code, observed result), and the stop conditions: it never says 'should pass' without an exit code." |
 | 5 | Type `/yolo` and press Enter | "Some built-ins remove a safety checkpoint. `/yolo` is an alias for `/autoApprove`. We teach `/disableAutoApprove` instead." |
 | 5-7 | **Mission** (press `3`). Ask the audience about two or three smells | "Which command fixes this smell?" Click their answer and read the explanation. |
 | 7-13 | VS Code: exercise 03 live | See [Live exercise](#live-exercise). |
@@ -72,7 +72,7 @@ The agent's output will differ from the walkthrough, and that's expected. If it 
 | Animations are unsuitable for the room | Show the [before](../assets/posters/verify-before.png) and [after](../assets/posters/verify-after.png) posters and read the [transcript](../assets/transcripts/verify.md) |
 | The studio doesn't open | Run `npm.cmd run studio -- --print` and paste the `file:///` URL into a browser |
 | Copilot is unavailable or slow | Walk through the transcript, then run `npm.cmd run check -- 03-prove-it-with-tests --solution` and say plainly that this is the **reference solution**, not a live agent result |
-| Custom commands are missing from `/` | Check that the workspace root is `commands` and the Session Target is Local, then start a new chat. See [Recovery](../labs/facilitator.md#recovery-without-cheating) |
+| Lab commands are missing from `/` | Check that the open folder is `commands` (not the repository root) and the Session Target is Local, then run `/prompts` and check that the lab's prompt files are listed. See [If a lab command doesn't appear](../COMMANDS.md#if-a-lab-command-doesnt-appear) |
 | You have more time | Swap in exercise 07: `/scope`, then `/disableAutoApprove`, then `/pre-commit`. Use the [contain.gif](../assets/gifs/contain.gif) for the intro |
 
 ## What this folder contains

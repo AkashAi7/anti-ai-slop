@@ -64,7 +64,9 @@ test('every exercise command resolves to the registry', () => {
   for (const item of catalog) {
     const text = describeCommands(item);
     for (const name of item.commands) assert.match(text, new RegExp(`/${name}\\b`));
+    assert.match(text, /Lab commands are not built in\./, `${item.id}: the guide must say lab commands are not built in`);
   }
+  assert.doesNotMatch(describeCommands({ commands: ['plan', 'clear'] }), /not built in/);
   assert.throws(() => describeCommands({ commands: ['not-a-command'] }), /not in commands\.json/);
 });
 

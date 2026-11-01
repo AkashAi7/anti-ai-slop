@@ -19,7 +19,7 @@
         kind: 'custom', name: entry.name, aliases: [], mechanism: entry.mechanism, access: entry.access,
         file: entry.file, slop: entry.slop, evidence: entry.evidence,
         purpose: prompt.description, argumentHint: prompt.argumentHint || '', tools: prompt.tools.slice(),
-        body: prompt.body, availability: 'Local (prompt file)', local: true, caution: false,
+        body: prompt.body, availability: 'Local only, with this lab\'s commands folder open (prompt file, not built in)', local: true, caution: false,
       };
     });
     const builtIn = registry.builtIns.map((entry) => ({

@@ -28,7 +28,8 @@
 <p>Use this guide to run the Commands lab as a workshop of 60 to 90 minutes, or as a self-paced session with one check-in.</p>
 <h2 id="prepare">Prepare</h2>
 <ul>
-<li>Open <code>Anti-Ai-Slop\commands</code> as its own VS Code workspace root, not the parent folder. The 12 custom commands in <a href="../github/prompts/index.html">.github/prompts</a> load only from the workspace root.</li>
+<li>Open <code>Anti-Ai-Slop\commands</code> as its own VS Code workspace root, not the repository root or a parent folder. The 12 lab commands in <a href="../github/prompts/index.html">.github/prompts</a> load only from the folder you open.</li>
+<li>Tell participants up front that <code>/clarify</code>, <code>/spec</code>, <code>/verify</code>, and the other lab commands are <strong>not built in</strong>. They are this lab&#39;s prompt files, not VS Code, Copilot, or Spec Kit commands, so they appear only in this folder. Built-ins such as <code>/plan</code>, <code>/clear</code>, and <code>/tools</code> work anywhere.</li>
 <li>Confirm that Node.js 22.20 or later is installed and that participants have Copilot access their organization allows.</li>
 <li>Explain tool approval, workspace trust, and the Chat view&#39;s <strong>Session Target</strong>. This lab expects <strong>Local</strong>.</li>
 <li>Run <code>npm.cmd test</code>. Every defective baseline should report its expected failures, and every reference solution should pass.</li>
@@ -152,15 +153,15 @@
 </tbody></table></div>
 <h2 id="recovery-without-cheating">Recovery without cheating</h2>
 <ul>
-<li><p><strong>Custom commands don&#39;t appear when you type <code>/</code>:</strong></p>
+<li><p><strong>Lab commands don&#39;t appear when you type <code>/</code>:</strong></p>
 <ol>
-<li>Check that the workspace root is the <code>commands</code> folder.</li>
-<li>Check that the <strong>Session Target</strong> is <strong>Local</strong> and the chat is in agent mode.</li>
-<li>Start a fresh chat.</li>
-<li>Check whether organization policy disables prompt files.</li>
-<li>Check whether a personal prompt file uses the same name.</li>
+<li>Check that the open folder is <code>commands</code> itself, not the repository root. The root has no <code>.github/prompts</code>.</li>
+<li>Check that the <strong>Session Target</strong> is <strong>Local</strong> and the chat is in agent mode. Prompt files don&#39;t run in other harnesses.</li>
+<li>Start a fresh chat and type the full name, such as <code>/clarify</code>.</li>
+<li>Run <code>/prompts</code> to open the Configure Prompt Files menu, check that the lab&#39;s prompt files are listed, and look for a personal prompt file with the same name.</li>
+<li>In the Chat view, open the <strong>...</strong> menu and select <strong>Show Agent Debug Logs</strong> to see prompt file discovery errors.</li>
 </ol>
-<p>Don&#39;t pretend a pasted prompt proves that the command loaded.</p>
+<p>Don&#39;t pretend a pasted prompt proves that the command loaded. Full steps: <a href="../COMMANDS.html#if-a-lab-command-doesnt-appear">If a lab command doesn&#39;t appear</a>.</p>
 </li>
 <li><p><strong>The agent guesses instead of asking:</strong> stop it, run <code>/clarify</code> again, and tell it to wait for answers.</p>
 </li>
@@ -183,7 +184,7 @@
 <p>The Node test suite can&#39;t observe VS Code itself. Record these yourself:</p>
 <ol>
 <li>Open <code>Anti-Ai-Slop\commands</code> as the workspace root, and start a fresh chat with <strong>Session Target: Local</strong> in agent mode.</li>
-<li>Type <code>/</code> and confirm that all 12 custom commands appear: <code>/clarify</code>, <code>/spec</code>, <code>/ground</code>, <code>/deps-check</code>, <code>/deslop</code>, <code>/verify</code>, <code>/root-cause</code>, <code>/pre-commit</code>, <code>/fail-paths</code>, <code>/simplify</code>, <code>/scope</code>, and <code>/handoff</code>.</li>
+<li>Type <code>/</code> and confirm that all 12 lab commands appear: <code>/clarify</code>, <code>/spec</code>, <code>/ground</code>, <code>/deps-check</code>, <code>/deslop</code>, <code>/verify</code>, <code>/root-cause</code>, <code>/pre-commit</code>, <code>/fail-paths</code>, <code>/simplify</code>, <code>/scope</code>, and <code>/handoff</code>. Then run <code>/prompts</code> and confirm that each one comes from this folder&#39;s <code>.github/prompts</code>.</li>
 <li>Run <code>/clarify</code> on exercise 01. Confirm that it asks at most 5 questions, proposes a default for each, waits, and writes no code.</li>
 <li>Run <code>/verify</code> on any exercise. Confirm that it ran real commands, that each command shows an exit code, and that the verdict is VERIFIED or NOT VERIFIED.</li>
 <li>Confirm that a read-only command (<code>/ground</code> or <code>/deslop</code>) doesn&#39;t edit files, even when you ask it to.</li>
@@ -195,7 +196,7 @@
 <pre><code class="language-text">Date:
 VS Code version / Copilot Chat version:
 Session Target / agent:
-12 custom commands visible in / menu: yes/no (missing: )
+12 lab commands visible in / menu with the commands folder open: yes/no (missing: )
 /clarify waited for answers: yes/no
 /verify reported commands with exit codes: yes/no
 Read-only command refused edits: yes/no

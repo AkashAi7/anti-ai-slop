@@ -21,18 +21,20 @@
 <main id="main" tabindex="-1">
 <div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../../commands.html">Commands lab</a></li><li aria-current="page">COMMANDS.md</li></ol></nav></div>
 <div class="wrap doc-layout">
-<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#command-flows-that-beat-slop">Command flows that beat slop</a></li><li><a href="#what-each-custom-command-is-allowed-to-do">What each custom command is allowed to do</a></li><li><a href="#custom-commands-in-this-lab-prompt-files">Custom commands in this lab (prompt files)</a></li><li><a href="#built-in-vs-code-chat-commands-by-mechanism">Built-in VS Code chat commands, by mechanism</a></li><li><a href="#github-copilot-app-mention-only">GitHub Copilot app (mention only)</a></li><li><a href="#anatomy-of-a-custom-command">Anatomy of a custom command</a></li><li><a href="#use-these-commands-in-your-own-repository">Use these commands in your own repository</a></li></ol></nav>
+<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#command-flows-that-beat-slop">Command flows that beat slop</a></li><li><a href="#what-each-custom-command-is-allowed-to-do">What each custom command is allowed to do</a></li><li><a href="#lab-commands-prompt-files-not-built-in">Lab commands (prompt files, not built in)</a></li><li><a href="#built-in-vs-code-chat-commands-by-mechanism">Built-in VS Code chat commands, by mechanism</a></li><li><a href="#github-copilot-app-mention-only">GitHub Copilot app (mention only)</a></li><li><a href="#anatomy-of-a-custom-command">Anatomy of a custom command</a></li><li><a href="#if-a-lab-command-doesnt-appear">If a lab command doesn&#39;t appear</a></li><li><a href="#use-these-commands-in-your-own-repository">Use these commands in your own repository</a></li></ol></nav>
 <article class="prose">
 <h1 id="command-reference">Command reference</h1>
 
 <p>Every <code>/command</code> in this lab is an anti-slop checkpoint. Each one has a job (&quot;ask before code&quot;, &quot;prove it exists&quot;, &quot;show the exit code&quot;), and each makes the agent return evidence you can check. This page lists the commands, the order to use them in, and what each one is allowed to touch.</p>
 <ul>
 <li><strong>Built-in commands</strong> ship with VS Code chat. Type <code>/</code> in the Chat view to see them.</li>
-<li><strong>Custom commands</strong> are the 12 prompt files in <a href="github/prompts/index.html">.github/prompts</a>. VS Code shows them in the same <code>/</code> menu when this folder is open as the workspace.</li>
+<li><strong>Lab commands</strong> (<code>/clarify</code>, <code>/spec</code>, <code>/ground</code>, and 9 more) are <strong>not built in</strong>. They are the 12 prompt files in <a href="github/prompts/index.html">.github/prompts</a>, written for this lab. VS Code adds them to the <code>/</code> menu only when this <code>commands</code> folder is the folder you opened. They are also not <a href="https://github.com/github/spec-kit">Spec Kit</a> commands; Spec Kit installs its own <code>speckit</code>-prefixed commands, and this lab doesn&#39;t use it.</li>
 <li><strong>Where they run:</strong> the VS Code Chat view with the <strong>Session Target set to Local</strong>. Prompt files and most built-ins run only with the Local harness.</li>
 </ul>
+<p>If a lab command doesn&#39;t show up when you type <code>/</code>, see <a href="#if-a-lab-command-doesnt-appear">If a lab command doesn&#39;t appear</a>.</p>
 <p>Back to the <a href="README.html">lab README</a>.</p>
 <h2 id="command-flows-that-beat-slop">Command flows that beat slop</h2>
+<p>In these flows, <code>/clarify</code>, <code>/spec</code>, <code>/ground</code>, <code>/deps-check</code>, <code>/root-cause</code>, <code>/fail-paths</code>, <code>/deslop</code>, <code>/simplify</code>, <code>/verify</code>, <code>/pre-commit</code>, <code>/scope</code>, and <code>/handoff</code> are this lab&#39;s prompt files. Every other command is a VS Code built-in.</p>
 <div class="table-wrap" role="region" aria-label="Table: Situation, Flow, Why" tabindex="0"><table>
 <thead>
 <tr>
@@ -114,8 +116,13 @@
 </tr>
 </tbody></table></div>
 <p>Approvals are a VS Code setting, not a prompt-file feature. <code>/disableAutoApprove</code> puts every edit and terminal command back behind your approval for the session. <code>/autoApprove</code> (alias <code>/yolo</code>) removes that human checkpoint, so use it only in a sandbox you can throw away.</p>
-<h2 id="custom-commands-in-this-lab-prompt-files">Custom commands in this lab (prompt files)</h2>
-<p>These 12 commands live in <a href="github/prompts/index.html">.github/prompts</a>. Type <code>/</code> in the VS Code Chat view (Session Target: Local) to run them.</p>
+<h2 id="lab-commands-prompt-files-not-built-in">Lab commands (prompt files, not built in)</h2>
+<blockquote>
+<p><strong>Lab commands are not built in.</strong> <code>/clarify</code>, <code>/spec</code>, and the other lab commands are prompt files that this repository ships in <code>.github/prompts</code>.</p>
+<p>VS Code reads workspace prompt files from the <code>.github/prompts</code> folder of the folder you open, and runs them only in Local chat sessions. Open this <code>commands</code> folder itself (or a repository you copied the prompt files into). The anti-ai-slop repository root has no <code>.github/prompts</code> folder, so opening the repository root or a parent folder does not load them. See the <a href="https://code.visualstudio.com/docs/agent-customization/prompt-files">VS Code prompt files documentation</a>.</p>
+<p>They are not Spec Kit commands. <a href="https://github.com/github/spec-kit">Spec Kit</a> installs its own <code>speckit</code>-prefixed commands when you run <code>specify init</code>. This lab does not use Spec Kit.</p>
+</blockquote>
+<p>These 12 commands live in <a href="github/prompts/index.html">.github/prompts</a>. With this folder open and the Chat view&#39;s Session Target set to Local, type <code>/</code> to run them. If one doesn&#39;t appear, see <a href="#if-a-lab-command-doesnt-appear">If a lab command doesn&#39;t appear</a>.</p>
 <div class="table-wrap" role="region" aria-label="Table: Command, Mechanism, Access, Slop it fixes, Evidence it must return" tabindex="0"><table>
 <thead>
 <tr>
@@ -487,7 +494,7 @@
 <tr>
 <td><a href="https://code.visualstudio.com/docs/agent-customization/prompt-files"><code>/prompts</code></a></td>
 <td>Configure prompt files.</td>
-<td>Confirms which prompt files (custom /commands) were discovered and where they come from.</td>
+<td>Opens the prompt file menu so you can confirm the lab&#39;s prompt files (custom /commands) were discovered, instead of guessing.</td>
 <td><code>/prompts</code></td>
 <td>Local and Copilot</td>
 </tr>
@@ -603,13 +610,24 @@ tools: [&#39;read/readFile&#39;, &#39;execute/runInTerminal&#39;]   # inside its
 ## Stop conditions     # what it must refuse to do
 </code></pre>
 <p>The body is limited to 80 lines. A short prompt with explicit stop conditions produces less slop than a long, clever one.</p>
+<h2 id="if-a-lab-command-doesnt-appear">If a lab command doesn&#39;t appear</h2>
+<p>The lab commands are prompt files, so VS Code has to find and load them. Built-ins such as <code>/plan</code> and <code>/clear</code> don&#39;t depend on any of this. Work through these checks in order:</p>
+<ol>
+<li><strong>Open the right folder.</strong> VS Code reads workspace prompt files from <code>.github/prompts</code> in the folder you open. Open this <code>commands</code> folder itself, for example by running <code>code commands</code> from the repository root. The repository root has no <code>.github/prompts</code> folder, so opening the root or a parent folder doesn&#39;t load the lab commands.</li>
+<li><strong>Use a Local session.</strong> In the Chat view, set the <strong>Session Target</strong> to <strong>Local</strong>. Prompt files run only in Local sessions, not in Copilot CLI or other harnesses.</li>
+<li><strong>Type the full name.</strong> Type <code>/</code> followed by the command name, for example <code>/clarify</code>, in the chat input.</li>
+<li><strong>Ask VS Code what it loaded.</strong> Run the built-in <code>/prompts</code> to open the <strong>Configure Prompt Files</strong> menu, and check that the lab&#39;s prompt files are listed.</li>
+<li><strong>Read the discovery log.</strong> In the Chat view, select the <strong>...</strong> menu, then <strong>Show Agent Debug Logs</strong> to see prompt file discovery errors. The built-in <code>/troubleshoot</code> can also help.</li>
+</ol>
+<p>Spec Kit isn&#39;t involved. Commands such as <code>/speckit.clarify</code> (listed in <a href="https://docs.runmaestro.ai/speckit-commands">Maestro&#39;s Spec Kit command docs</a>) belong to Spec Kit, which adds them to a project when you run <code>specify init</code>. They are unrelated to this lab&#39;s <code>/clarify</code>.</p>
 <h2 id="use-these-commands-in-your-own-repository">Use these commands in your own repository</h2>
 <ol>
 <li>Copy the prompt files you want from <a href="github/prompts/index.html">.github/prompts</a> into your repository&#39;s <code>.github/prompts/</code> folder.</li>
-<li>Open that repository in VS Code, set the Chat view&#39;s Session Target to Local, and type <code>/</code>. The commands appear next to the built-ins.</li>
+<li>Open that repository in VS Code, set the Chat view&#39;s Session Target to Local, and type <code>/</code>. VS Code lists the copied prompt files in the <code>/</code> menu with the built-in commands. They still aren&#39;t built-ins; they work only where the files are.</li>
 <li>Optionally, suggest some of them in the chat input. This lab&#39;s <a href="../../../commands/.vscode/settings.json">.vscode/settings.json</a> uses <code>chat.promptFilesRecommendations</code> for <code>/clarify</code>, <code>/ground</code>, <code>/verify</code>, and <code>/handoff</code>. Check the <a href="https://code.visualstudio.com/docs/agent-customization/prompt-files">prompt files documentation</a> for the current format of that setting before you rely on it.</li>
 <li>Change the <code>## Steps</code> sections to use your real test and build commands. Leave the <code>## Stop conditions</code> sections alone.</li>
 </ol>
+<p>To use a command in every workspace instead, create it as a user-level prompt file with the <strong>Chat: New Prompt File</strong> command and paste in the file&#39;s contents. See the <a href="https://code.visualstudio.com/docs/agent-customization/prompt-files">prompt files documentation</a> for user-profile locations.</p>
 <p>Custom command names avoid the skill names in the sibling <a href="../skills/README.html">skills lab</a>, so both labs can sit in one workspace without collisions.</p>
 
 <p class="doc-source">Source: <a href="../../../commands/COMMANDS.md"><code>commands/COMMANDS.md</code></a></p>

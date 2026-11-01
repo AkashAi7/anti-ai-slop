@@ -21,7 +21,9 @@ for (const source of sources) {
     console.error(`FAIL ${source.id}: ${error.message}`);
     continue;
   }
-  const missing = source.expect.filter((value) => !text.includes(value));
+  // Sentences can contain inline markup such as <strong>, so also match against the visible text.
+  const visible = text.replace(/<[^>]+>/g, '').replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/\s+/g, ' ');
+  const missing = source.expect.filter((value) => !text.includes(value) && !visible.includes(value));
   if (missing.length) {
     failed += 1;
     console.error(`FAIL ${source.id}: missing ${missing.join(', ')} at ${source.url}`);
