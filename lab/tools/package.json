@@ -1,0 +1,19 @@
+{
+  "name": "anti-slop-lab-tools",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Maintainer tooling: records and verifies the lab walkthrough GIFs. Learners do not need it.",
+  "engines": { "node": ">=22.20" },
+  "scripts": {
+    "gifs": "node record-gifs.mjs",
+    "verify": "node verify-gifs.mjs",
+    "test": "node --test gif-encoder.test.mjs"
+  },
+  "devDependencies": {
+    "gifenc": "1.0.3",
+    "omggif": "1.0.10",
+    "playwright": "1.64.1",
+    "pngjs": "7.0.0"
+  }
+}

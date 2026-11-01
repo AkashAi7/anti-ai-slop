@@ -1,0 +1,16 @@
+{
+  "name": "anti-slop-labs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local environment for Lab 1 (/commands + Spec Kit) and Lab 2 (anti-slop skills) in VS Code or the GitHub Copilot app.",
+  "engines": { "node": ">=22.20" },
+  "config": { "specifyVersion": "1.2.3" },
+  "scripts": {
+    "doctor": "node scripts/doctor.mjs",
+    "setup": "node scripts/setup.mjs",
+    "check": "node scripts/check.mjs",
+    "skills": "node scripts/skills.mjs",
+    "test": "node --test tests/*.test.mjs"
+  }
+}

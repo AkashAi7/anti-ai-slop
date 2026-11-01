@@ -1,82 +1,88 @@
 # Anti-Slop Labs website
 
-A static website for both anti-slop labs, hosted on GitHub Pages at **https://akashai7.github.io/anti-ai-slop/**. A clone also works offline, so you can open it straight from disk with no server, no build, and no npm install. It sends nothing to a model and loads nothing from other sites.
+The GitHub Pages site for both labs: **https://akashai7.github.io/anti-ai-slop/**.
+It is static HTML that works straight from disk after a clone. No server, no
+build and no npm install are needed to view it. It sends nothing to a model and
+loads nothing from other sites.
 
-| Page | What it shows |
-| --- | --- |
-| [Home](index.html) | Both labs side by side, the exercise loop, every GIF walkthrough, and the honesty rules |
-| [Commands lab](commands.html) | VS Code chat `/commands`: start steps, the 5 command flows, all commands grouped by mechanism with a live filter, exercises, and guides |
-| [Skills lab](skills.html) | Agent skills: start steps, the 4 skill walkthroughs, all 12 skills, exercises, and guides |
-| [Command Studio](../commands/studio/index.html) | The interactive demo for the Commands lab: watch, try a simulated chat, play Mission, and browse commands |
+| Page | Source | What it shows |
+| --- | --- | --- |
+| [Home](index.html) | generated | Both labs, setup in four steps, how to load the public skills, workshop resources |
+| [Setup](setup.html) | [lab/README.md](../lab/README.md) | Prerequisites, tracks, client setup, baselines, troubleshooting, all three downloads |
+| [Lab 1: /commands + Spec Kit](lab-1.html) | [lab/LAB-1-COMMANDS-SPECKIT.md](../lab/LAB-1-COMMANDS-SPECKIT.md) | 6 GIF walkthroughs, then the lab guide |
+| [Lab 2: anti-slop skills](lab-2.html) | [lab/LAB-2-ANTI-SLOP-SKILLS.md](../lab/LAB-2-ANTI-SLOP-SKILLS.md) | 4 GIF walkthroughs, then the lab guide |
+| [Facilitator](facilitator.html) | [lab/FACILITATOR.md](../lab/FACILITATOR.md) | Run sheet for workshop leads |
+| [Verification](verification.html), [Notices](notices.html) | `lab/VERIFICATION.md`, `lab/THIRD-PARTY-NOTICES.md` | Evidence and licenses |
+| `transcripts/*.html` | `lab/assets/transcripts/*.md` | One page per GIF, with its player and transcript |
 
-Every Markdown guide in [commands](../commands/README.md) and [skills](../skills/README.md) is also published as an HTML page under `docs/`. That includes prompt files, SKILL.md files, exercise tasks, hints, and transcripts. The site doesn't render or link the exercise `starter/` and `solution/` folders, so reference solutions stay opt-in.
+Walkthroughs show a still poster. **Play full screen**, or the poster, opens the
+GIF in a theater that fills the screen; Esc or **Exit full screen** returns.
+Without JavaScript, the **GIF** link under each poster opens the animation.
 
-## Open it
-
-From this folder:
+## Open it offline
 
 ```powershell
 npm.cmd run open
 ```
 
-Or open `index.html` in any current browser. Each walkthrough shows a still poster on the page. Select **Play full screen**, or the poster itself, to watch the GIF fill the screen. **Stop** shows the still frame again, and Esc or **Exit full screen** returns you to the page. If the browser doesn't allow full screen, the GIF fills the browser window instead. On a phone held upright, full screen turns to landscape where the browser allows it; otherwise the theater suggests turning the phone sideways. Without JavaScript, the **GIF** link under each poster opens the animation directly.
+Or open `index.html` in any current browser.
 
 ## Rebuild after a lab changes
 
-The pages are generated from the labs' own sources, so their counts, commands, skills, exercises, and baselines can't drift from the labs:
-
-- `commands/commands.json`, `commands/studio/missions.json`, and the prompt files' frontmatter
-- the mechanisms table in `skills/README.md` and the SKILL.md frontmatter
-- each lab's `exercises/catalog.json`, `demo/scenarios.json`, and `assets/media-manifest.json`
-- every Markdown guide
-
-The generated HTML is committed so learners never need to build. After you edit a lab, rebuild and check:
+The pages and downloads are generated from `lab/`: the Markdown guides,
+`catalog.json`, `walkthroughs.json`, `assets/media-manifest.json` and the
+pinned public skills. The generated HTML and ZIPs are committed, so learners
+never build anything.
 
 ```powershell
 npm.cmd ci
 npm.cmd run build
 npm.cmd run check
+npm.cmd run test:bundles
 npm.cmd run smoke
 ```
 
 | Command | What it does |
 | --- | --- |
-| `npm run build` | Regenerates the pages. It writes only the files that changed and removes stale pages under `docs/`. |
-| `npm run check` | Confirms the committed pages match a fresh build. Then it checks that every link, image, GIF, and anchor resolves, that each page has one `h1`, a title, a language, and unique ids, that every image has alt text, that no page loads a remote resource, that no local link points outside the files GitHub Pages publishes, and that no raw Markdown leaked into the HTML. |
-| `npm run smoke` | Opens every page in headless Chromium. It checks for console errors, external requests, broken images, and horizontal overflow at 320, 768, 1024, and 1440 px wide. It also tests the full-screen GIF player (the Play button never covers the poster, the theater fills the viewport, Stop and Play again work, Esc and the close button restore focus and scrolling, and a portrait phone gets the turn-sideways hint), the command filter, and keyboard skip navigation. Add `-- --shots <folder>` to save screenshots. Add `-- --base <url>` to run the same checks against a hosted copy; it then also requests every same-site link and asset and confirms the site root opens the home page. |
+| `npm run build` | Writes the changed pages and the three ZIPs under `assets/downloads`, and removes stale pages. |
+| `npm run check` | Confirms pages and ZIPs match a fresh build. Checks every link, image, GIF and anchor resolves; one `h1`, a title, a language and unique ids per page; alt text on every image; no remote resources; no links outside the published files (`index.html`, `site/`, `lab/`); and no raw Markdown links or leftovers. |
+| `npm run test:bundles` | Confirms the ZIPs are deterministic and clean, that the skills ZIP matches the pinned hashes, and extracts the lab ZIP to run real setup, baseline and repair for two tracks. |
+| `npm run smoke` | Opens every page in headless Chromium: no console errors, external requests, broken images or overflow at 320/768/1024/1440 px. Tests the home routing and downloads, plays every lab GIF full screen and checks focus returns, the theater's Stop/Play again/Esc/close and phone fallback, copy buttons including a clipboard failure, and the skip link. Add `-- --shots <folder>` for screenshots, or `-- --base <url>` to run against a hosted copy (it then also requests every same-site link and asset). |
 
-`npm ci` installs `marked`, which `build` and `check` use, and `playwright` for the smoke test. The smoke test uses the Chromium build that Playwright installs (`npx.cmd playwright install chromium`).
-
-### Last observed results
-
-| Command | Observed result |
+| Download | Contents |
 | --- | --- |
-| `npm.cmd run check` | `Site check passed: 88 pages up to date, 1902 links and assets resolve, 382 anchors found.` |
-| `npm.cmd run smoke` | `Site smoke passed: 88 pages, 31 images decoded, no errors or network requests, no overflow at 320/768/1024/1440px; full-screen player, catalog filter, and skip link work.` |
-| `npm.cmd run smoke -- --base https://akashai7.github.io/anti-ai-slop/` | Same checks against the live site, plus `the root redirect works and 218 same-site links and assets return 2xx.` |
-| `check` with a stray `docs/bogus.html` added | Exit 1: `stale page. Run npm run build.` The file was then removed and `check` passed again. |
-| `check` with a README link to the root `.github` folder | Exit 1: `points outside the files GitHub Pages publishes`. The link was then restored and `check` passed again. |
+| `anti-slop-lab.zip` | Everything a learner needs for both labs, without the GIF media and recorder |
+| `anti-slop-public-skills.zip` | The three pinned Superpowers skills as a `.github` folder, with license and SHA-256 manifest |
+| `anti-slop-walkthroughs.zip` | All 10 GIFs, posters and transcripts, for slides or offline demos |
 
-Not verified: screen-reader output (only DOM semantics and keyboard skip navigation were tested), browsers other than Chromium, and real phones (narrow layouts were checked at 320px in desktop Chromium).
+`npm ci` installs `marked` (Markdown), `fflate` (ZIPs) and `playwright`
+(browser checks; run `npx.cmd playwright install chromium` once).
+
+### Regenerate the GIFs
+
+The recorder lives in [lab/tools](../lab/tools). It reruns the starter,
+red-test and reference checks so the results shown are real; the dialogue is
+authored.
+
+```powershell
+npm.cmd --prefix ..\lab\tools ci
+npm.cmd --prefix ..\lab\tools run gifs
+npm.cmd --prefix ..\lab\tools run verify
+npm.cmd run build
+```
 
 ## Hosting
 
-The site is published to GitHub Pages by [the Pages workflow](https://github.com/AkashAi7/anti-ai-slop/blob/main/.github/workflows/pages.yml). On every push to `main`, it:
+[The Pages workflow](../.github/workflows/pages.yml) runs on every push and
+pull request. It runs the lab tests and GIF verification, then `check`,
+`test:bundles` and `smoke`, and fails if any generated file changed. On `main`
+it deploys `index.html`, `site/` and `lab/` with `git archive`, so installed
+dependencies and learner `work/` folders never ship. The root `index.html`
+redirects to `site/index.html`.
 
-1. Validates both labs, runs their exercise tests, and verifies the GIFs.
-2. Runs `check` and `smoke` on Linux, then confirms no generated file changed.
-3. Deploys the committed `index.html`, `site`, `commands`, and `skills` with `git archive`, so installed dependencies and learner `work/` folders never ship.
-
-Pull requests run the same checks without deploying. The root `index.html` redirects to `site/index.html`.
-
-Links reach into the labs for GIFs, posters, the studio, and raw files, so publish the whole repository with the site, not `site/` by itself. Paths are relative and the pages need no server-side code, so any static host works. Dot folders such as `.github` are also rendered under `docs/.../github/`, because some static hosts skip dot folders; GitHub Pages serves them as-is.
-
-After a deployment, check the live site from this folder:
+Publish `lab/` with the site: the pages embed GIFs and posters from
+`lab/assets`. After a deployment, check the live site:
 
 ```powershell
 npm.cmd run smoke -- --base https://akashai7.github.io/anti-ai-slop/
 ```
-
-## Honesty
-
-The site adds no claims of its own. Walkthroughs are labeled illustrative. The Commands lab's final-frame check results come from its recorder, which re-runs the real checks before each capture. Each lab's verification record ([Commands](../commands/VERIFICATION.md), [Skills](../skills/VERIFICATION.md)) lists what was actually run.

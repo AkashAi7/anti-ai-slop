@@ -1,0 +1,123 @@
+{
+  "asOf": "2026-11-01",
+  "sources": {
+    "vscode": "https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet#slash-commands",
+    "app": "https://docs.github.com/en/copilot/reference/github-copilot-app-reference/slash-commands",
+    "specKit": "https://github.github.io/spec-kit/integrations/copilot.html",
+    "workflow": "https://github.github.io/spec-kit/quickstart.html",
+    "skills": "https://code.visualstudio.com/docs/agent-customization/agent-skills",
+    "superpowers": "https://github.com/obra/superpowers",
+    "directory": "https://skills.sh/obra/superpowers"
+  },
+  "specKitSteps": ["constitution", "specify", "clarify", "plan", "checklist", "tasks", "analyze", "implement", "converge"],
+  "tracks": [
+    {
+      "id": "builtins",
+      "title": "Built-ins: repair a cart without scope creep",
+      "minutes": "25-35",
+      "testCount": 7,
+      "expectedFailures": [
+        "quantities are applied",
+        "invalid cart lines are rejected",
+        "safe integer cents are enforced",
+        "learner regressions catch the original bug"
+      ]
+    },
+    {
+      "id": "spec-kit",
+      "title": "Spec Kit: agree on a discount policy before coding",
+      "minutes": "40-55",
+      "testCount": 10,
+      "expectedFailures": [
+        "best single code wins without stacking",
+        "discounts are floored to whole cents",
+        "duplicate codes do not stack",
+        "unknown and expired codes are rejected",
+        "invalid inputs are rejected",
+        "large cent amounts remain exact",
+        "learner regressions catch the original bug",
+        "constitution and feature artifacts are ready"
+      ]
+    },
+    {
+      "id": "superpowers",
+      "fixture": "builtins",
+      "title": "Public skills: investigate, test first, verify",
+      "minutes": "25-35",
+      "testCount": 7,
+      "expectedFailures": [
+        "quantities are applied",
+        "invalid cart lines are rejected",
+        "safe integer cents are enforced",
+        "learner regressions catch the original bug"
+      ]
+    }
+  ],
+  "publicSkills": [
+    {
+      "name": "systematic-debugging",
+      "job": "Replace speculative fixes with a reproduced root cause.",
+      "prompt": "/systematic-debugging Read BRIEF.md and src/cart.mjs. Reproduce the quantity defect, cite file:line evidence, and state one testable cause. Do not edit yet. Keep investigation inside this disposable workspace."
+    },
+    {
+      "name": "test-driven-development",
+      "job": "Make a regression fail for the right reason before repairing code.",
+      "prompt": "/test-driven-development Follow BRIEF.md. Add at least four node:test cases to src/cart.test.mjs. Preserve existing behavior and cover quantity, invalid input and overflow. Run npm test with cart.mjs unchanged; stop for review of the red output. Do not delete existing starter or learner work."
+    },
+    {
+      "name": "verification-before-completion",
+      "job": "Replace a confident completion claim with fresh terminal evidence.",
+      "prompt": "/verification-before-completion Run npm test and npm run check now. Report actual exit codes, passed/failed counts and unresolved issues. Inspect git diff and git status --short, including untracked tests. Do not commit or change acceptance tooling."
+    }
+  ],
+  "recipes": [
+    {
+      "name": "explain",
+      "surface": "vscode",
+      "job": "Ground the explanation in actual code, not invented helpers.",
+      "prompt": "/explain Read BRIEF.md and src/cart.mjs. Explain the quantity bug with file:line evidence. List the existing API and unknowns. Do not edit files."
+    },
+    {
+      "name": "plan",
+      "surface": "both",
+      "job": "Agree on scope and a red-to-green test plan before edits.",
+      "prompt": "/plan Read BRIEF.md. Propose the smallest cart repair. Only src/cart.mjs and src/cart.test.mjs may change. Cite the root cause and propose boundary tests. Do not implement yet."
+    },
+    {
+      "name": "tests",
+      "surface": "vscode",
+      "job": "Write tests that actually fail on the defective starter.",
+      "prompt": "/tests Add at least four node:test cases to src/cart.test.mjs, importing ./cart.mjs. Cover existing behavior, quantity greater than one, invalid input and safe integer cents. Do not change src/cart.mjs. Run npm test and report the observed failures."
+    },
+    {
+      "name": "fix",
+      "surface": "vscode",
+      "job": "Repair the cause without weakening tests or rewriting unrelated code.",
+      "prompt": "/fix Repair src/cart.mjs against BRIEF.md and the failing tests. Keep its public API and src/legacy-pricing.mjs unchanged. No dependencies. Run npm test and npm run check; report both exit codes and any unresolved issue."
+    },
+    {
+      "name": "review",
+      "surface": "app",
+      "job": "Review the actual change rather than trusting the author's summary.",
+      "prompt": "/review"
+    },
+    {
+      "name": "rubber-duck",
+      "surface": "app",
+      "job": "Challenge the proposed fix and its boundary assumptions.",
+      "prompt": "/rubber-duck Challenge the cart repair against BRIEF.md. Look for missed boundaries, tests that also pass on the original implementation, and out-of-scope changes. Do not edit."
+    },
+    {
+      "name": "context",
+      "surface": "app",
+      "job": "Inspect context usage before a long session loses focus.",
+      "prompt": "/context"
+    },
+    {
+      "name": "compact",
+      "surface": "both",
+      "job": "Reduce conversation size, then reattach the brief and test evidence.",
+      "prompt": "/compact"
+    }
+  ]
+}

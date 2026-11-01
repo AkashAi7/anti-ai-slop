@@ -1,0 +1,415 @@
+[
+  {
+    "id": "builtin-plan",
+    "track": "builtins",
+    "client": "VS Code | Local Chat",
+    "title": "Explain first. Plan a contained repair.",
+    "commands": [
+      "explain",
+      "plan"
+    ],
+    "takeaway": "Ask for source evidence and an approved scope before any implementation.",
+    "steps": [
+      {
+        "heading": "Start with the actual defect",
+        "prompt": "Open BRIEF.md and src/cart.mjs in the built-ins workspace. Run the baseline before asking for changes.",
+        "answer": "The starter ignores qty. Three existing checks pass; four intended failures expose the missing behavior and regression suite.",
+        "artifact": "src/cart.mjs:2\nreturn lines.reduce(\n  (sum, line) => sum + line.priceCents,\n  0\n);\n\nNo multiplication by line.qty.",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Invoke the built-in /explain",
+        "recipe": "explain",
+        "answer": "Source: src/cart.mjs:2 adds each price once. The existing API is subtotal(lines). Quantity, validation and overflow need tests; legacy pricing is out of scope.",
+        "artifact": "Evidence, not invented APIs\n\nCause: src/cart.mjs:2\nExport: subtotal(lines)\nFrozen: src/legacy-pricing.mjs\nUnknowns: resolve against BRIEF.md",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Invoke /plan, not 'build everything'",
+        "recipe": "plan",
+        "answer": "Plan: preserve empty carts and quantity one; add red quantity/invalid-input/overflow tests; repair subtotal; run independent checks. No dependencies or unrelated edits.",
+        "artifact": "Allowed\n  src/cart.mjs\n  src/cart.test.mjs\n\nDone when\n  red regressions, then green\n  independent check = 7/7\n  reviewed diff",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Human checkpoint: approve before editing",
+        "prompt": "Review the plan. Confirm BRIEF.md, reject extra services, and approve only the two named files. Switch to Agent for edits in the Local session, then continue to tests/fix.",
+        "answer": "Planning is not implementation. The baseline is still red. An approved plan needs a real red-to-green test run before anyone claims done.",
+        "artifact": "Checkpoint\n\n[ ] Source evidence is correct\n[ ] Scope is limited to two files\n[ ] Boundary tests are explicit\n[ ] No implementation claim yet",
+        "evidence": "baseline"
+      }
+    ]
+  },
+  {
+    "id": "builtin-tests-fix",
+    "track": "builtins",
+    "client": "VS Code | Local Agent Chat",
+    "title": "Make tests red. Fix the cause. Prove green.",
+    "commands": [
+      "tests",
+      "fix"
+    ],
+    "takeaway": "Useful tests fail on the starter and pass on the repair; the lab checks both.",
+    "steps": [
+      {
+        "heading": "The starter must be red",
+        "prompt": "Run npm run check -- --baseline in work/builtins. Do not fix anything yet.",
+        "answer": "The exact defective baseline is confirmed. This is evidence that the checks detect the intended defects, not evidence that the exercise is solved.",
+        "artifact": "Reported case\n\npriceCents: 250\nqty: 3\n\nExpected subtotal: 750\nStarter subtotal: 250",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Invoke /tests before /fix",
+        "recipe": "tests",
+        "answer": "Add node:test assertions for existing behavior, mixed quantities, invalid lines and overflow. Leave cart.mjs unchanged and run the new suite.",
+        "artifact": "src/cart.test.mjs\n\nassert.equal(subtotal([\n  { priceCents: 250, qty: 3 },\n  { priceCents: 100, qty: 2 }\n]), 950);\n\nThe starter returns 350.",
+        "evidence": "red"
+      },
+      {
+        "heading": "Invoke /fix within the agreed scope",
+        "recipe": "fix",
+        "answer": "Validate each line. Multiply safe integer cents by qty; reject unsafe products or sums. Preserve the API and legacy file. Do not weaken assertions.",
+        "artifact": "src/cart.mjs\n\nconst amount = line.priceCents * line.qty;\nif (!Number.isSafeInteger(amount)\n  || !Number.isSafeInteger(sum + amount)) {\n  throw new RangeError(...);\n}\nsum += amount;",
+        "evidence": "final"
+      },
+      {
+        "heading": "The independent checker decides",
+        "prompt": "Run npm test and npm run check yourself. Inspect git diff and git status --short, including new test files.",
+        "answer": "The reference repair passes all seven acceptance checks. Its learner suite is also replayed against the original code and detects the bug. Review is still required.",
+        "artifact": "Evidence required\n\nnode:test: green after repair\nOriginal-code replay: detects defect\nIndependent acceptance: 7/7\nLegacy file and API: unchanged",
+        "evidence": "final"
+      }
+    ]
+  },
+  {
+    "id": "builtin-app-review",
+    "track": "builtins",
+    "client": "GitHub Copilot app | local Interactive session",
+    "title": "Review the change. Challenge it. Manage context.",
+    "commands": [
+      "review",
+      "rubber-duck",
+      "context",
+      "compact"
+    ],
+    "takeaway": "The app has its own built-ins; /tests and /fix are not promised app commands.",
+    "steps": [
+      {
+        "heading": "Use the app's actual command picker",
+        "prompt": "Add work/builtins as a local repository. Use /plan; approve it, then return to Interactive mode for red tests and the repair. Make a change in the active session before /review.",
+        "answer": "The lab baseline commit makes the repair reviewable. App commands are context-dependent; inspect the live / picker instead of assuming the VS Code command list.",
+        "artifact": "Copilot app built-ins\n\n/plan\n/review\n/rubber-duck\n/context\n/compact\n\nNo homemade command is needed.",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Invoke /review on actual session changes",
+        "recipe": "review",
+        "answer": "Inspect the quantity fix, input rejection, overflow boundaries, preserved API and untracked tests. Cite actionable findings; do not trust a success summary alone.",
+        "artifact": "Review targets\n\nsrc/cart.mjs\nsrc/cart.test.mjs\nBRIEF.md contract\n\nRequire source locations and impact.\nDo not edit during review.",
+        "evidence": "final"
+      },
+      {
+        "heading": "Invoke /rubber-duck to challenge assumptions",
+        "recipe": "rubber-duck",
+        "answer": "Challenge zero quantity, fractional cents, unsafe sums, and whether the new tests fail on the original code. Critique is not a passing test run.",
+        "artifact": "Boundary questions\n\nDoes qty = 0 throw?\nAre unsafe products rejected?\nCan a happy-path-only suite pass?\nDid legacy pricing stay untouched?",
+        "evidence": "final"
+      },
+      {
+        "heading": "/context, then /compact after saving evidence",
+        "prompt": "/context\n\nSave the brief, decisions and actual test output.\nThen invoke /compact and reattach BRIEF.md.",
+        "answer": "Context inspection and compaction help keep a long session focused. They do not preserve every detail or prove correctness. Restate scope and unresolved work afterward.",
+        "artifact": "Before compaction\n\nSave: decisions and evidence\nAfter: reattach BRIEF.md\nConfirm: scope and open issues\n\nKeep approvals on.",
+        "evidence": "final"
+      }
+    ]
+  },
+  {
+    "id": "speckit-specify-clarify",
+    "track": "spec-kit",
+    "client": "VS Code | official Spec Kit commands layout",
+    "title": "Constitution, specification, clarification.",
+    "commands": [
+      "speckit.constitution",
+      "speckit.specify",
+      "speckit.clarify"
+    ],
+    "takeaway": "Resolve stacking, rounding and expiry before design or code; app skills use /speckit-*.",
+    "steps": [
+      {
+        "heading": "Initialize the real toolkit",
+        "prompt": "From the lab directory: npm run setup -- spec-kit. Open work/spec-kit itself in VS Code Local Chat and select /speckit. from the actual picker.",
+        "answer": "Setup uses the official pinned Specify CLI with --integration copilot and --commands. Nine genuine prompt commands are verified; no lab /clarify substitute is installed.",
+        "artifact": "Installed by Spec Kit\n\n.github/prompts/\n  speckit.constitution.prompt.md\n  speckit.specify.prompt.md\n  speckit.clarify.prompt.md\n  ... six further core commands",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Invoke /speckit.constitution",
+        "prompt": "/speckit.constitution Keep the public API and catalogue stable. Use integer cents, no dependencies, and node:test. Require red regressions, explicit errors, real verification and no unrelated edits.",
+        "answer": "Agree on constraints once. Later plans and tasks must respect them. The illustrative artifact below is a reference snapshot, not captured agent output.",
+        "artifact": ".specify/memory/constitution.md\n\nPrinciples\n  Existing public API stays stable\n  Integer cents, no dependencies\n  Red regressions before repair\n  Real commands and exit codes",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Invoke /speckit.specify",
+        "prompt": "/speckit.specify Make discount-code checkout correct for the existing project in BRIEF.md. Capture the policy and measurable acceptance criteria before implementation. Do not change code yet.",
+        "answer": "Describe what checkout must do, not a new technology stack. The vague product request needs explicit rules for multiple codes, expiry and cent rounding.",
+        "artifact": "specs/<feature>/spec.md\n\nOPEN before clarification\n  Stack or best single code?\n  Floor or round cents?\n  Unknown code: error or ignore?\n  Expiry date inclusive?",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Invoke /speckit.clarify; the learner answers",
+        "prompt": "/speckit.clarify Resolve stacking, duplicate codes, integer-cent rounding, unknown codes, inclusive expiry and explicit dates against BRIEF.md. Ask blocking questions before planning.",
+        "answer": "Learner decisions: best single code, duplicates never stack, floor cents, reject unknown/expired codes, inclusive expiry, explicitly supplied valid date. Update the spec before planning.",
+        "artifact": "Agreed acceptance examples\n\n999 + SAVE10 -> discount 99\n1000 + SAVE10/SAVE20 -> 200\nOLD5 on 2026-11-01 -> error\nSAVE10 on expiry date -> valid",
+        "evidence": "baseline"
+      }
+    ]
+  },
+  {
+    "id": "speckit-plan-analyze",
+    "track": "spec-kit",
+    "client": "VS Code | official Spec Kit commands layout",
+    "title": "Plan, checklist, tasks, consistency analysis.",
+    "commands": [
+      "speckit.plan",
+      "speckit.checklist",
+      "speckit.tasks",
+      "speckit.analyze"
+    ],
+    "takeaway": "A requirements checklist is not a runtime test. Resolve contradictions before implementation.",
+    "steps": [
+      {
+        "heading": "Invoke /speckit.plan with the existing stack",
+        "prompt": "/speckit.plan Use the existing Node.js ESM project, node:test and src/coupons.mjs. No dependencies or new services. Preserve quoteDiscount(subtotalCents, codes, today). Plan red tests before the repair.",
+        "answer": "Keep the implementation small: validate inputs, select the best code, calculate exact integer cents, preserve the catalogue. No UI, database or invented helper.",
+        "artifact": "specs/<feature>/plan.md\n\nStack: existing Node.js ESM\nTests: node:test\nReuse: src/coupons.mjs\nAllowed: discount.mjs + test file\nNo new service or dependency",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Invoke /speckit.checklist; review requirements",
+        "prompt": "/speckit.checklist Review whether stacking, duplicate handling, cent precision, expiry, invalid input and frozen scope are complete, clear and testable. Do not treat this as a passing code test.",
+        "answer": "A human reviews custom checklist items against the specification. Do not blindly mark every box to make implementation proceed. A checked requirement is not verified code.",
+        "artifact": "Requirements-quality checklist\n\n[ ] Non-stacking is unambiguous\n[ ] Expiry boundary is explicit\n[ ] Large-cent precision is testable\n[ ] Invalid-input behavior is defined\n\nStill no runtime pass claim.",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Invoke /speckit.tasks; keep tests first",
+        "prompt": "/speckit.tasks Include at least four node:test cases in src/discount.test.mjs importing ./discount.mjs. Run them red before fixing src/discount.mjs, then run npm test and npm run check.",
+        "answer": "Make requirements traceable to ordered tasks. Add regression cases before the implementation task, then verify the frozen API and catalogue.",
+        "artifact": "Illustrative tasks.md snapshot\n\nT001 Red regressions -> policy rules\nT002 Input validation -> error rules\nT003 Best-code and exact-cent repair\nT004 Independent check + scope review\n\nOrder prevents happy-path-only proof.",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Invoke /speckit.analyze before building",
+        "prompt": "/speckit.analyze",
+        "answer": "Read-only consistency review: compare specification, plan and tasks. If a plan stacks codes but the spec forbids stacking, fix the source artifact and re-run analysis.",
+        "artifact": "Example contradiction\n\nSpec: best single code\nPlan: combine percentages\n\nAction: repair plan, re-run analysis\nDo not implement through the conflict.",
+        "evidence": "baseline"
+      }
+    ]
+  },
+  {
+    "id": "speckit-implement-converge",
+    "track": "spec-kit",
+    "client": "VS Code | official Spec Kit commands layout",
+    "title": "Implement agreed tasks. Converge. Verify.",
+    "commands": [
+      "speckit.implement",
+      "speckit.converge"
+    ],
+    "takeaway": "Spec Kit reviews completeness; independent checks and the human-reviewed diff establish the final evidence.",
+    "steps": [
+      {
+        "heading": "Review the gate before implementation",
+        "prompt": "Confirm the constitution, clarified spec, plan, tasks and resolved analysis findings. A human reviews custom requirements checklists. Keep approvals enabled.",
+        "answer": "Do not bypass an unchecked requirements gate. Confirm that only discount code, its tests and feature documents are allowed to change.",
+        "artifact": "Before implementation\n\nConstitution agreed\nSpec clarified\nPlan respects existing code\nTasks trace requirements\nAnalysis conflicts resolved",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Invoke /speckit.implement; tests go red first",
+        "prompt": "/speckit.implement Follow the agreed tasks. Preserve the API and catalogue; change only src/discount.mjs and src/discount.test.mjs plus feature documents. Report the red tests before repair and independent checks afterward.",
+        "answer": "Run the new node:test suite while the starter is unchanged. It detects stacking, rounding, invalid-input and precision defects before the implementation is repaired.",
+        "artifact": "src/discount.test.mjs\n\n999 + SAVE10 -> 99 cents\nSAVE10 + SAVE20 -> best only\nUnknown / expired -> error\nMAX_SAFE_INTEGER - 2 -> exact cents\n\nRed before repair.",
+        "evidence": "red"
+      },
+      {
+        "heading": "Invoke /speckit.converge",
+        "prompt": "/speckit.converge",
+        "answer": "Review code against specification, plan and tasks. Resolve remaining tasks and repeat as needed. A convergence report is not a substitute for actual terminal verification.",
+        "artifact": "Illustrative repaired policy\n\nValidate amount, codes and date\nReject unknown / expired codes\nChoose one best valid code\nFloor cents without unsafe products\nKeep API and catalogue unchanged",
+        "evidence": "final"
+      },
+      {
+        "heading": "Run the independent checks yourself",
+        "prompt": "Run npm test and npm run check in work/spec-kit. Inspect git diff and git status --short. Review the constitution and complete feature artifacts.",
+        "answer": "The authored reference passes 10/10 independent checks and its tests detect the original code. The real learner must obtain the same acceptance result and review the actual agent changes.",
+        "artifact": "Required final evidence\n\nAcceptance: 10/10, exit 0\nOriginal-code replay detects defect\nCatalogue and API unchanged\nConstitution + spec + plan + tasks\nHuman review of coverage and diff",
+        "evidence": "final"
+      }
+    ]
+  },
+  {
+    "id": "skills-find-load",
+    "track": "superpowers",
+    "client": "VS Code + Copilot app | built-in skill tools",
+    "title": "Find skills. Load reviewed copies. Prove the path.",
+    "commands": [
+      "skills",
+      "af",
+      "skills reload"
+    ],
+    "takeaway": "Use the client's own skill tools to see what is loaded, prefer pinned and reviewed copies, and confirm the exact SKILL.md path.",
+    "steps": [
+      {
+        "heading": "See what is already loaded",
+        "prompt": "/skills",
+        "answer": "VS Code Local chat opens Configure Skills; the Copilot app lists skills. Note built-in, personal and workspace entries. A same-named personal skill is a warning sign.",
+        "artifact": "Skill locations\n\nProject   .github/skills/\n          .claude/skills/  .agents/skills/\nPersonal  ~/.copilot/skills/\n          ~/.claude/skills/  ~/.agents/skills/\n\nBuilt-in skills vary by client and version.",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Search with the built-in Agent Finder (app)",
+        "prompt": "/af Find popular public agent skills that stop guessed fixes, tests that prove nothing and unverified completion claims. Show source repository, license and install method for each. Do not install anything.",
+        "answer": "Treat search results as leads, not proof. Prefer a known source and license, then compare with the pinned copies already bundled in this lab instead of installing unreviewed files.",
+        "artifact": "Candidate (illustrative)\n\nobra/superpowers  MIT\n  systematic-debugging\n  test-driven-development\n  verification-before-completion\n\nLab copy pinned at 2ce8aa1",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Load the reviewed copies, then reload",
+        "prompt": "From the lab directory: npm run setup -- superpowers, then npm run skills. Open work/superpowers itself. In the app type /skills reload; in VS Code start a fresh Local chat and type /skills.",
+        "answer": "Three complete upstream folders are copied with their license. The hash check covers every file. No network, hooks or global install are needed.",
+        "artifact": "npm run skills\n\nVERIFIED: 3 upstream skills, 15 files\n/systematic-debugging\n  -> .github/skills/systematic-debugging/SKILL.md\n/test-driven-development -> ...\n/verification-before-completion -> ...",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Prove which skill the agent will use",
+        "prompt": "Which loaded skill applies to the quantity bug in BRIEF.md? Name the exact SKILL.md path you would load. Do not edit files.",
+        "answer": "Expected: systematic-debugging from this workspace's .github/skills. Confirm the path in tool activity. A plausible answer alone does not prove the skill loaded.",
+        "artifact": "Evidence to keep\n\nClient and session type\nSkills listed and their folders\nLoaded path:\n  .github/skills/systematic-debugging/SKILL.md\n\nBaseline still 3/7. Next: debug.",
+        "evidence": "baseline"
+      }
+    ]
+  },
+  {
+    "id": "public-debug",
+    "track": "superpowers",
+    "client": "VS Code / Copilot app | public Superpowers skill",
+    "title": "Stop guessing. Trace the defect.",
+    "commands": [
+      "systematic-debugging"
+    ],
+    "takeaway": "Load the actual upstream skill, reproduce the bug, then approve a bounded hypothesis.",
+    "steps": [
+      {
+        "heading": "Load the genuine public skill",
+        "prompt": "Run npm run setup -- superpowers from the lab folder. Open work/superpowers itself. Run npm run skills from the lab folder; inspect the client skill picker.",
+        "answer": "Three pinned skills are copied locally, including their support files and license. Check the loaded path, not just a familiar skill name.",
+        "artifact": ".github/skills/\n  systematic-debugging/SKILL.md\n  test-driven-development/SKILL.md\n  verification-before-completion/SKILL.md\n\nSource: obra/superpowers\nNo plugin hooks or global install.",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Invoke /systematic-debugging",
+        "recipe": "systematic-debugging",
+        "answer": "Reproduce with priceCents 250 and qty 3. Expected 750, observed 250. The reducer adds price once instead of multiplying by quantity.",
+        "artifact": "src/cart.mjs:2\n\nsum + line.priceCents\n\nEvidence: qty is never read.\nHypothesis: the reducer ignores quantity.\nDo not add retries or wrappers.",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Use evidence, not a plausible story",
+        "prompt": "Show how the current code produces 250. Identify preserved behavior and proposed regressions. Do not implement until I approve.",
+        "answer": "Empty carts and quantity one already work. New tests must cover quantity, bad input and unsafe arithmetic without changing legacy pricing.",
+        "artifact": "Preserve\n  empty cart -> 0\n  quantity one -> same price\n\nCover\n  quantity > 1\n  invalid values and overflow",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Stop at the human checkpoint",
+        "prompt": "I approve changes only to src/cart.mjs and src/cart.test.mjs. Next, use test-driven-development and show the red run before the repair.",
+        "answer": "Investigation is not completion. The independent baseline remains 3/7. Record the loaded skill path and root-cause evidence before continuing.",
+        "artifact": "Evidence to keep\n\nLoaded workspace SKILL.md path\nReproduction: expected vs actual\nRoot-cause file:line\nApproved two-file scope\n\nStill red; not solved.",
+        "evidence": "baseline"
+      }
+    ]
+  },
+  {
+    "id": "public-tdd",
+    "track": "superpowers",
+    "client": "VS Code / Copilot app | public Superpowers skill",
+    "title": "Make a useful test fail first.",
+    "commands": [
+      "test-driven-development"
+    ],
+    "takeaway": "A green suite is useful only if it also detects the original defect.",
+    "steps": [
+      {
+        "heading": "Begin in the fresh public-skills cart",
+        "prompt": "Open work/superpowers. Read BRIEF.md and run npm run check -- --baseline. Confirm the installed test-driven-development skill in the picker.",
+        "answer": "The same defect and checks make this comparable to built-ins. Do not copy the previous repair into this workspace.",
+        "artifact": "Before repair\n\nsubtotal([{priceCents: 250, qty: 3}])\nExpected: 750\nActual: 250\n\nStarter acceptance: 3/7",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Invoke /test-driven-development",
+        "recipe": "test-driven-development",
+        "answer": "Run the tests with cart.mjs untouched. A quantity assertion must fail for the expected mismatch, not for an import or syntax error.",
+        "artifact": "src/cart.test.mjs\n\nassert.equal(subtotal([\n  { priceCents: 250, qty: 3 }\n]), 750);\n\nKeep an empty-cart test too.",
+        "evidence": "red"
+      },
+      {
+        "heading": "Review red, then approve the repair",
+        "prompt": "The regression failed for the correct reason. Repair only src/cart.mjs under BRIEF.md. Keep assertions and legacy pricing unchanged. Do not delete existing work.",
+        "answer": "Validate the input, multiply cents by quantity, reject unsafe arithmetic and rerun the complete learner suite. No extra package or abstraction.",
+        "artifact": "Minimal repair\n\nValidate line fields\namount = priceCents * qty\nCheck product and total are safe\nReturn accumulated cents\n\nNo test weakening.",
+        "evidence": "final"
+      },
+      {
+        "heading": "Prove the tests distinguish the versions",
+        "prompt": "Run npm test and npm run check yourself. Explain the original-code replay and inspect the changed and untracked files.",
+        "answer": "The reference reaches 7/7. Its tests pass after repair and catch the original bug. Learners must reproduce that evidence on their own files.",
+        "artifact": "Acceptance criteria\n\nRed on original implementation\nGreen on repaired implementation\nExisting behavior retained\nIndependent acceptance: 7/7\nReviewed two-file change",
+        "evidence": "final"
+      }
+    ]
+  },
+  {
+    "id": "public-verify",
+    "track": "superpowers",
+    "client": "VS Code / Copilot app | public Superpowers skill",
+    "title": "Replace 'done' with fresh evidence.",
+    "commands": [
+      "verification-before-completion"
+    ],
+    "takeaway": "Record real commands, exit codes and limitations; confidence is not verification.",
+    "steps": [
+      {
+        "heading": "Reject an unsupported success claim",
+        "prompt": "The agent says the cart should work. Do not accept that as evidence. Read BRIEF.md and run the checks on the current files.",
+        "answer": "On the starter, four acceptance checks still fail. A reassuring response cannot turn that result green.",
+        "artifact": "Not evidence\n\n'Should pass'\n'Looks correct'\nA previous green run\nA screenshot of someone else's tests\n\nRun checks on your own files.",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Invoke /verification-before-completion",
+        "recipe": "verification-before-completion",
+        "answer": "The reference repair has fresh passing acceptance output. Report the actual result in your session, including any failures or blocked checks.",
+        "artifact": "Run in the learner terminal\n\nnpm test\nnpm run check\ngit --no-pager diff\ngit --no-pager status --short\n\nRead output and exit codes.",
+        "evidence": "final"
+      },
+      {
+        "heading": "Inspect what the test summary misses",
+        "prompt": "Check the allowed files, new tests, upstream skill integrity and remaining risks. Do not say checks prove Copilot loaded a skill.",
+        "answer": "Review untracked files too. The checker verifies code and snapshot bytes; only client activity can show which skill was loaded.",
+        "artifact": "Separate the claims\n\nCode acceptance: 7/7\nSkill files: checksummed snapshot\nSkill loaded: inspect client activity\nQuality of review: human judgment\n\nNo automatic guarantee.",
+        "evidence": "final"
+      },
+      {
+        "heading": "Keep an honest handoff",
+        "prompt": "Summarize the root cause, changed files, exact commands and outcomes, plus limitations. Do not commit or deploy.",
+        "answer": "Keep the red output, fresh green output, loaded skill path and reviewed diff. GIF dialogue is illustrative; your live evidence is the deliverable.",
+        "artifact": "Completion card\n\nCause and bounded repair\nObserved red then green\nAcceptance: 7/7, exit 0\nLoaded skill path\nReviewed diff and limitations",
+        "evidence": "final"
+      }
+    ]
+  }
+]

@@ -93,59 +93,9 @@
     }
   }
 
-  // Command catalog filter.
-  const filters = document.querySelector('[data-catalog-filters]');
-  if (filters) {
-    const search = document.getElementById('cmd-search');
-    const customOnly = document.getElementById('cmd-custom');
-    const status = document.getElementById('cmd-status');
-    const empty = document.getElementById('cmd-empty');
-    const chips = [...filters.querySelectorAll('[data-filter]')];
-    const sections = [...document.querySelectorAll('.mech')];
-    const total = Number(status.dataset.total);
-    let mechanism = 'all';
-
-    const apply = () => {
-      const terms = search.value.toLowerCase().split(/\s+/).map((term) => term.replace(/^\//, '')).filter(Boolean);
-      let shown = 0;
-      for (const section of sections) {
-        const inMechanism = mechanism === 'all' || section.dataset.mechanism === mechanism;
-        let visible = 0;
-        for (const item of section.querySelectorAll('.cmd-card')) {
-          const match = inMechanism
-            && (!customOnly.checked || item.dataset.kind === 'custom')
-            && terms.every((term) => item.dataset.search.includes(term));
-          item.hidden = !match;
-          if (match) visible += 1;
-        }
-        section.hidden = visible === 0;
-        shown += visible;
-      }
-      status.textContent = `Showing ${shown} of ${total} commands.`;
-      empty.hidden = shown !== 0;
-    };
-
-    const choose = (id) => {
-      mechanism = id;
-      for (const chip of chips) chip.setAttribute('aria-pressed', String(chip.dataset.filter === id));
-      apply();
-    };
-
-    filters.hidden = false;
-    search.addEventListener('input', apply);
-    customOnly.addEventListener('change', apply);
-    for (const chip of chips) chip.addEventListener('click', () => choose(chip.dataset.filter));
-    empty.querySelector('[data-clear]').addEventListener('click', () => {
-      search.value = '';
-      customOnly.checked = false;
-      choose('all');
-      search.focus();
-    });
-  }
-
-  // Copy buttons on code blocks. The exercise loop shows placeholders, not runnable commands.
+  // Copy buttons on code blocks.
   if (navigator.clipboard) {
-    for (const pre of document.querySelectorAll('main pre:not(.loop pre)')) {
+    for (const pre of document.querySelectorAll('main pre')) {
       const block = document.createElement('div');
       block.className = 'code-block';
       pre.replaceWith(block);
@@ -154,6 +104,8 @@
       button.type = 'button';
       button.className = 'copy';
       button.textContent = 'Copy';
+      button.setAttribute('aria-live', 'polite');
+      button.setAttribute('aria-label', 'Copy this command or code block');
       block.append(button);
       button.addEventListener('click', async () => {
         try {
@@ -161,6 +113,7 @@
           button.textContent = 'Copied';
         } catch {
           button.textContent = 'Copy failed';
+          button.title = 'Select the command text and copy it manually.';
         }
         setTimeout(() => { button.textContent = 'Copy'; }, 2000);
       });

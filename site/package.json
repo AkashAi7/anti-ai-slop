@@ -3,15 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Anti-Slop Labs website: an offline, static showcase of the Commands and Skills labs - GIF walkthroughs, the Command Studio, exercises, and every guide rendered as HTML.",
+  "description": "Anti-Slop Labs website: a static GitHub Pages site for Lab 1 (/commands + Spec Kit) and Lab 2 (anti-slop skills), with GIF walkthroughs, setup guidance and downloadable lab bundles.",
   "engines": { "node": ">=22.20" },
   "scripts": {
     "open": "node scripts/open.mjs",
     "build": "node scripts/build.mjs",
     "check": "node scripts/check.mjs",
+    "test:bundles": "node --test tests/bundles.test.mjs",
     "smoke": "node scripts/smoke.mjs"
   },
   "devDependencies": {
+    "fflate": "0.8.3",
     "marked": "18.1.1",
     "playwright": "1.64.1"
   }

@@ -1,3 +1,5 @@
 * text=auto eol=lf
 *.gif binary
 *.png binary
+*.zip binary
+lab/vendor/superpowers/** -text

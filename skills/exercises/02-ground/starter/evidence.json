@@ -1,7 +1,0 @@
-{
-  "claims": [
-    {"id": "timestamp", "claim": "createdAt is epoch seconds", "status": "verified", "source": "invented.example/guide"},
-    {"id": "package", "claim": "incident-smart-counter is mandatory", "status": "verified", "source": "trust the generated answer"}
-  ],
-  "dependency": {"decision": "install", "capability": "incident-smart-counter", "reason": "It sounds useful"}
-}

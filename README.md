@@ -1,86 +1,79 @@
-# Anti-AI-Slop
+# Anti-AI-Slop labs
 
-Hands-on GitHub Copilot labs for asking better questions, grounding changes in the repository, and proving results with real checks.
+Two hands-on GitHub Copilot labs that you run locally in **VS Code** or the
+**GitHub Copilot app**:
 
-**[Open the website](https://akashai7.github.io/anti-ai-slop/)** | **[Download the exercises (ZIP)](https://github.com/AkashAi7/anti-ai-slop/archive/refs/heads/main.zip)**
+| Lab | What you practice | Guide | GIFs |
+| --- | --- | --- | --- |
+| **Lab 1: /commands + Spec Kit** | Built-in slash commands (`/explain`, `/plan`, `/tests`, `/fix`, `/review`, `/rubber-duck`, `/compact`), then spec-driven development with [GitHub Spec Kit](https://github.com/github/spec-kit) | [LAB-1-COMMANDS-SPECKIT.md](lab/LAB-1-COMMANDS-SPECKIT.md) | 6 |
+| **Lab 2: anti-slop skills** | Find skills with the built-in skill tools (`/skills`, `/af`, `/skills reload`), load three popular public skills from [obra/superpowers](https://github.com/obra/superpowers), then use them to stop guessed fixes, weak tests and unverified "done" claims | [LAB-2-ANTI-SLOP-SKILLS.md](lab/LAB-2-ANTI-SLOP-SKILLS.md) | 4 |
 
-## What is included
+Every exercise starts from deliberately broken code and ends with an
+independent check that rejects plausible-but-wrong results.
 
-| Folder | Contents |
-| --- | --- |
-| [commands](commands/README.md) | 12 lab slash commands (this repo's prompt files, not Copilot built-ins), a reference for 31 built-ins, 8 exercises, 6 GIFs, and an interactive browser Command Studio |
-| [skills](skills/README.md) | 12 reusable agent skills, 8 exercises, 4 GIFs, and an interactive terminal guide |
-| [site](site/README.md) | The GitHub Pages website, full-screen walkthroughs, and HTML versions of the lab guides |
+**[Open the workshop site](https://akashai7.github.io/anti-ai-slop/)**: the
+GIF walkthroughs, setup guide, both lab guides and the downloads, in one place.
 
-Both labs include starter code, acceptance checks, progressive hints, opt-in reference solutions, and facilitator guides. The website is for browsing and demonstrations; real exercise files run locally in VS Code, not on GitHub Pages.
+## Quick start
 
-## Prerequisites
-
-- **Just browsing:** a current browser. No account, install, or API key is needed for the website or simulated Command Studio.
-- **Running exercises:** [Node.js 22.20 or newer](https://nodejs.org/en/download) (includes npm).
-- **Practicing with Copilot:** [VS Code](https://code.visualstudio.com/download), signed-in GitHub Copilot Chat with agent access, and permission under your organization's policies. Copilot requires its normal network access and entitlement.
-- **Getting the files:** [Git](https://git-scm.com/downloads), or use the ZIP download instead.
-
-The repository supplies the lab files, not Node.js, VS Code, or a Copilot subscription. The exercises need no Azure subscription, backend, paid API key, or npm dependency install.
-
-## Get started
+You need [Node.js 22.20+](https://nodejs.org/en/download), [Git](https://git-scm.com/downloads),
+and either [VS Code](https://code.visualstudio.com/download) signed in to GitHub
+Copilot or the GitHub Copilot app. Lab 1's Spec Kit part also needs
+[uv](https://docs.astral.sh/uv/getting-started/installation/). No npm install,
+API key or cloud resource is needed.
 
 ```powershell
 git clone https://github.com/AkashAi7/anti-ai-slop.git
-cd anti-ai-slop
+cd anti-ai-slop\lab
+npm.cmd run doctor -- builtins
+npm.cmd run setup -- builtins
+code -n .\work\builtins
 ```
 
-Without Git, download and extract the ZIP above. Its default folder is `anti-ai-slop-main`; use that folder instead of `anti-ai-slop` in the steps below.
+Or download `anti-slop-lab.zip` from the site and run the same commands in the
+extracted `anti-slop-lab` folder. On macOS or Linux, use `npm` instead of
+`npm.cmd`.
 
-Choose **one** lab:
+| Track | Lab | Setup | Open this folder |
+| --- | --- | --- | --- |
+| `builtins` | Lab 1, part A | `npm.cmd run setup -- builtins` | `work\builtins` |
+| `spec-kit` | Lab 1, part B (VS Code) | `npm.cmd run setup -- spec-kit` | `work\spec-kit` |
+| `spec-kit-skills` | Lab 1, part B (Copilot app) | `npm.cmd run setup -- spec-kit-skills` | `work\spec-kit-skills` |
+| `superpowers` | Lab 2 | `npm.cmd run setup -- superpowers` then `npm.cmd run skills` | `work\superpowers` |
 
-### Commands
+In VS Code, start a **Local** chat. In the GitHub Copilot app, add the folder
+as a local repository and start an **Interactive** session. The full guide,
+with baselines and troubleshooting, is [lab/README.md](lab/README.md).
 
-Open the downloaded `commands` folder itself with **VS Code > File > Open Folder**, or run `code commands` from the repository root. Do not open only the repository root: VS Code reads prompt files from `.github/prompts` in the folder you open, and the root has none.
+### Load the public skills into your own project
 
-> **`/clarify`, `/spec`, `/verify`, and the other lab commands are not built in.** They are prompt files in [commands/.github/prompts](commands/.github/prompts), so they appear only with the `commands` folder open in a **Local** chat session. They are also not [Spec Kit](https://github.com/github/spec-kit) commands; Spec Kit installs its own `speckit`-prefixed commands. If a lab command is missing, see [If a lab command doesn't appear](commands/COMMANDS.md#if-a-lab-command-doesnt-appear).
-
-In the integrated terminal:
+Download `anti-slop-public-skills.zip` from the site and copy its `.github`
+folder into your repository root, or install the latest upstream with the
+skills CLI:
 
 ```powershell
-node --version
-npm.cmd run studio
-npm.cmd run demo
+npx skills add https://github.com/obra/superpowers --skill systematic-debugging -a github-copilot
 ```
 
-Choose `01-clarify-before-code`, then `setup`, `baseline`, and `prompt`. In Copilot Chat, select **Session Target: Local**, use agent mode, and follow the prompt. Run the exercise check on your learner copy:
+Then confirm they loaded: `/skills` in VS Code, or `/skills reload` then
+`/skills` in the GitHub Copilot app.
 
-```powershell
-npm.cmd run check -- 01-clarify-before-code
-```
+## Repository layout
 
-### Skills
+| Folder | Contents |
+| --- | --- |
+| [lab](lab/README.md) | The local lab environment for both labs: setup, broken starters, independent checks, the pinned public skills, lab guides, facilitator sheet, and the GIFs (`assets/`) with their maintainer recorder (`tools/`) |
+| [site](site/README.md) | The GitHub Pages site generator and its checks |
 
-Open the downloaded `skills` folder itself in a separate VS Code window, so `.github/skills` belongs to the active workspace. Skills such as `/grill-me` are this repo's agent skills, not Copilot built-ins, so they load only from that folder.
+The [Pages workflow](.github/workflows/pages.yml) runs the lab tests, verifies
+the GIFs, checks every generated page and download, and runs browser tests
+before it deploys from `main`.
 
-```powershell
-node --version
-npm.cmd run demo
-```
+## Honesty
 
-Choose `01-clarify`, then `setup`, `baseline`, and `prompt`. Work in a fresh Copilot chat, then check:
-
-```powershell
-npm.cmd run check -- 01-clarify
-```
-
-On macOS/Linux, use `npm` instead of `npm.cmd`. No `npm install` is required for these learner commands or `npm test`. An intentionally failing starter is expected; `--baseline` confirms those expected failures rather than claiming the exercise is solved.
-
-## Website and maintenance
-
-The website is hosted at **https://akashai7.github.io/anti-ai-slop/**. The root entry opens the showcase under `site/`, preserving the relative links to both labs.
-
-After cloning, you can also open `site/index.html` or `commands/studio/index.html` directly in a browser, offline.
-
-The [Pages workflow](.github/workflows/pages.yml) validates both labs, tests the exercises, verifies the GIFs, checks generated pages, and runs browser smoke tests before deployment. Pull requests run the checks without deploying; pushes to `main` deploy after the checks pass. See the [site maintenance guide](site/README.md) for rebuild commands and the [hosted check](site/README.md#hosting) that runs the browser tests against the live site.
-
-## Honesty and reuse
-
-Walkthroughs and simulated chat answers are illustrative, not recordings of live Copilot output. Commands-lab GIF check results are captured from actual reference-solution checks. Commands and skills guide an agent; tests and human review verify the result. No productivity statistics are claimed.
-
-Preserve the licenses shipped with adapted skills. See [third-party notices](skills/THIRD-PARTY-NOTICES.md) and each lab's verification record: [Commands](commands/VERIFICATION.md), [Skills](skills/VERIFICATION.md).
+The GIFs are illustrative reenactments: the chat dialogue is authored, not
+recorded Copilot output, but every test result shown comes from a real fixture
+run. Commands and skills guide an agent; tests and human review decide whether
+the work is done. No productivity statistics are claimed. See
+[Verification and limitations](lab/VERIFICATION.md) and the
+[third-party notices](lab/THIRD-PARTY-NOTICES.md) for the bundled skills.

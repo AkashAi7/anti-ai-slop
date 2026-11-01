@@ -23,35 +23,32 @@ jobs:
           node-version: '22'
           cache: npm
           cache-dependency-path: |
-            commands/package-lock.json
-            skills/package-lock.json
+            lab/tools/package-lock.json
             site/package-lock.json
       - name: Install maintainer dependencies
+        # Learners need none of these; the lab itself has no npm dependencies.
         run: |
-          npm ci --prefix commands
-          npm ci --prefix skills
+          npm ci --prefix lab/tools
           npm ci --prefix site
           cd site
           npx playwright install --with-deps chromium
-      - name: Validate lab files, exercises, and GIFs
+      - name: Validate both labs and their GIFs
         run: |
-          npm --prefix commands run validate
-          npm --prefix commands test
-          npm --prefix commands run verify:assets
-          npm --prefix skills run validate
-          npm --prefix skills test
-          npm --prefix skills run verify:assets
-      - name: Verify generated pages and browser behavior
+          npm --prefix lab test
+          npm --prefix lab/tools test
+          npm --prefix lab/tools run verify
+      - name: Verify generated pages, downloads and browser behavior
         run: |
           npm --prefix site run check
+          npm --prefix site run test:bundles
           npm --prefix site run smoke
           git diff --exit-code
       - name: Package committed website and lab files
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-        # Keep lab .github files: rendered guides link to prompt sources and skill licenses.
+        # The site embeds GIFs and posters from lab/assets, so lab/ is published with it.
         # git archive excludes installed dependencies, learner work, credentials, and Git history.
         # site/scripts/check.mjs (PUBLISHED) rejects links outside these paths; update both together.
-        run: git archive --format=tar --output="${{ runner.temp }}/artifact.tar" HEAD index.html site commands skills
+        run: git archive --format=tar --output="${{ runner.temp }}/artifact.tar" HEAD index.html site lab
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

@@ -1,8 +1,7 @@
 import { existsSync, readFileSync, statSync } from 'node:fs';
-import { basename, dirname, resolve, sep } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { Marked } from 'marked';
-import { esc, frontmatter, slug, urlFrom } from './util.mjs';
-import { dirIndexOutput, docOutput } from './data.mjs';
+import { PAGES_URL, ROOT, SITE, esc, relativeToRoot, repoUrl, slug, urlFrom } from './util.mjs';
 
 const stripTags = (html) => html.replace(/<[^>]+>/g, '').trim();
 
@@ -18,30 +17,35 @@ function wrapTables(html) {
   });
 }
 
-export function createDocRenderer(rendered) {
-  const linkedDirs = new Set();
-  const hasDocsUnder = (dir) => [...rendered].some((file) => file.startsWith(dir + sep));
-
-  function resolveHref(href, source, output) {
-    if (!href || href.startsWith('#') || href.startsWith('//') || /^[a-z][a-z\d+.-]*:/i.test(href)) return href;
+// `outputs` maps each rendered Markdown source to the page it becomes.
+export function createDocRenderer(outputs) {
+  function resolveHref(href, source, output, selfHash) {
+    if (!href || href.startsWith('#')) return href;
     const cut = href.indexOf('#');
     const path = cut < 0 ? href : href.slice(0, cut);
     const hash = cut < 0 ? '' : href.slice(cut);
-    const target = resolve(dirname(source), decodeURIComponent(path));
-    let dest = target;
-    if (rendered.has(target)) {
-      dest = docOutput(target);
-    } else if (existsSync(target) && statSync(target).isDirectory() && hasDocsUnder(target)) {
-      linkedDirs.add(target);
-      dest = dirIndexOutput(target);
+    let dest;
+    if (path.startsWith(PAGES_URL)) {
+      // The guides link to the published site; on the site itself those become relative links.
+      const rest = path.slice(PAGES_URL.length);
+      dest = rest ? join(ROOT, ...rest.split('/')) : join(SITE, 'index.html');
+    } else if (path.startsWith('//') || /^[a-z][a-z\d+.-]*:/i.test(path)) {
+      return href;
+    } else {
+      const target = resolve(dirname(source), decodeURIComponent(path));
+      if (outputs.has(target)) dest = outputs.get(target);
+      else if (existsSync(target)) return repoUrl(target, statSync(target).isDirectory() ? 'tree' : 'blob') + hash;
+      else throw new Error(`${relativeToRoot(source)}: broken link "${href}"`);
     }
-    const url = dest === output ? '' : urlFrom(output, dest);
-    return url + hash || basename(output);
+    if (dest === output) return hash || selfHash || '#main';
+    return urlFrom(output, dest) + hash;
   }
 
-  function render(source) {
-    const { data, body } = frontmatter(readFileSync(source, 'utf8'));
-    const output = docOutput(source);
+  // Renders one Markdown source. With `dropTitle`, the first h1 is returned as `title` instead of rendered,
+  // so the page header can own the page's only h1.
+  function render(source, { dropTitle = false, selfHash } = {}) {
+    const output = outputs.get(source);
+    if (!output) throw new Error(`${relativeToRoot(source)} has no output page`);
     const toc = [];
     const ids = new Map();
     let title = null;
@@ -49,20 +53,23 @@ export function createDocRenderer(rendered) {
     const marked = new Marked({ gfm: true });
     marked.use({
       walkTokens(token) {
-        if (token.type === 'link' || token.type === 'image') token.href = resolveHref(token.href, source, output);
+        if (token.type === 'link' || token.type === 'image') token.href = resolveHref(token.href, source, output, selfHash);
       },
       renderer: {
         heading({ tokens, depth, text }) {
+          const content = this.parser.parseInline(tokens);
+          if (depth === 1 && title === null) {
+            title = stripTags(content);
+            if (dropTitle) return '';
+          }
           let id = slug(text.trim());
           const n = ids.get(id) ?? 0;
           ids.set(id, n + 1);
           if (n) id = `${id}-${n}`;
-          const content = this.parser.parseInline(tokens);
-          if (depth === 1 && title === null) title = stripTags(content);
           if (depth === 2) toc.push({ id, label: stripTags(content) });
           return `<h${depth} id="${id}">${content}</h${depth}>\n`;
         },
-        // Lab docs contain prose like `/fork <title>`; show it as text instead of injecting tags.
+        // The guides contain prose such as `<track>` placeholders; show raw HTML as text instead of injecting tags.
         html({ text }) {
           if (/^\s*<!--[\s\S]*-->\s*$/.test(text)) return '';
           if (/^\s*<br\s*\/?>\s*$/i.test(text)) return '<br>';
@@ -74,9 +81,10 @@ export function createDocRenderer(rendered) {
       },
     });
 
-    const html = wrapTables(marked.parse(body));
-    return { source, output, html, toc, meta: data, title: title ?? esc(basename(source)) };
+    const html = wrapTables(marked.parse(readFileSync(source, 'utf8')));
+    if (title === null) throw new Error(`${relativeToRoot(source)} has no h1 title`);
+    return { source, output, html, toc, title };
   }
 
-  return { render, linkedDirs };
+  return { render };
 }

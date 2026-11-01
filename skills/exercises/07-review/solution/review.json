@@ -1,6 +1,0 @@
-{
-  "decisions": [
-    {"id": "R1", "disposition": "reject", "evidence": "TASK.md defines 0 as valid; priority(0) must return 0. Use a nullish default instead of falsy default."},
-    {"id": "R2", "disposition": "accept", "evidence": "TASK.md requires integer priorities from 0 to 3. Existing RangeError validation already covers -1 and 1.5; preserve it and verify tests."}
-  ]
-}

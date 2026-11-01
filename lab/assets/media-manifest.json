@@ -1,0 +1,269 @@
+{
+  "disclaimer": "Illustrative reenactment - not a recorded Copilot session. Test results are real fixture runs.",
+  "width": 1280,
+  "height": 720,
+  "maxBytes": 8388608,
+  "sourceSha256": "4f6cb2339face69305868c72844f128a1a5bc8c081b22904451c34c59116e846",
+  "assets": [
+    {
+      "id": "builtin-plan",
+      "frames": 12,
+      "bytes": 113681,
+      "durationMs": 23600,
+      "sha256": "5bbb53fca618f64c38413f31468c02ec183e0125f1cdec1be4f66a36ad0871b6",
+      "baseline": {
+        "total": 7,
+        "passed": 3,
+        "failed": 4,
+        "status": 1
+      },
+      "red": {
+        "total": 5,
+        "passed": 1,
+        "failed": 4,
+        "status": 1
+      },
+      "final": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "status": 0
+      },
+      "displayedFinal": "baseline"
+    },
+    {
+      "id": "builtin-tests-fix",
+      "frames": 12,
+      "bytes": 129976,
+      "durationMs": 23600,
+      "sha256": "d4d1bb7655f3432f8dbf85a69b5fa4d6fdf9b494d41694ae172c533a51e2aea8",
+      "baseline": {
+        "total": 7,
+        "passed": 3,
+        "failed": 4,
+        "status": 1
+      },
+      "red": {
+        "total": 5,
+        "passed": 1,
+        "failed": 4,
+        "status": 1
+      },
+      "final": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "status": 0
+      },
+      "displayedFinal": "final"
+    },
+    {
+      "id": "builtin-app-review",
+      "frames": 12,
+      "bytes": 125473,
+      "durationMs": 23600,
+      "sha256": "4cc54d0072d354f348da6b6999d3749f2052247ddc897d006102ae217fefee68",
+      "baseline": {
+        "total": 7,
+        "passed": 3,
+        "failed": 4,
+        "status": 1
+      },
+      "red": {
+        "total": 5,
+        "passed": 1,
+        "failed": 4,
+        "status": 1
+      },
+      "final": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "status": 0
+      },
+      "displayedFinal": "final"
+    },
+    {
+      "id": "speckit-specify-clarify",
+      "frames": 12,
+      "bytes": 122237,
+      "durationMs": 23600,
+      "sha256": "ac79ba98bd6c80b2215c132f8ab36a3bbe376985153fee83500eb6b02c35f6d0",
+      "baseline": {
+        "total": 10,
+        "passed": 2,
+        "failed": 8,
+        "status": 1
+      },
+      "red": {
+        "total": 6,
+        "passed": 1,
+        "failed": 5,
+        "status": 1
+      },
+      "final": {
+        "total": 10,
+        "passed": 10,
+        "failed": 0,
+        "status": 0
+      },
+      "displayedFinal": "baseline"
+    },
+    {
+      "id": "speckit-plan-analyze",
+      "frames": 12,
+      "bytes": 128172,
+      "durationMs": 23600,
+      "sha256": "ed9b9d639a73f24ee922036336d900560e6ec89e54d24d9a0e4cec877fd67342",
+      "baseline": {
+        "total": 10,
+        "passed": 2,
+        "failed": 8,
+        "status": 1
+      },
+      "red": {
+        "total": 6,
+        "passed": 1,
+        "failed": 5,
+        "status": 1
+      },
+      "final": {
+        "total": 10,
+        "passed": 10,
+        "failed": 0,
+        "status": 0
+      },
+      "displayedFinal": "baseline"
+    },
+    {
+      "id": "speckit-implement-converge",
+      "frames": 12,
+      "bytes": 130980,
+      "durationMs": 23600,
+      "sha256": "71149f421b84455c812a7558f54768afb947155e6d211b7bb991e5afd8bd5f18",
+      "baseline": {
+        "total": 10,
+        "passed": 2,
+        "failed": 8,
+        "status": 1
+      },
+      "red": {
+        "total": 6,
+        "passed": 1,
+        "failed": 5,
+        "status": 1
+      },
+      "final": {
+        "total": 10,
+        "passed": 10,
+        "failed": 0,
+        "status": 0
+      },
+      "displayedFinal": "final"
+    },
+    {
+      "id": "skills-find-load",
+      "frames": 12,
+      "bytes": 121127,
+      "durationMs": 23600,
+      "sha256": "c145bab00ed43d4b5731cae3917f71b3640ba62d57d08a54002d580b8d5299b1",
+      "baseline": {
+        "total": 7,
+        "passed": 3,
+        "failed": 4,
+        "status": 1
+      },
+      "red": {
+        "total": 5,
+        "passed": 1,
+        "failed": 4,
+        "status": 1
+      },
+      "final": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "status": 0
+      },
+      "displayedFinal": "baseline"
+    },
+    {
+      "id": "public-debug",
+      "frames": 12,
+      "bytes": 117464,
+      "durationMs": 23600,
+      "sha256": "81bf462cda757acfad06811f35bdf9bd4c0ba6634227da00fd996a15cb2e7551",
+      "baseline": {
+        "total": 7,
+        "passed": 3,
+        "failed": 4,
+        "status": 1
+      },
+      "red": {
+        "total": 5,
+        "passed": 1,
+        "failed": 4,
+        "status": 1
+      },
+      "final": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "status": 0
+      },
+      "displayedFinal": "baseline"
+    },
+    {
+      "id": "public-tdd",
+      "frames": 12,
+      "bytes": 125812,
+      "durationMs": 23600,
+      "sha256": "f63cf07d6d5d399131611b3933ea8f2a3f08bc1f3e6d8458084e196bfac460d8",
+      "baseline": {
+        "total": 7,
+        "passed": 3,
+        "failed": 4,
+        "status": 1
+      },
+      "red": {
+        "total": 5,
+        "passed": 1,
+        "failed": 4,
+        "status": 1
+      },
+      "final": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "status": 0
+      },
+      "displayedFinal": "final"
+    },
+    {
+      "id": "public-verify",
+      "frames": 12,
+      "bytes": 122421,
+      "durationMs": 23600,
+      "sha256": "c6665d35c6fe0da06b04df33a902f278d3853b7355b4e2400b030fd08ab178b0",
+      "baseline": {
+        "total": 7,
+        "passed": 3,
+        "failed": 4,
+        "status": 1
+      },
+      "red": {
+        "total": 5,
+        "passed": 1,
+        "failed": 4,
+        "status": 1
+      },
+      "final": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "status": 0
+      },
+      "displayedFinal": "final"
+    }
+  ]
+}

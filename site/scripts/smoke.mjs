@@ -1,10 +1,11 @@
-import { mkdirSync, readFileSync } from 'node:fs';
+import { existsSync, mkdirSync } from 'node:fs';
 import { join, relative, resolve, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { chromium } from 'playwright';
-import { ROOT } from './lib/util.mjs';
+import { DOWNLOADS, ROOT, urlFrom } from './lib/util.mjs';
 import { PAGES } from './lib/layout.mjs';
-import { DOCS, listHtml } from './build.mjs';
+import { loadLab, transcriptOutput } from './lib/data.mjs';
+import { listGenerated } from './build.mjs';
 
 const WIDTHS = [320, 768, 1024, 1440];
 const USAGE = 'Usage: npm run smoke [-- --shots <folder>] [--base <https://host/path/>]';
@@ -27,13 +28,7 @@ const fail = (file, message) => errors.push(`${relative(ROOT, file)}: ${message}
 const url = (file) => (base ? new URL(relative(ROOT, file).split(sep).join('/'), base).href : pathToFileURL(file).href);
 const ownRequest = (address) => address.startsWith('data:') || (base ? address.startsWith(base.href) : address.startsWith('file:'));
 
-const registry = JSON.parse(readFileSync(join(ROOT, 'commands', 'commands.json'), 'utf8'));
-const totalCommands = registry.builtIns.length + registry.custom.length;
-const verifyCommands = [...registry.builtIns, ...registry.custom].filter((cmd) => cmd.mechanism === 'verify').length;
-
-async function visibleCards(page) {
-  return page.locator('.cmd-card:visible').count();
-}
+const lab = loadLab();
 
 // Chromium restores a window from full screen asynchronously, and refuses to resize it until it has.
 async function resize(page, size) {
@@ -88,7 +83,11 @@ async function testPlayer(page, file) {
       locked: getComputedStyle(document.documentElement).overflow === 'hidden',
       stageSrc: document.querySelector('.theater-stage img').getAttribute('src'),
     }));
-    if (!(await trigger.evaluate((el) => el === document.activeElement))) fail(file, `${how} did not return focus to the Play button`);
+    // Focus comes back from the fullscreenchange handler, which can land a beat after full screen ends.
+    const focused = await trigger.evaluateHandle((el) => el)
+      .then((handle) => page.waitForFunction((el) => el === document.activeElement, handle, { timeout: 2000 }))
+      .then(() => true, () => false);
+    if (!focused) fail(file, `${how} did not return focus to the Play button`);
     if (after.fullscreen) fail(file, `${how} left the browser in full screen`);
     if (after.locked) fail(file, `${how} left page scrolling locked`);
     if (after.stageSrc) fail(file, `${how} left the GIF loaded (${after.stageSrc})`);
@@ -148,34 +147,6 @@ async function testTheaterNarrow(page, file) {
   await resize(page, { width: 1440, height: 900 });
 }
 
-async function testCatalog(page, file) {
-  const status = page.locator('#cmd-status');
-  const expectStatus = async (count, what) => {
-    const text = await status.innerText();
-    if (text !== `Showing ${count} of ${totalCommands} commands.`) fail(file, `${what}: status says "${text}"`);
-    const cards = await visibleCards(page);
-    if (cards !== count) fail(file, `${what}: ${cards} cards visible, expected ${count}`);
-  };
-  if (!(await page.locator('[data-catalog-filters]').isVisible())) return fail(file, 'catalog filters are not shown');
-  await expectStatus(totalCommands, 'initial');
-  await page.click('[data-filter="verify"]');
-  await expectStatus(verifyCommands, 'verify mechanism');
-  await page.click('[data-filter="all"]');
-  await page.check('#cmd-custom');
-  await expectStatus(registry.custom.length, 'lab commands only');
-  await page.uncheck('#cmd-custom');
-  await page.fill('#cmd-search', '/handoff');
-  const found = await visibleCards(page);
-  const names = await page.locator('.cmd-card:visible .cmd-name').allInnerTexts();
-  if (!found || !names.includes('/handoff')) fail(file, `search "/handoff" found ${names.join(', ') || 'nothing'}`);
-  await page.fill('#cmd-search', 'zzzz-no-such-command');
-  await expectStatus(0, 'nonsense search');
-  if (!(await page.locator('#cmd-empty').isVisible())) fail(file, 'empty state is not shown');
-  await page.click('[data-clear]');
-  await expectStatus(totalCommands, 'after Clear filters');
-  if (!(await page.locator('#cmd-search').evaluate((el) => el === document.activeElement))) fail(file, 'Clear filters did not return focus to search');
-}
-
 async function testSkipLink(page, file) {
   await page.keyboard.press('Tab');
   const first = await page.evaluate(() => document.activeElement?.className);
@@ -185,12 +156,72 @@ async function testSkipLink(page, file) {
   if (target !== 'main') fail(file, `skip link moved focus to "${target}"`);
 }
 
+// The home page must route people to both labs, setup, skill loading and all three downloads.
+async function testHome(page, file) {
+  const cards = await page.locator('.lab-card h3 a').evaluateAll((links) => links.map((link) => link.getAttribute('href')));
+  const expected = lab.labs.map(({ id }) => urlFrom(file, PAGES[id]));
+  if (JSON.stringify(cards) !== JSON.stringify(expected)) fail(file, `lab cards link to ${cards.join(', ') || 'nothing'}, expected ${expected.join(', ')}`);
+  for (const id of ['labs', 'setup', 'load-skills', 'workshop']) {
+    if (!(await page.locator(`#${id}`).count())) fail(file, `missing #${id} section`);
+  }
+  const downloads = new Set(await page.locator('a[download]').evaluateAll((links) => links.map((link) => link.getAttribute('href'))));
+  for (const target of Object.values(DOWNLOADS)) {
+    const href = urlFrom(file, target);
+    if (!downloads.has(href)) fail(file, `no download link to ${href}`);
+    if (!base && !existsSync(target)) fail(file, `download ${href} has not been built`);
+  }
+}
+
+// Each lab page must show exactly its own walkthroughs, and every one must play full screen and hand focus back.
+async function testLabPage(page, file, item) {
+  const gifs = await page.locator('#watch .player-media img').evaluateAll((images) => images.map((img) => img.dataset.gif));
+  const expected = item.walkthroughs.map((walk) => urlFrom(file, walk.gif));
+  if (JSON.stringify(gifs) !== JSON.stringify(expected)) fail(file, `walkthrough GIFs are ${gifs.join(', ')}, expected ${expected.join(', ')}`);
+  const ids = await page.locator('#watch .walk').evaluateAll((walks) => walks.map((walk) => walk.id));
+  if (JSON.stringify(ids) !== JSON.stringify(item.walkthroughs.map(({ id }) => `walk-${id}`))) fail(file, `walkthrough anchors are ${ids.join(', ')}`);
+  if (!(await page.locator('.toc a[href="#watch"]').count())) fail(file, 'contents does not link to the walkthroughs');
+
+  const before = await page.evaluate(() => ({ w: innerWidth, h: innerHeight }));
+  const triggers = page.locator('#watch .player-toggle');
+  for (let index = 0; index < expected.length; index += 1) {
+    const trigger = triggers.nth(index);
+    await trigger.click();
+    const stage = page.locator('.theater-stage img');
+    await page.waitForFunction((el) => el.complete && el.naturalWidth === 1280, await stage.elementHandle());
+    const src = await stage.getAttribute('src');
+    if (src !== expected[index]) fail(file, `Play ${index + 1} opened ${src}, expected ${expected[index]}`);
+    const transcript = await page.locator('[data-theater-transcript]').getAttribute('href');
+    const wanted = urlFrom(file, transcriptOutput(item.walkthroughs[index].id));
+    if (transcript !== wanted) fail(file, `theater transcript link is ${transcript}, expected ${wanted}`);
+    await page.locator('[data-theater-close]').click();
+    await page.waitForFunction(({ w, h }) => !document.fullscreenElement && innerWidth === w && innerHeight === h, before);
+    const focused = await page.waitForFunction((el) => el === document.activeElement, await trigger.elementHandle(), { timeout: 5000 })
+      .then(() => true, () => false);
+    if (!focused) fail(file, `focus not restored after walkthrough ${index + 1}`);
+  }
+}
+
+// Copy must put the exact command on the clipboard, and say so plainly when the clipboard refuses.
+async function testCopy(page, file) {
+  await page.evaluate(() => { navigator.clipboard.writeText = async (text) => { window.__copied = text; }; });
+  const block = page.locator('main .code-block').first();
+  const text = await block.locator('pre').evaluate((pre) => pre.innerText.replace(/\n$/, ''));
+  await block.locator('.copy').click();
+  if (await page.evaluate(() => window.__copied) !== text) fail(file, 'Copy did not put the whole code block on the clipboard');
+  if (await block.locator('.copy').innerText() !== 'Copied') fail(file, 'Copy does not confirm success');
+  await page.evaluate(() => { navigator.clipboard.writeText = async () => { throw new Error('Clipboard permission denied'); }; });
+  await block.locator('.copy').click();
+  if (await block.locator('.copy').innerText() !== 'Copy failed') fail(file, 'clipboard failure is not surfaced');
+}
+
 const browser = await chromium.launch();
 try {
   const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
-  const files = [PAGES.home, PAGES.commands, PAGES.skills, ...listHtml(DOCS).sort()];
+  const first = [PAGES.home, PAGES.setup, ...lab.labs.map(({ id }) => PAGES[id])];
+  const files = [...first, ...listGenerated().filter((path) => !first.includes(path)).sort()];
   const hostedLinks = new Set();
   let images = 0;
+  let players = 0;
 
   for (const file of files) {
     const page = await context.newPage();
@@ -219,6 +250,7 @@ try {
     });
     images += broken.count;
     for (const src of broken.broken) fail(file, `image did not load: ${src}`);
+    players += await page.locator('.player-toggle').count();
 
     for (const width of WIDTHS) {
       await page.setViewportSize({ width, height: 900 });
@@ -227,31 +259,36 @@ try {
     }
     await page.setViewportSize({ width: 1440, height: 900 });
 
-    if (await page.locator('main pre:not(.loop pre)').count()) {
-      if (!(await page.locator('.code-block .copy').count())) fail(file, 'code blocks have no copy button');
-    }
+    const blocks = await page.locator('main pre').count();
+    if (blocks && (await page.locator('main .code-block .copy').count()) !== blocks) fail(file, 'not every code block has a copy button');
+
     if (file === PAGES.home) {
       await testSkipLink(page, file);
+      await testHome(page, file);
       await testPlayer(page, file);
       await testTheaterNarrow(page, file);
     }
-    if (file === PAGES.commands) {
+    if (file === PAGES.setup) await testCopy(page, file);
+    const item = lab.labs.find(({ id }) => PAGES[id] === file);
+    if (item) {
+      await testLabPage(page, file, item);
       await testPlayer(page, file);
-      await testCatalog(page, file);
     }
-    if (file === PAGES.skills) await testPlayer(page, file);
+    if (file === transcriptOutput(lab.walkthroughs[0].id)) await testPlayer(page, file);
     await page.close();
   }
+
+  const expectedPlayers = lab.walkthroughs.length * 2 + 1;
+  if (players !== expectedPlayers) errors.push(`expected ${expectedPlayers} players (1 hero, 1 per walkthrough on its lab page, 1 per transcript), found ${players}`);
 
   if (shots) {
     mkdirSync(shots, { recursive: true });
     const targets = [
       ['home', PAGES.home],
-      ['commands', PAGES.commands],
-      ['skills', PAGES.skills],
-      ['doc-readme', join(DOCS, 'commands', 'README.html')],
-      ['doc-prompt', join(DOCS, 'commands', 'github', 'prompts', 'verify.prompt.html')],
-      ['doc-skill', join(DOCS, 'skills', 'github', 'skills', 'grill-me', 'SKILL.html')],
+      ['setup', PAGES.setup],
+      ...lab.labs.map(({ id }) => [id, PAGES[id]]),
+      ['facilitator', PAGES.facilitator],
+      ['transcript', transcriptOutput(lab.walkthroughs[0].id)],
     ];
     for (const width of [1440, 390]) {
       const page = await context.newPage();
@@ -315,7 +352,7 @@ try {
     process.exitCode = 1;
   } else {
     const hosted = base ? `; on ${base.href}, the root redirect works and ${hostedLinks.size} same-site links and assets return 2xx` : '';
-    console.log(`Site smoke passed: ${files.length} pages, ${images} images decoded, no errors or ${base ? 'off-site' : 'network'} requests, no overflow at ${WIDTHS.join('/')}px; full-screen player, catalog filter, and skip link work${hosted}.${shots ? ` Screenshots: ${shots}` : ''}`);
+    console.log(`Site smoke passed: ${files.length} pages, ${images} images decoded, ${players} players, no errors or ${base ? 'off-site' : 'network'} requests, no overflow at ${WIDTHS.join('/')}px; home routes to both labs and all three downloads; all ${lab.walkthroughs.length} lab GIFs play full screen and return focus; copy, clipboard error, theater and skip link work${hosted}.${shots ? ` Screenshots: ${shots}` : ''}`);
   }
 } finally {
   await browser.close();
