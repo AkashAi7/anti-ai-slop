@@ -1,0 +1,7 @@
+{
+  "claims": [
+    {"id": "timestamp", "claim": "createdAt is epoch seconds", "status": "contradicted", "source": "exercises/02-ground/contract.json#capabilities.timestamps", "conclusion": "The exercise contract specifies an ISO 8601 UTC string."},
+    {"id": "package", "claim": "incident-smart-counter is mandatory", "status": "contradicted", "source": "exercises/02-ground/contract.json#capabilities.countOpen", "conclusion": "The supplied contract needs no package. The real registry existence of this illustrative name was not checked."}
+  ],
+  "dependency": {"decision": "reuse", "capability": "Array.prototype.filter", "reason": "The supplied countOpen contract can be met by the existing runtime without a package."}
+}

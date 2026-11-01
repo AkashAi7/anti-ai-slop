@@ -1,0 +1,13 @@
+{
+  "goal": "Give the incoming on-call engineer a count of unresolved incidents",
+  "audience": "Incoming on-call engineer",
+  "includedStatuses": ["open", "investigating"],
+  "outputFields": ["openCount"],
+  "errorBehavior": "Reject non-array input with TypeError",
+  "examples": [
+    { "input": [{"status": "open"}, {"status": "resolved"}], "expected": {"openCount": 1} },
+    { "input": [], "expected": {"openCount": 0} }
+  ],
+  "nonGoals": ["no network service", "no dashboard", "no automatic incident closure"],
+  "unresolved": []
+}

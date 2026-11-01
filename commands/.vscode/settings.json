@@ -1,0 +1,8 @@
+{
+  "chat.promptFilesRecommendations": {
+    "clarify": true,
+    "ground": true,
+    "verify": true,
+    "handoff": true
+  }
+}

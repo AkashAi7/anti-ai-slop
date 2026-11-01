@@ -1,0 +1,61 @@
+{
+  "disclaimer": "Illustrative walkthrough - not recorded Copilot output",
+  "width": 1280,
+  "height": 720,
+  "maxBytes": 8388608,
+  "assets": [
+    {
+      "id": "plan",
+      "kind": "walkthrough",
+      "exercise": "01-clarify-before-code",
+      "observed": "# pass 6 of 6",
+      "frames": 15,
+      "bytes": 206328,
+      "sha256": "90e179188d8c0ed69b6ae3b9ce36d68a1616af10ed3bedcf9dae08428af23b2d"
+    },
+    {
+      "id": "ground",
+      "kind": "walkthrough",
+      "exercise": "02-ground-in-the-repo",
+      "observed": "# pass 5 of 5",
+      "frames": 15,
+      "bytes": 207783,
+      "sha256": "9135b623c9f430a9bd125a5b337a17ef04b2f33a5c7a8d6457ebef148520ce72"
+    },
+    {
+      "id": "verify",
+      "kind": "walkthrough",
+      "exercise": "03-prove-it-with-tests",
+      "observed": "# pass 5 of 5",
+      "frames": 15,
+      "bytes": 195870,
+      "sha256": "4f3bbfd2e3d4fcf316be5d193e0142585520af3402a38bf91c988679878dbb51"
+    },
+    {
+      "id": "contain",
+      "kind": "walkthrough",
+      "exercise": "07-scope-contract",
+      "observed": "# pass 6 of 6",
+      "frames": 15,
+      "bytes": 196928,
+      "sha256": "9c7d6432bf3c59414caeeae20a0314ec7826b65c2bf7d0f546f5d66fbd35c202"
+    },
+    {
+      "id": "context",
+      "kind": "walkthrough",
+      "exercise": "04-clean-context-handoff",
+      "observed": "# pass 5 of 5",
+      "frames": 15,
+      "bytes": 187681,
+      "sha256": "5c68b23e12c2b7631f0d6861f7c52fb9e210f30e2df51c058aed775dffbd9b98"
+    },
+    {
+      "id": "studio-tour",
+      "kind": "tour",
+      "exercise": null,
+      "frames": 11,
+      "bytes": 282071,
+      "sha256": "99038ca9a647f76318ea4b57bc7dc3b72612e109cd7f2c683eacc6d968426a4d"
+    }
+  ]
+}

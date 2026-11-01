@@ -1,0 +1,25 @@
+{
+  "name": "anti-slop-skills-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Skills - Anti-Slop Lab: real VS Code/Copilot exercises and clearly illustrative GIFs.",
+  "engines": { "node": ">=22.20" },
+  "scripts": {
+    "demo": "node scripts/demo.mjs",
+    "setup": "node scripts/setup.mjs",
+    "check": "node scripts/check.mjs",
+    "validate": "node scripts/validate.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "gifs": "node scripts/record-gifs.mjs",
+    "verify:assets": "node scripts/verify-assets.mjs",
+    "verify:sources": "node scripts/verify-sources.mjs"
+  },
+  "devDependencies": {
+    "gifenc": "1.0.3",
+    "omggif": "1.0.10",
+    "playwright": "1.64.1",
+    "pngjs": "7.0.0",
+    "yaml": "2.9.1"
+  }
+}

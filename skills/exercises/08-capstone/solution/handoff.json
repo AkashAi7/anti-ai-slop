@@ -1,0 +1,7 @@
+{
+  "changed": "Reference fixture filters active statuses while preserving input order and output shape.",
+  "command": "npm run check -- 08-capstone --solution",
+  "observed": "Fixture expectation: all four acceptance checks pass. This text is not a participant execution record.",
+  "notVerified": ["A live participant Copilot session and actual learner code are not verified by this fixture."],
+  "evidenceKind": "reference-fixture"
+}

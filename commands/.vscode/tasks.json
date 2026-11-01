@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "Commands: interactive guide", "type": "process", "command": "node", "args": ["scripts/demo.mjs"], "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": [] },
+    { "label": "Commands: open Command Studio", "type": "process", "command": "node", "args": ["scripts/studio.mjs"], "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": [] },
+    { "label": "Commands: prepare exercise", "type": "process", "command": "node", "args": ["scripts/setup.mjs", "${input:exercise}"], "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": [] },
+    { "label": "Commands: check learner work", "type": "process", "command": "node", "args": ["scripts/check.mjs", "${input:exercise}"], "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": [] },
+    { "label": "Commands: show defective baseline", "type": "process", "command": "node", "args": ["scripts/check.mjs", "${input:exercise}", "--baseline"], "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": [] }
+  ],
+  "inputs": [
+    { "id": "exercise", "type": "pickString", "description": "Choose an independent exercise", "options": ["01-clarify-before-code", "02-ground-in-the-repo", "03-prove-it-with-tests", "04-clean-context-handoff", "05-deps-reality-check", "06-deslop-the-diff", "07-scope-contract", "08-root-cause-not-symptom"] }
+  ]
+}

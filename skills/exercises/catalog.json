@@ -1,0 +1,58 @@
+[
+  {
+    "id": "01-clarify", "title": "Grill the request, not the person", "track": "beginner",
+    "skills": ["grill-me", "scope-contract"],
+    "prompt": "/grill-me Read exercises/01-clarify/TASK.md and work/01-clarify/brief.json. Ask the unresolved decision frontier. Do not write code or inspect the reference solution.",
+    "expectedFailures": ["brief has an observable contract"],
+    "testCount": 2
+  },
+  {
+    "id": "02-ground", "title": "Challenge the plausible claim", "track": "beginner",
+    "skills": ["evidence-first", "dependency-reality-check"],
+    "prompt": "/evidence-first Check the claims in work/02-ground/evidence.json against exercises/02-ground/contract.json. Mark unsupported claims honestly; do not install packages or inspect the solution.",
+    "expectedFailures": ["claims distinguish evidence from invention", "dependency decision uses the supplied capability"],
+    "testCount": 2
+  },
+  {
+    "id": "03-honest-tests", "title": "Make the test earn its green", "track": "beginner",
+    "skills": ["test-driven-development"],
+    "prompt": "/test-driven-development Read exercises/03-honest-tests/TASK.md. Add a behavioral assertion in work/03-honest-tests/regression.mjs, show it failing on the current code, then minimally fix work/03-honest-tests/incident.mjs.",
+    "expectedFailures": ["resolved incidents are excluded", "learner regression catches the known defect"],
+    "testCount": 4
+  },
+  {
+    "id": "04-simplify", "title": "Use the function, not a framework", "track": "beginner",
+    "skills": ["simplify-first", "repo-conventions"],
+    "prompt": "/simplify-first Read exercises/04-simplify/TASK.md and conventions.mjs. Simplify only work/04-simplify/incident.mjs; preserve inputs, follow the existing helper, and prove behavior with the lab checks.",
+    "expectedFailures": ["numeric priority order is correct", "input order is preserved"],
+    "testCount": 3
+  },
+  {
+    "id": "05-debug", "title": "Trace the boundary error", "track": "advanced",
+    "skills": ["systematic-debugging"],
+    "prompt": "/systematic-debugging Reproduce the failure in work/05-debug/incident.mjs using exercises/05-debug/TASK.md. Trace the boundary and state one hypothesis before fixing it; no retry wrapper.",
+    "expectedFailures": ["seconds become milliseconds", "missing timestamps are rejected"],
+    "testCount": 3
+  },
+  {
+    "id": "06-failure-paths", "title": "Do not disguise failure as success", "track": "advanced",
+    "skills": ["failure-paths"],
+    "prompt": "/failure-paths Inspect work/06-failure-paths/incident.mjs and exercises/06-failure-paths/TASK.md. Make malformed input fail explicitly; preserve valid empty input and validate failure cases.",
+    "expectedFailures": ["malformed JSON surfaces an error", "wrong shape is rejected"],
+    "testCount": 4
+  },
+  {
+    "id": "07-review", "title": "Review the review", "track": "advanced",
+    "skills": ["review-feedback", "evidence-first"],
+    "prompt": "/review-feedback Evaluate exercises/07-review/comments.json against its contract. Record evidence-backed decisions in work/07-review/review.json, then change only work/07-review/incident.mjs as justified.",
+    "expectedFailures": ["zero remains a valid priority", "invalid priorities are rejected", "review dispositions reflect the contract"],
+    "testCount": 3
+  },
+  {
+    "id": "08-capstone", "title": "Prove done, then hand off", "track": "advanced",
+    "skills": ["verification-before-completion", "concise-handoff", "scope-contract"],
+    "prompt": "/verification-before-completion Read exercises/08-capstone/TASK.md. Check work/08-capstone/incident.mjs against every acceptance criterion. Fix only the bounded defect, run checks, then record real evidence in handoff.json.",
+    "expectedFailures": ["handoff excludes resolved incidents", "handoff evidence is explicit"],
+    "testCount": 4
+  }
+]

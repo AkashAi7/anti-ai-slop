@@ -1,0 +1,30 @@
+{
+  "name": "anti-slop-commands-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Commands - Anti-Slop Lab: VS Code chat /commands as anti-slop checkpoints, with an offline Command Studio, illustrative GIFs, and graded exercises.",
+  "engines": { "node": ">=22.20" },
+  "scripts": {
+    "demo": "node scripts/demo.mjs",
+    "studio": "node scripts/studio.mjs",
+    "setup": "node scripts/setup.mjs",
+    "check": "node scripts/check.mjs",
+    "validate": "node scripts/validate.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "build": "node scripts/build-studio-data.mjs && node scripts/build-docs.mjs",
+    "build:studio": "node scripts/build-studio-data.mjs",
+    "build:docs": "node scripts/build-docs.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "gifs": "node scripts/record-gifs.mjs",
+    "verify:assets": "node scripts/verify-assets.mjs",
+    "verify:sources": "node scripts/verify-sources.mjs"
+  },
+  "devDependencies": {
+    "gifenc": "1.0.3",
+    "omggif": "1.0.10",
+    "playwright": "1.64.1",
+    "pngjs": "7.0.0",
+    "yaml": "2.9.1"
+  }
+}

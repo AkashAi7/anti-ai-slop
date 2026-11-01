@@ -1,0 +1,36 @@
+{
+  "disclaimer": "Illustrative walkthrough - not recorded Copilot output",
+  "width": 1280,
+  "height": 720,
+  "maxBytes": 8388608,
+  "assets": [
+    {
+      "id": "01-grill-me",
+      "exercise": "01-clarify",
+      "frames": 15,
+      "bytes": 150314,
+      "sha256": "08dad477cb33e36b8bc02d5f80efe0f8a424c41625b38659a225a1c94b8e8866"
+    },
+    {
+      "id": "02-evidence-first",
+      "exercise": "02-ground",
+      "frames": 15,
+      "bytes": 142274,
+      "sha256": "d390b2b982e9ccd15f7b35db301a9a71547e71366d7e58d49cf7dffd4f1770ec"
+    },
+    {
+      "id": "03-test-and-debug",
+      "exercise": "03-honest-tests",
+      "frames": 15,
+      "bytes": 141626,
+      "sha256": "034d33ba69f8be7ca7d0693d1314231cc154389f75e3f6fb57ba539f2fbc88be"
+    },
+    {
+      "id": "04-verify-and-handoff",
+      "exercise": "08-capstone",
+      "frames": 15,
+      "bytes": 144684,
+      "sha256": "6e8b75f58c55aba40531fdc8651b51fd439724d8f58b6605aa24f3e3801b49db"
+    }
+  ]
+}

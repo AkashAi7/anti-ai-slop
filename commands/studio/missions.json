@@ -1,0 +1,100 @@
+[
+  {
+    "id": "silent-assumption",
+    "smell": "You asked for \"discount codes at checkout\". The agent went straight to code and quietly decided that codes stack and never expire.",
+    "choices": ["clarify", "fix", "compact", "tests"],
+    "answer": "clarify",
+    "why": "/clarify stops before code and turns silent assumptions into at most 5 questions, each with a proposed default. Stacking and expiry are product decisions, not something the agent should guess."
+  },
+  {
+    "id": "claimed-green",
+    "smell": "The agent replies \"All tests pass\" with a checkmark, but there is no command, no exit code, and no output anywhere in the chat.",
+    "choices": ["verify", "explain", "deslop", "plan"],
+    "answer": "verify",
+    "why": "/verify runs the real checks and reports the command, exit code, and observed result. It ends with VERIFIED or NOT VERIFIED, so a claim without evidence cannot pass."
+  },
+  {
+    "id": "invented-helper",
+    "smell": "The diff calls formatCurrency() and reads config.paymentDays. The repo actually has formatMoney() in src/lib/money.js and a dueDays key.",
+    "choices": ["ground", "simplify", "fix", "new"],
+    "answer": "ground",
+    "why": "/ground maps every helper and config key the change needs to what exists in the repo, with file:line evidence, and flags anything invented."
+  },
+  {
+    "id": "phantom-package",
+    "smell": "For a ten-line settings loader, the agent added two new packages to package.json, and one import name does not exist on npm.",
+    "choices": ["deps-check", "deslop", "tests", "compact"],
+    "answer": "deps-check",
+    "why": "/deps-check verifies each import and package against the manifest, the standard library, and official docs, and never installs anything. Hallucinated or unnecessary packages show up before they ship."
+  },
+  {
+    "id": "special-case",
+    "smell": "A bug report says \"1,299.00\" parses wrong. The fix adds if (input === '1,299.00') return 1299 and the report goes green.",
+    "choices": ["root-cause", "fix", "verify", "scope"],
+    "answer": "root-cause",
+    "why": "/root-cause reproduces the bug, tests a few hypotheses, and rejects special-casing the reported input. The real cause (thousands separators) also breaks 2,500.00."
+  },
+  {
+    "id": "slop-diff",
+    "smell": "The change works, but it leaves console.log calls, a try/catch that swallows errors, and a copy of a helper that already exists.",
+    "choices": ["deslop", "simplify", "explain", "clear"],
+    "answer": "deslop",
+    "why": "/deslop reviews a change for named slop patterns (debug output, swallowed errors, duplicate helpers, fake tests) and reports findings with file:line, so you fix the right things."
+  },
+  {
+    "id": "long-chat",
+    "smell": "You are eighty turns into a chat full of dead ends, and you need to continue tomorrow in a clean session.",
+    "choices": ["handoff", "fork", "rename", "models"],
+    "answer": "handoff",
+    "why": "/handoff writes HANDOFF.md with goal, state, decisions, evidence, open questions, and next steps. A fresh chat can then resume without inheriting the noise. Follow it with /clear."
+  },
+  {
+    "id": "scope-creep",
+    "smell": "Asked to fix one quantity bug, the agent proposes renaming a public function and refactoring three unrelated files.",
+    "choices": ["scope", "simplify", "plan", "deslop"],
+    "answer": "scope",
+    "why": "/scope writes SCOPE.md before any edit: allowed files, forbidden paths, frozen public API, and a done-when check. Anything outside it is out of bounds."
+  },
+  {
+    "id": "silent-tools",
+    "smell": "Tool calls run without asking you, including a terminal command that deletes a folder.",
+    "choices": ["disableAutoApprove", "autoApprove", "tools", "clear"],
+    "answer": "disableAutoApprove",
+    "why": "/disableAutoApprove (alias /disableYolo) brings back the approval prompt, so a human checks each tool call again. /autoApprove does the opposite."
+  },
+  {
+    "id": "prompt-missing",
+    "smell": "You added a prompt file, but it does not appear when you type /, and you cannot tell why.",
+    "choices": ["troubleshoot", "prompts", "help", "init"],
+    "answer": "troubleshoot",
+    "why": "/troubleshoot reads the chat debug logs to explain why a customization did not load. /prompts lists and manages prompt files, but it does not diagnose the failure."
+  },
+  {
+    "id": "happy-path-only",
+    "smell": "Every test feeds valid input and checks the right answer. Nothing tests malformed input, wrong types, or boundary values.",
+    "choices": ["fail-paths", "tests", "verify", "setupTests"],
+    "answer": "fail-paths",
+    "why": "/fail-paths enumerates edge cases and failure modes, writes tests for them, and runs them without weakening assertions. Plain /tests often stops at the happy path."
+  },
+  {
+    "id": "repeat-rules",
+    "smell": "In every new chat you re-explain that this repo uses node:test, ESM, and no new dependencies.",
+    "choices": ["create-instructions", "compact", "rename", "newNotebook"],
+    "answer": "create-instructions",
+    "why": "/create-instructions turns repeated rules into an instructions file the agent loads automatically, so you stop pasting them. /init can bootstrap one from the codebase."
+  },
+  {
+    "id": "unread-commit",
+    "smell": "You are about to commit a diff that touches six files. You have not reread it, and the tests last ran an hour ago.",
+    "choices": ["pre-commit", "rename", "fork", "doc"],
+    "answer": "pre-commit",
+    "why": "/pre-commit is the final gate. It checks scope, debug output, secrets, stubs, skipped tests, and a fresh test run, then ends with READY or NOT READY."
+  },
+  {
+    "id": "risky-branch",
+    "smell": "You want to try a risky alternative design, but you do not want to lose the current conversation and its decisions.",
+    "choices": ["fork", "new", "clear", "compact"],
+    "answer": "fork",
+    "why": "/fork copies the conversation into a new session. You can experiment there while the original thread stays intact."
+  }
+]

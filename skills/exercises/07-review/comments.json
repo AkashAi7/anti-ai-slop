@@ -1,0 +1,4 @@
+[
+  {"id": "R1", "comment": "Zero is falsy, so treat it as missing priority and default to 3."},
+  {"id": "R2", "comment": "Reject negative and fractional priorities explicitly."}
+]

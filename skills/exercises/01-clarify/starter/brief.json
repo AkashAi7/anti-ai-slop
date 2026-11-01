@@ -1,0 +1,10 @@
+{
+  "goal": "Make incident summaries better",
+  "audience": "",
+  "includedStatuses": [],
+  "outputFields": [],
+  "errorBehavior": "",
+  "examples": [],
+  "nonGoals": ["no network service"],
+  "unresolved": ["Who reads it?", "Which incidents?", "What output?", "What if input is invalid?"]
+}

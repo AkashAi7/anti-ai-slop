@@ -1,0 +1,35 @@
+{
+  "$comment": "Live documentation checks for every command claim in commands.json. Run npm run verify:sources (needs network).",
+  "sources": [
+    {
+      "id": "vscode-cheat-sheet",
+      "url": "https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet",
+      "covers": "Built-in chat commands except auto-approval commands",
+      "expect": ["10/28/2026", "/plan", "/explain", "/fix", "/tests", "/setupTests", "/doc", "/new", "/newNotebook", "/compact", "/fork", "/clear", "/rename", "/help", "/models", "/tools", "/init", "/instructions", "/create-instructions", "/agents", "/skills", "/prompts", "/hooks", "/create-agent", "/create-skill", "/create-prompt", "/create-hook", "/troubleshoot", "/debug", "/sandbox"]
+    },
+    {
+      "id": "vscode-approvals",
+      "url": "https://code.visualstudio.com/docs/agents/run/approvals",
+      "covers": "/autoApprove, /yolo, /disableAutoApprove, /disableYolo",
+      "expect": ["10/28/2026", "/autoApprove", "/yolo", "/disableAutoApprove", "/disableYolo"]
+    },
+    {
+      "id": "vscode-prompt-files",
+      "url": "https://code.visualstudio.com/docs/agent-customization/prompt-files",
+      "covers": "Prompt file location, frontmatter fields, and recommendations setting",
+      "expect": ["10/28/2026", ".prompt.md", ".github/prompts", "argument-hint", "chat.promptFilesRecommendations"]
+    },
+    {
+      "id": "vscode-agent-harnesses",
+      "url": "https://code.visualstudio.com/docs/agents/run/agent-harnesses",
+      "covers": "Session Target Local versus other harnesses",
+      "expect": ["10/28/2026", "Local", "Copilot CLI"]
+    },
+    {
+      "id": "copilot-app-slash-commands",
+      "url": "https://docs.github.com/en/copilot/reference/github-copilot-app-reference/slash-commands",
+      "covers": "GitHub Copilot app commands (mention only)",
+      "expect": ["/plan", "/review", "/security-review", "/rubber-duck", "/spar", "/research", "/context", "/compact", "/fork", "/reset-allowed-tools", "/sandbox on", "/chronicle improve"]
+    }
+  ]
+}
