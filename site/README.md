@@ -51,11 +51,13 @@ npm.cmd run smoke
 
 | Command | Observed result |
 | --- | --- |
-| `npm.cmd run check` | `Site check passed: 88 pages up to date, 1811 links and assets resolve, 291 anchors found.` |
+| `npm.cmd run check` | `Site check passed: 88 pages up to date, 1902 links and assets resolve, 382 anchors found.` |
 | `npm.cmd run smoke` | `Site smoke passed: 88 pages, 31 images decoded, no errors or network requests, no overflow at 320/768/1024/1440px; full-screen player, catalog filter, and skip link work.` |
+| `npm.cmd run smoke -- --base https://akashai7.github.io/anti-ai-slop/` | Same checks against the live site, plus `the root redirect works and 218 same-site links and assets return 2xx.` |
 | `check` with a stray `docs/bogus.html` added | Exit 1: `stale page. Run npm run build.` The file was then removed and `check` passed again. |
+| `check` with a README link to the root `.github` folder | Exit 1: `points outside the files GitHub Pages publishes`. The link was then restored and `check` passed again. |
 
-Not verified: screen-reader output (only DOM semantics and keyboard skip navigation were tested), browsers other than Chromium, and hosting on a real static host.
+Not verified: screen-reader output (only DOM semantics and keyboard skip navigation were tested), browsers other than Chromium, and real phones (narrow layouts were checked at 320px in desktop Chromium).
 
 ## Hosting
 
@@ -67,7 +69,7 @@ The site is published to GitHub Pages by [the Pages workflow](https://github.com
 
 Pull requests run the same checks without deploying. The root `index.html` redirects to `site/index.html`.
 
-Links reach into the labs for GIFs, posters, the studio, and raw files, so publish the whole repository with the site, not `site/` by itself. Paths are relative and the pages need no server-side code, so any static host works. Dot folders such as `.github` are also rendered under `docs/.../github/`, because some static hosts skip dot folders.
+Links reach into the labs for GIFs, posters, the studio, and raw files, so publish the whole repository with the site, not `site/` by itself. Paths are relative and the pages need no server-side code, so any static host works. Dot folders such as `.github` are also rendered under `docs/.../github/`, because some static hosts skip dot folders; GitHub Pages serves them as-is.
 
 After a deployment, check the live site from this folder:
 

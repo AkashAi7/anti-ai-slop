@@ -101,18 +101,26 @@ npm.cmd run smoke
 </thead>
 <tbody><tr>
 <td><code>npm.cmd run check</code></td>
-<td><code>Site check passed: 88 pages up to date, 1811 links and assets resolve, 291 anchors found.</code></td>
+<td><code>Site check passed: 88 pages up to date, 1902 links and assets resolve, 382 anchors found.</code></td>
 </tr>
 <tr>
 <td><code>npm.cmd run smoke</code></td>
 <td><code>Site smoke passed: 88 pages, 31 images decoded, no errors or network requests, no overflow at 320/768/1024/1440px; full-screen player, catalog filter, and skip link work.</code></td>
 </tr>
 <tr>
+<td><code>npm.cmd run smoke -- --base https://akashai7.github.io/anti-ai-slop/</code></td>
+<td>Same checks against the live site, plus <code>the root redirect works and 218 same-site links and assets return 2xx.</code></td>
+</tr>
+<tr>
 <td><code>check</code> with a stray <code>docs/bogus.html</code> added</td>
 <td>Exit 1: <code>stale page. Run npm run build.</code> The file was then removed and <code>check</code> passed again.</td>
 </tr>
+<tr>
+<td><code>check</code> with a README link to the root <code>.github</code> folder</td>
+<td>Exit 1: <code>points outside the files GitHub Pages publishes</code>. The link was then restored and <code>check</code> passed again.</td>
+</tr>
 </tbody></table></div>
-<p>Not verified: screen-reader output (only DOM semantics and keyboard skip navigation were tested), browsers other than Chromium, and hosting on a real static host.</p>
+<p>Not verified: screen-reader output (only DOM semantics and keyboard skip navigation were tested), browsers other than Chromium, and real phones (narrow layouts were checked at 320px in desktop Chromium).</p>
 <h2 id="hosting">Hosting</h2>
 <p>The site is published to GitHub Pages by <a href="https://github.com/AkashAi7/anti-ai-slop/blob/main/.github/workflows/pages.yml">the Pages workflow</a>. On every push to <code>main</code>, it:</p>
 <ol>
@@ -121,7 +129,7 @@ npm.cmd run smoke
 <li>Deploys the committed <code>index.html</code>, <code>site</code>, <code>commands</code>, and <code>skills</code> with <code>git archive</code>, so installed dependencies and learner <code>work/</code> folders never ship.</li>
 </ol>
 <p>Pull requests run the same checks without deploying. The root <code>index.html</code> redirects to <code>site/index.html</code>.</p>
-<p>Links reach into the labs for GIFs, posters, the studio, and raw files, so publish the whole repository with the site, not <code>site/</code> by itself. Paths are relative and the pages need no server-side code, so any static host works. Dot folders such as <code>.github</code> are also rendered under <code>docs/.../github/</code>, because some static hosts skip dot folders.</p>
+<p>Links reach into the labs for GIFs, posters, the studio, and raw files, so publish the whole repository with the site, not <code>site/</code> by itself. Paths are relative and the pages need no server-side code, so any static host works. Dot folders such as <code>.github</code> are also rendered under <code>docs/.../github/</code>, because some static hosts skip dot folders; GitHub Pages serves them as-is.</p>
 <p>After a deployment, check the live site from this folder:</p>
 <pre><code class="language-powershell">npm.cmd run smoke -- --base https://akashai7.github.io/anti-ai-slop/
 </code></pre>
