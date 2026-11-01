@@ -277,11 +277,27 @@ try {
 
   if (base) {
     // Every same-site link and asset must be served, including lab files outside site/.
+    // Dropped connections are retried; an HTTP 4xx fails immediately.
+    const problemWith = async (target) => {
+      let problem = null;
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        if (attempt) await new Promise((done) => setTimeout(done, 500 * attempt));
+        try {
+          const response = await fetch(target, { method: 'HEAD' });
+          if (response.ok) return null;
+          problem = `HTTP ${response.status}`;
+          if (response.status < 500) return problem;
+        } catch (error) {
+          problem = error.cause?.code ?? error.message;
+        }
+      }
+      return problem;
+    };
     const queue = [...hostedLinks];
     const worker = async () => {
       for (let target = queue.shift(); target; target = queue.shift()) {
-        const response = await fetch(target, { method: 'HEAD' }).catch((error) => ({ ok: false, status: error.message }));
-        if (!response.ok) errors.push(`${target}: HTTP ${response.status}`);
+        const problem = await problemWith(target);
+        if (problem) errors.push(`${target}: ${problem}`);
       }
     };
     await Promise.all(Array.from({ length: 8 }, worker));

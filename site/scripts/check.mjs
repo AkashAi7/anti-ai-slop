@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs';
-import { dirname, relative, resolve } from 'node:path';
+import { dirname, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ROOT, SITE } from './lib/util.mjs';
 import { PAGES } from './lib/layout.mjs';
@@ -8,6 +8,9 @@ import { DOCS, generate, listHtml } from './build.mjs';
 const errors = [];
 const fail = (page, message) => errors.push(`${relative(ROOT, page)}: ${message}`);
 const EXTERNAL = /^(https?:|mailto:)/i;
+// GitHub Pages deploys only these top-level paths: keep in sync with the git archive step in .github/workflows/pages.yml.
+const PUBLISHED = new Set(['index.html', 'site', 'commands', 'skills']);
+const published = (target) => PUBLISHED.has(relative(ROOT, target).split(sep)[0]);
 
 const ids = (html) => [...html.matchAll(/\sid="([^"]*)"/g)].map((match) => match[1]);
 
@@ -60,6 +63,10 @@ export function check() {
       const target = path ? resolve(dirname(page), decodeURIComponent(path)) : page;
       if (!existsSync(target)) {
         fail(page, `broken ${match[1]} "${value}"`);
+        continue;
+      }
+      if (!published(target)) {
+        fail(page, `${match[1]} "${value}" points outside the files GitHub Pages publishes`);
         continue;
       }
       // The studio routes with its own hash fragments, so only site pages get anchor checks.

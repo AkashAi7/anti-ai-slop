@@ -50,6 +50,7 @@ jobs:
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         # Keep lab .github files: rendered guides link to prompt sources and skill licenses.
         # git archive excludes installed dependencies, learner work, credentials, and Git history.
+        # site/scripts/check.mjs (PUBLISHED) rejects links outside these paths; update both together.
         run: git archive --format=tar --output="${{ runner.temp }}/artifact.tar" HEAD index.html site commands skills
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'

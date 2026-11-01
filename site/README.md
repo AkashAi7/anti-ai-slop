@@ -42,7 +42,7 @@ npm.cmd run smoke
 | Command | What it does |
 | --- | --- |
 | `npm run build` | Regenerates the pages. It writes only the files that changed and removes stale pages under `docs/`. |
-| `npm run check` | Confirms the committed pages match a fresh build. Then it checks that every link, image, GIF, and anchor resolves, that each page has one `h1`, a title, a language, and unique ids, that every image has alt text, that no page loads a remote resource, and that no raw Markdown leaked into the HTML. |
+| `npm run check` | Confirms the committed pages match a fresh build. Then it checks that every link, image, GIF, and anchor resolves, that each page has one `h1`, a title, a language, and unique ids, that every image has alt text, that no page loads a remote resource, that no local link points outside the files GitHub Pages publishes, and that no raw Markdown leaked into the HTML. |
 | `npm run smoke` | Opens every page in headless Chromium. It checks for console errors, external requests, broken images, and horizontal overflow at 320, 768, 1024, and 1440 px wide. It also tests the full-screen GIF player (the Play button never covers the poster, the theater fills the viewport, Stop and Play again work, Esc and the close button restore focus and scrolling, and a portrait phone gets the turn-sideways hint), the command filter, and keyboard skip navigation. Add `-- --shots <folder>` to save screenshots. Add `-- --base <url>` to run the same checks against a hosted copy; it then also requests every same-site link and asset and confirms the site root opens the home page. |
 
 `npm ci` installs `marked`, which `build` and `check` use, and `playwright` for the smoke test. The smoke test uses the Chromium build that Playwright installs (`npx.cmd playwright install chromium`).
@@ -59,7 +59,7 @@ Not verified: screen-reader output (only DOM semantics and keyboard skip navigat
 
 ## Hosting
 
-The site is published to GitHub Pages by [the Pages workflow](../.github/workflows/pages.yml). On every push to `main`, it:
+The site is published to GitHub Pages by [the Pages workflow](https://github.com/AkashAi7/anti-ai-slop/blob/main/.github/workflows/pages.yml). On every push to `main`, it:
 
 1. Validates both labs, runs their exercise tests, and verifies the GIFs.
 2. Runs `check` and `smoke` on Linux, then confirms no generated file changed.

@@ -83,7 +83,7 @@ npm.cmd run smoke
 </tr>
 <tr>
 <td><code>npm run check</code></td>
-<td>Confirms the committed pages match a fresh build. Then it checks that every link, image, GIF, and anchor resolves, that each page has one <code>h1</code>, a title, a language, and unique ids, that every image has alt text, that no page loads a remote resource, and that no raw Markdown leaked into the HTML.</td>
+<td>Confirms the committed pages match a fresh build. Then it checks that every link, image, GIF, and anchor resolves, that each page has one <code>h1</code>, a title, a language, and unique ids, that every image has alt text, that no page loads a remote resource, that no local link points outside the files GitHub Pages publishes, and that no raw Markdown leaked into the HTML.</td>
 </tr>
 <tr>
 <td><code>npm run smoke</code></td>
@@ -114,7 +114,7 @@ npm.cmd run smoke
 </tbody></table></div>
 <p>Not verified: screen-reader output (only DOM semantics and keyboard skip navigation were tested), browsers other than Chromium, and hosting on a real static host.</p>
 <h2 id="hosting">Hosting</h2>
-<p>The site is published to GitHub Pages by <a href="../../../.github/workflows/pages.yml">the Pages workflow</a>. On every push to <code>main</code>, it:</p>
+<p>The site is published to GitHub Pages by <a href="https://github.com/AkashAi7/anti-ai-slop/blob/main/.github/workflows/pages.yml">the Pages workflow</a>. On every push to <code>main</code>, it:</p>
 <ol>
 <li>Validates both labs, runs their exercise tests, and verifies the GIFs.</li>
 <li>Runs <code>check</code> and <code>smoke</code> on Linux, then confirms no generated file changed.</li>
