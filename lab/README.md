@@ -6,12 +6,13 @@ and its own GIF walkthroughs:
 | Lab | What you practice | Guide |
 | --- | --- | --- |
 | **Lab 1: /commands + Spec Kit** | Built-in slash commands (`/explain`, `/plan`, `/tests`, `/fix`, `/review`, `/rubber-duck`, `/compact`) and spec-driven development with GitHub Spec Kit (`/speckit.*` or `/speckit-*`) | [LAB-1-COMMANDS-SPECKIT.md](LAB-1-COMMANDS-SPECKIT.md) |
-| **Lab 2: anti-slop skills** | Discover skills with the client's built-in skill tools (`/skills`, `/af`, `/skills reload`), load ten popular public skills from five repositories, then use them from plan to handoff: `/grill-me`, `/systematic-debugging`, `/test-driven-development`, `/verification-before-completion`, `/receiving-code-review`, `/code-simplification`, `/humanizer` (plus `/source-driven-development` and `/frontend-design` for your own projects) | [LAB-2-ANTI-SLOP-SKILLS.md](LAB-2-ANTI-SLOP-SKILLS.md) |
+| **Lab 2: anti-slop skills** | Discover skills with the client's built-in skill tools (`/skills`, `/af`, `/skills reload`), load ten pinned public skills and six lab-authored engineering skills, then practice requirements, debugging, testing, verification, security, API compatibility, dependency triage, migrations, profiling and accessibility | [LAB-2-ANTI-SLOP-SKILLS.md](LAB-2-ANTI-SLOP-SKILLS.md) |
 
 Both labs work in **VS Code** (Copilot Chat, Local session) and in the
 **GitHub Copilot app** (desktop, local repository, Interactive session).
-Every exercise starts from deliberately broken code and ends with an
-independent check that rejects plausible-but-wrong results.
+The core coding tracks start from deliberately broken code and end with an
+independent check. Lab 2 also includes focused engineering reviews and
+planning exercises with explicit evidence and scope limits.
 
 ## 1. Install the prerequisites
 
@@ -39,9 +40,10 @@ Pick one:
   cd anti-ai-slop\lab
   ```
 
-The ZIP already contains the ten public skills for Lab 2, their licenses and a
-SHA-256 inventory pinned to each upstream commit. Nothing else is downloaded
-for Lab 2.
+The ZIP already contains ten public skills and six lab-authored engineering
+skills for Lab 2. Upstream files include their licenses and pinned SHA-256
+inventory; the engineering skills have a separate checksum manifest. Nothing
+else is downloaded for Lab 2.
 
 ## 3. Check your machine
 
@@ -127,7 +129,7 @@ Red is intentional. Now open your lab guide:
 
 - [Facilitator run sheet](FACILITATOR.md): timings, stop conditions, completion card
 - [Verification and limitations](VERIFICATION.md): what the checks prove and what they do not
-- [Third-party notices](THIRD-PARTY-NOTICES.md): sources, commits and licenses for the bundled public skills
+- [Third-party notices](THIRD-PARTY-NOTICES.md): sources, commits and licenses for the ten public skills; the six original engineering skills are also listed
 
 In the repository only (the lab ZIP leaves them out to stay small):
 

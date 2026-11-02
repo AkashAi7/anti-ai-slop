@@ -2,7 +2,9 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { dirname, join, relative, sep } from 'node:path';
 import { zipSync } from 'fflate';
 import { DOWNLOADS, LAB, PAGES_URL } from './lib/util.mjs';
-import { publicSkillNames, verifyPublicSkills } from '../../lab/scripts/public-skills.mjs';
+import {
+  engineeringSkillNames, publicSkillNames, verifyEngineeringSkills, verifyPublicSkills,
+} from '../../lab/scripts/public-skills.mjs';
 
 export const LAB_BUNDLE = DOWNLOADS.lab;
 export const SKILLS_BUNDLE = DOWNLOADS.skills;
@@ -14,7 +16,7 @@ export const LAB_FILES = [
   'LAB-1-COMMANDS-SPECKIT.md', 'LAB-2-ANTI-SLOP-SKILLS.md',
   'FACILITATOR.md', 'VERIFICATION.md', 'THIRD-PARTY-NOTICES.md',
 ];
-export const LAB_DIRS = ['scripts', 'tests', 'fixtures', 'vendor'];
+export const LAB_DIRS = ['scripts', 'tests', 'fixtures', 'vendor', 'engineering-skills'];
 
 const SKIP = new Set(['work', 'node_modules', '.git']);
 const mtime = new Date(2026, 0, 1);
@@ -49,12 +51,19 @@ output. The test summaries in them come from real fixture runs.
 To do the exercises yourself, download anti-slop-lab.zip from ${PAGES_URL}
 `;
 
-const SKILLS_README = (names) => `# Public anti-slop skills (pinned copies)
+const SKILLS_README = (publicNames, engineeringNames) => `# Anti-slop skills pack
 
-Ten skill folders from five pinned public repositories, with their licenses
-and a SHA-256 manifest:
+This pack contains ${publicNames.length + engineeringNames.length} skill folders:
 
-${names.map((name) => `- \`${name}\``).join('\n')}
+- ${publicNames.length} pinned upstream skills from five public repositories, with their licenses and upstream SHA-256 manifest:
+
+${publicNames.map((name) => `  - \`${name}\``).join('\n')}
+- ${engineeringNames.length} original software-development skills authored for Anti-Slop Labs:
+${engineeringNames.map((name) => `  - \`${name}\``).join('\n')}
+
+The engineering skills have a separate checksum manifest in
+\`.github/engineering-skills-manifest.json\`. Third-party notices apply to the
+pinned upstream skills only.
 
 ## Add them to your own project
 
@@ -70,11 +79,14 @@ ${names.map((name) => `- \`${name}\``).join('\n')}
 
 Practice with them in Lab 2: ${PAGES_URL}site/lab-2.html
 
-These are public skills, not Copilot built-ins. Read them before use.
+These are skill folders, not Copilot built-ins. Read them before use. The
+upstream files are unmodified redistributions; the engineering skills are
+original to this lab.
 `;
 
 export function bundles() {
   verifyPublicSkills();
+  verifyEngineeringSkills();
   const lab = {};
   for (const name of LAB_FILES) lab[`anti-slop-lab/${name}`] = file(join(LAB, name));
   for (const name of LAB_DIRS) addTree(lab, join(LAB, name), `anti-slop-lab/${name}`);
@@ -85,9 +97,13 @@ export function bundles() {
   gifs['anti-slop-walkthroughs/README.md'] = text(GIFS_README(count));
 
   const skills = {};
-  addTree(skills, join(LAB, 'vendor', 'skill-pack'), 'anti-slop-public-skills/.github');
-  skills['anti-slop-public-skills/README.md'] = text(SKILLS_README(publicSkillNames));
-  skills['anti-slop-public-skills/THIRD-PARTY-NOTICES.md'] = file(join(LAB, 'THIRD-PARTY-NOTICES.md'));
+  addTree(skills, join(LAB, 'vendor', 'skill-pack'), 'anti-slop-skills/.github');
+  for (const name of engineeringSkillNames) {
+    addTree(skills, join(LAB, 'engineering-skills', name), `anti-slop-skills/.github/skills/${name}`);
+  }
+  skills['anti-slop-skills/.github/engineering-skills-manifest.json'] = file(join(LAB, 'engineering-skills', 'skills-manifest.json'));
+  skills['anti-slop-skills/README.md'] = text(SKILLS_README(publicSkillNames, engineeringSkillNames));
+  skills['anti-slop-skills/THIRD-PARTY-NOTICES.md'] = file(join(LAB, 'THIRD-PARTY-NOTICES.md'));
 
   return new Map([
     [LAB_BUNDLE, Buffer.from(zipSync(lab, { level: 9 }))],

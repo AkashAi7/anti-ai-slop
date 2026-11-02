@@ -24,8 +24,13 @@ export const transcriptOutput = (id) => join(TRANSCRIPTS, `${id}.html`);
 
 export function loadLab() {
   const catalog = json('catalog.json');
+  const engineeringManifest = json('engineering-skills', 'skills-manifest.json');
   const scenes = json('walkthroughs.json');
   const media = json('assets', 'media-manifest.json');
+  const catalogSkillNames = catalog.softwareDevelopmentSkills.map(({ command }) => command).sort();
+  const manifestSkillNames = [...engineeringManifest.skills].sort();
+  assert(JSON.stringify(catalogSkillNames) === JSON.stringify(manifestSkillNames),
+    'catalog.json and engineering-skills/skills-manifest.json must list the same skills');
   assert(media.assets.length === scenes.length, 'media-manifest.json is out of step with walkthroughs.json; run npm run gifs in lab/tools');
 
   const walkthroughs = scenes.map((scene) => {
@@ -56,6 +61,7 @@ export function loadLab() {
     sources: catalog.sources,
     recipes: catalog.recipes,
     publicSkills: catalog.publicSkills,
+    softwareDevelopmentSkills: catalog.softwareDevelopmentSkills,
     tracks: catalog.tracks,
     specifyVersion: json('package.json').config.specifyVersion,
     skillPack: json('vendor', 'skill-pack', 'skills-manifest.json'),

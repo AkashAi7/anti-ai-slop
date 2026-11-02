@@ -3,7 +3,7 @@ import { cpSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, re
 import { tmpdir } from 'node:os';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { installPublicSkills } from './public-skills.mjs';
+import { installSkillPack } from './public-skills.mjs';
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export const catalog = JSON.parse(readFileSync(join(ROOT, 'catalog.json'), 'utf8'));
@@ -54,12 +54,12 @@ export function seed(id, destination, target = 'starter', existing = false) {
   copy(join(ROOT, 'fixtures', 'common'));
   if (target === 'reference') copy(join(ROOT, 'fixtures', item.fixture, 'reference'), true);
   if (id === 'skills') {
-    installPublicSkills(destination);
+    installSkillPack(destination);
     const path = join(destination, 'package.json');
     const pkg = JSON.parse(readFileSync(path, 'utf8'));
     pkg.scripts.check = 'node ../../scripts/check.mjs skills';
     writeFileSync(path, `${JSON.stringify(pkg, null, 2)}\n`);
-    // The skills lab reuses the cart starter, with its own brief and practice files for the extra skills.
+    // The skills lab reuses the cart starter and includes focused exercises for its engineering skills.
     copy(join(ROOT, 'fixtures', 'skills'), true);
   }
   return destination;

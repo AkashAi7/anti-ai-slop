@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { test } from 'node:test';
 import { ROOT, originalSuite, plainPath, runNodeTests, track } from './lab.mjs';
-import { verifyPublicSkills } from './public-skills.mjs';
+import { verifyInstalledSkills } from './public-skills.mjs';
 
 const id = process.env.PRACTICE_TRACK;
 const item = track(id);
@@ -106,7 +106,7 @@ if (item.fixture === 'builtins') {
     assert.equal(mod.subtotal.length, 1);
     unchanged('src/legacy-pricing.mjs');
     metadata();
-    if (id === 'skills') verifyPublicSkills(plainPath(directory, '.github'));
+    if (id === 'skills') verifyInstalledSkills(plainPath(directory, '.github'));
   });
   test('learner regressions catch the original bug', () => regressions('cart'));
 } else {

@@ -5,19 +5,29 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import { ROOT, seed, runChecks } from '../scripts/lab.mjs';
 import {
-  installPublicSkills, publicSkillNames, skillFileCount, skillSources, VENDOR, verifyPublicSkills,
+  allSkillNames, ENGINEERING, engineeringSkillFileCount, engineeringSkillNames, installSkillPack,
+  publicSkillNames, skillFileCount, skillSources, VENDOR, verifyEngineeringSkills,
+  verifyInstalledSkills, verifyPublicSkills,
 } from '../scripts/public-skills.mjs';
 
 const catalog = JSON.parse(readFileSync(join(ROOT, 'catalog.json'), 'utf8'));
 
-test('the pack ships grill-me and the other anti-slop skills from licensed public sources', () => {
+test('the pack ships pinned public skills and six lab-authored engineering skills', () => {
   for (const name of ['grill-me', 'grilling', 'systematic-debugging', 'test-driven-development',
     'verification-before-completion', 'receiving-code-review', 'code-simplification',
     'source-driven-development', 'humanizer', 'frontend-design']) {
     assert.ok(publicSkillNames.includes(name), `missing ${name}`);
   }
   assert.equal(new Set(publicSkillNames).size, publicSkillNames.length);
+  assert.equal(new Set(allSkillNames).size, allSkillNames.length);
+  assert.deepEqual(engineeringSkillNames, catalog.softwareDevelopmentSkills.map(({ command }) => command));
+  assert.equal(allSkillNames.length, publicSkillNames.length + engineeringSkillNames.length);
+  assert.equal(verifyEngineeringSkills(), engineeringSkillFileCount);
   assert.deepEqual(readdirSync(join(VENDOR, 'skills')).sort(), [...publicSkillNames].sort());
+  assert.deepEqual(
+    readdirSync(ENGINEERING, { withFileTypes: true }).filter((entry) => entry.isDirectory()).map(({ name }) => name).sort(),
+    [...engineeringSkillNames].sort(),
+  );
   for (const source of skillSources) {
     assert.match(source.commit, /^[0-9a-f]{40}$/);
     assert.ok(existsSync(join(VENDOR, ...source.licenseFile.split('/'))), `license for ${source.repository}`);
@@ -28,23 +38,38 @@ test('the pack ships grill-me and the other anti-slop skills from licensed publi
     assert.ok(publicSkillNames.includes(name), `catalog lists unknown skill ${name}`);
     assert.ok(prompt.startsWith(`/${name} `), `${name} prompt must invoke the skill`);
   }
+  for (const { command, prompt } of catalog.softwareDevelopmentSkills) {
+    assert.ok(engineeringSkillNames.includes(command), `catalog lists unknown engineering skill ${command}`);
+    assert.ok(prompt.startsWith(`/${command} `), `${command} prompt must invoke the skill`);
+  }
 });
 
-test('complete licensed public skills are installed without changing upstream bytes', () => {
+test('the complete skill pack installs without changing upstream or lab-authored bytes', () => {
   const temp = mkdtempSync(join(tmpdir(), 'anti-slop-public-test-'));
   try {
     const destination = seed('skills', join(temp, 'learner'));
-    assert.equal(verifyPublicSkills(join(destination, '.github')), skillFileCount);
+    const installed = verifyInstalledSkills(join(destination, '.github'));
+    assert.deepEqual(installed, {
+      skillCount: allSkillNames.length,
+      publicSkillCount: publicSkillNames.length,
+      engineeringSkillCount: engineeringSkillNames.length,
+      fileCount: skillFileCount + engineeringSkillFileCount,
+    });
     for (const name of publicSkillNames) {
       const path = join('skills', name, 'SKILL.md');
       assert.ok(readFileSync(join(destination, '.github', path)).equals(readFileSync(join(VENDOR, path))));
+    }
+    for (const name of engineeringSkillNames) {
+      const path = join('skills', name, 'SKILL.md');
+      assert.ok(readFileSync(join(destination, '.github', path))
+        .equals(readFileSync(join(ENGINEERING, name, 'SKILL.md'))));
     }
     assert.ok(!existsSync(join(destination, '.github', 'hooks')));
     assert.ok(!existsSync(join(destination, '.github', 'prompts')));
     for (const name of ['BRIEF.md', 'REVIEW-FEEDBACK.md', 'PR-DESCRIPTION.md']) {
       assert.ok(readFileSync(join(destination, name)).equals(readFileSync(join(ROOT, 'fixtures', 'skills', name))));
     }
-    assert.throws(() => installPublicSkills(destination), /existing customizations/);
+    assert.throws(() => installSkillPack(destination), /existing customizations/);
     assert.match(readFileSync(join(destination, 'package.json'), 'utf8'), /check.mjs skills/);
   } finally {
     rmSync(temp, { recursive: true, force: true });
@@ -82,6 +107,17 @@ test('skills learner cannot pass by weakening tests or rewriting a skill', () =>
     writeFileSync(join(destination, '.github', 'skills', 'humanizer', 'SKILL.md'), 'Make it sound impressive.');
     assert.deepEqual(runChecks('skills', destination).failures,
       ['public API and scope are preserved', 'learner regressions catch the original bug']);
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+});
+
+test('changing a lab-authored skill in the learner workspace fails verification', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'anti-slop-engineering-skill-test-'));
+  try {
+    const destination = seed('skills', join(temp, 'learner'), 'reference');
+    writeFileSync(join(destination, '.github', 'skills', 'security-review', 'SKILL.md'), 'Skip the evidence.\n');
+    assert.deepEqual(runChecks('skills', destination).failures, ['public API and scope are preserved']);
   } finally {
     rmSync(temp, { recursive: true, force: true });
   }

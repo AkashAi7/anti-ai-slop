@@ -122,6 +122,50 @@
       "prompt": "/frontend-design Propose one deliberate visual direction for this page from its real content and audience. Name the palette, type and layout choices and why, then build it. Avoid default gradients, card grids and placeholder copy."
     }
   ],
+  "softwareDevelopmentSkills": [
+    {
+      "command": "security-review",
+      "name": "Security review",
+      "focus": "Map trust boundaries, validate inputs and trace data to sensitive sinks; return evidence-backed findings without inventing exploit paths.",
+      "exercise": "Trace cart inputs, separate contract defects from exploit claims, and turn confirmed boundaries into tests.",
+      "prompt": "/security-review Read BRIEF.md and src/cart.mjs. Perform a read-only input-boundary review with file:line evidence. Distinguish contract defects from exploitable paths. Do not edit."
+    },
+    {
+      "command": "api-contracts",
+      "name": "API contracts and compatibility",
+      "focus": "Pin public inputs, outputs, errors and compatibility expectations before changing an interface.",
+      "exercise": "Map subtotal's export, inputs, outputs, errors and protected caller; propose compatibility tests before editing.",
+      "prompt": "/api-contracts Read BRIEF.md, src/cart.mjs and src/legacy-pricing.mjs. Map the existing subtotal contract, its callers and compatibility tests. Separate observed behavior from assumptions; do not edit."
+    },
+    {
+      "command": "dependency-triage",
+      "name": "Dependency and CVE triage",
+      "focus": "Verify advisories against the resolved dependency, choose the smallest supported patch and preserve a reviewable lockfile diff.",
+      "exercise": "Inspect the learner manifest and lockfiles; confirm this fixture has no dependency to triage and do not invent a CVE.",
+      "prompt": "/dependency-triage Read DEPENDENCY-EXERCISE.md and inspect package.json and any lockfiles. Confirm whether an installed dependency or advisory exists. Do not install packages, query a registry or invent a finding."
+    },
+    {
+      "command": "data-migration-safety",
+      "name": "Data migration safety",
+      "focus": "Plan idempotent backfills, dry runs, rollback and before/after reconciliation before changing stored data.",
+      "exercise": "Plan the hypothetical orders conversion; clarify invalid decimal policy and define idempotency, reconciliation and rollback without running SQL.",
+      "prompt": "/data-migration-safety Read MIGRATION-EXERCISE.md. Identify unanswered conversion policies and propose an idempotent expand/backfill/verify/contract plan. Do not generate or run SQL."
+    },
+    {
+      "command": "performance-profiling",
+      "name": "Performance profiling",
+      "focus": "Measure a representative baseline, profile a real hot path and repeat the same workload after a targeted change.",
+      "exercise": "Run the deterministic benchmark after repair; report the repeated median and label it as synthetic, not production evidence.",
+      "prompt": "/performance-profiling After the cart repair passes, run node benchmark.mjs. Report the workload, warmups, samples and median; treat it as a fixture check, not production evidence. Do not optimize without a measured reason."
+    },
+    {
+      "command": "accessibility-review",
+      "name": "Accessibility review",
+      "focus": "Check semantics, keyboard order, focus, contrast and reduced-motion behavior with automated and manual evidence.",
+      "exercise": "Review ACCESSIBILITY-EXERCISE.html read-only for keyboard, accessible-name, error-association, contrast and focus barriers.",
+      "prompt": "/accessibility-review Review ACCESSIBILITY-EXERCISE.html read-only. Cite selectors or lines for keyboard, form-name, error-association, contrast and focus issues. Do not claim broad conformance."
+    }
+  ],
   "recipes": [
     {
       "name": "explain",

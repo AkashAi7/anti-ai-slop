@@ -116,7 +116,7 @@ clarification or the red-test checkpoint.</p>
 <td>10-15</td>
 <td>(same)</td>
 <td><code>npm run setup -- skills</code>, <code>npm run skills</code>, <code>/skills reload</code></td>
-<td>Ten workspace entries from five sources, exact SKILL.md path</td>
+<td>Sixteen workspace entries: ten pinned upstream and six lab-authored</td>
 </tr>
 <tr>
 <td>15-25</td>
@@ -151,6 +151,13 @@ clarification or the red-test checkpoint.</p>
 </tbody></table></div>
 <p>Short on time? Skip Part E and assign it, with Part F, as take-home practice.
 Do not skip the grilling confirmation or the red-test checkpoint.</p>
+<p>Optional 30-45 minute extension: use the six engineering skills in Part G for
+security review, API compatibility, dependency triage, migration planning,
+performance measurement and accessibility review. The GIF demonstrates the
+installed <code>/security-review</code> skill before test-first repair. Keep security and
+accessibility checks read-only; the migration case is hypothetical, and the
+performance result is synthetic. Use a fresh extracted lab copy if the original
+<code>work\skills</code> has already been repaired; never overwrite learner work.</p>
 <p><code>/grill-me</code> hands over to the <code>grilling</code> skill. If the agent starts editing
 instead of asking questions, check tool activity for
 <code>.github/skills/grilling/SKILL.md</code> and resend the prompt with <code>/grilling</code>.
@@ -183,6 +190,8 @@ files: reject it.</li>
 personal copy, and answered the grilling rounds before any edit.</li>
 <li><input disabled="" type="checkbox"> Lab 2: decided each review comment with evidence and kept only claims
 the checks proved in the PR description.</li>
+<li><input disabled="" type="checkbox"> Lab 2 optional extension: recorded results and limitations for each of the
+six engineering skills.</li>
 <li><input disabled="" type="checkbox"> Recorded remaining limitations; did not treat a GIF as proof.</li>
 </ul>
 <h2 id="reference-solutions">Reference solutions</h2>

@@ -3,7 +3,7 @@
   "width": 1280,
   "height": 720,
   "maxBytes": 8388608,
-  "sourceSha256": "297ad1ec019185a6519e4597fcdabb64d60d4d4c6c1007f4faa9c55d00f5cc52",
+  "sourceSha256": "4619afff99b4770d1197e9eaa2742bc1de80755e3d73822c515f35e7794c8a7e",
   "assets": [
     {
       "id": "builtin-plan",
@@ -297,6 +297,32 @@
       "bytes": 139654,
       "durationMs": 23600,
       "sha256": "be8f07473bba1518a4e95c6f45d007cf7495b7f4429a48571214943e2a412429",
+      "baseline": {
+        "total": 7,
+        "passed": 3,
+        "failed": 4,
+        "status": 1
+      },
+      "red": {
+        "total": 5,
+        "passed": 1,
+        "failed": 4,
+        "status": 1
+      },
+      "final": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "status": 0
+      },
+      "displayedFinal": "final"
+    },
+    {
+      "id": "engineering-input-review",
+      "frames": 12,
+      "bytes": 187767,
+      "durationMs": 23600,
+      "sha256": "1d6d0ebe0ce3389a3e95578e9684202ef01676ab582a6847ae99706078599ed7",
       "baseline": {
         "total": 7,
         "passed": 3,

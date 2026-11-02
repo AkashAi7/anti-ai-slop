@@ -14,12 +14,12 @@
 - Setup refuses existing learner work. The built-ins starter contains no
   `.github/prompts` or substitute slash commands.
 - The Spec Kit installer verifies nine official command or skill entries.
-- Public-skills setup installs ten complete upstream skill folders from five
-  pinned repositories (obra/superpowers, mattpocock/skills,
-  addyosmani/agent-skills, blader/humanizer, anthropics/skills), with their
-  licenses and inventory, without running upstream scripts or installing hooks.
-  All 29 files are checked against the pinned SHA-256 inventory, and each
-  `SKILL.md` must keep its upstream `name` and `description`.
+- Lab 2 setup installs ten complete upstream skill folders from five pinned
+  repositories (obra/superpowers, mattpocock/skills, addyosmani/agent-skills,
+  blader/humanizer, anthropics/skills) and six original engineering skills.
+  The 29 upstream files and six lab-authored skill files are checked against
+  separate SHA-256 manifests; upstream licenses are preserved, and no upstream
+  scripts or hooks are installed.
 - The public-skills track deliberately reuses the cart fixture in a fresh
   workspace: 3/7 baseline, 7/7 reference. It adds skill-integrity checks to the
   existing scope gate, not a new set of seven distinct business requirements.
@@ -43,6 +43,13 @@ from exercise checks.
 - Live Copilot entitlement, sign-in, command discovery or behavior on a
   participant's client; verify these in its `/` picker during preflight.
 - That a real agent will produce the reference solution or the same dialogue.
+- That the `/security-review` exercise identifies real attack paths or
+  establishes production security; it is a bounded fixture exercise with no
+  network, database or authorization sink.
+- That the dependency exercise audits a real vulnerable package; the learner
+  workspace intentionally has no application dependencies or lockfile.
+- That the migration scenario reflects a live database; it is hypothetical,
+  and the profiling benchmark is synthetic.
 - Semantic completeness merely because spec/plan/tasks files exist.
 - Screen-reader output, real phones or browsers other than the tested browser.
 - Hosted deployment of local edits, or any measured productivity improvement.
@@ -50,7 +57,23 @@ from exercise checks.
 Commands and skills guide an agent. Independent tests and human review decide
 whether the work is complete.
 
-## Expanded anti-slop skills: observed validation, 2026-11-02
+## Engineering skills extension: observed validation, 2026-11-02
+
+| Check | Observed result |
+| --- | --- |
+| Lab tests (`npm test` in `lab`) | 17 passed, including exact 3/7 and 2/10 baselines, references, scope checks and integrity checks for all six engineering skills |
+| GIF encoder (`lab/tools`) | 2 passed |
+| GIF verification (`lab/tools`) | All 13 GIFs verified: 12 distinct frames, 23.6-second loops, checksums, posters and transcripts |
+| Site build and check | 20 pages up to date; 614 links/assets and 97 anchors resolve |
+| Bundle tests | 3 passed, including deterministic ZIPs and extracted setup/baseline/refusal/repair |
+| Browser smoke (Chromium) | 20 pages, 29 images and 27 players; no errors, network requests or overflow at 320/768/1024/1440 px; home routes to both labs, the engineering skills and all downloads; all 13 GIFs play and return focus |
+
+These local results cover the six lab-authored engineering skills, their
+focused exercises and bundle installation, and the security-review walkthrough
+GIF. The hosted Pages deployment is updated only after the changes are pushed
+and the workflow succeeds.
+
+## Expanded anti-slop skills: prior validation, 2026-11-02
 
 | Check | Observed result |
 | --- | --- |

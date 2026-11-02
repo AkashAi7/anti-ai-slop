@@ -15,9 +15,20 @@ const width = 1280;
 const height = 720;
 const maxBytes = 8 * 1024 * 1024;
 const disclaimer = 'Illustrative reenactment - not a recorded Copilot session. Test results are real fixture runs.';
-const scenes = JSON.parse(readFileSync(join(ROOT, 'walkthroughs.json'), 'utf8'));
+const allScenes = JSON.parse(readFileSync(join(ROOT, 'walkthroughs.json'), 'utf8'));
+const requestedIds = process.argv.slice(2);
+const requestedSet = new Set(requestedIds);
+const scenes = requestedIds.length ? allScenes.filter(({ id }) => requestedSet.has(id)) : allScenes;
+if (scenes.length !== requestedIds.length) throw new Error('Walkthrough ids must be unique and present in walkthroughs.json.');
 const assets = join(ROOT, 'assets');
 for (const dir of ['gifs', 'posters', 'transcripts']) mkdirSync(join(assets, dir), { recursive: true });
+const mediaManifestPath = join(assets, 'media-manifest.json');
+const previousAssets = requestedIds.length
+  ? JSON.parse(readFileSync(mediaManifestPath, 'utf8')).assets.filter(({ id }) => !requestedSet.has(id))
+  : [];
+if (requestedIds.length && previousAssets.length !== allScenes.length - scenes.length) {
+  throw new Error('A selected GIF update requires a complete existing media manifest; run without ids to rebuild all walkthroughs.');
+}
 
 function redTests(id) {
   const temp = mkdtempSync(join(tmpdir(), 'anti-slop-gif-red-'));
@@ -89,7 +100,7 @@ for (const scene of scenes) {
 }
 
 const browser = await chromium.launch({ headless: true });
-const manifest = { disclaimer, width, height, maxBytes, sourceSha256: sourceFingerprint(), assets: [] };
+const manifest = { disclaimer, width, height, maxBytes, sourceSha256: sourceFingerprint(), assets: previousAssets };
 try {
   const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
   for (const scene of scenes) {
@@ -143,7 +154,10 @@ try {
     });
     console.log(`${scene.id}: ${frames.length} frames, ${(bytes.length / 1024).toFixed(0)} KiB; baseline ${baseline.passed}/${baseline.total}, reference ${final.passed}/${final.total}.`);
   }
-  writeFileSync(join(assets, 'media-manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
+  const assetsById = new Map(manifest.assets.map((asset) => [asset.id, asset]));
+  manifest.assets = allScenes.filter(({ id }) => assetsById.has(id)).map(({ id }) => assetsById.get(id));
+  if (manifest.assets.length !== allScenes.length) throw new Error('Walkthrough generation left the media manifest incomplete.');
+  writeFileSync(mediaManifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
 } finally {
   await browser.close();
 }

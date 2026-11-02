@@ -493,5 +493,47 @@
         "evidence": "final"
       }
     ]
+  },
+  {
+    "id": "engineering-input-review",
+    "track": "skills",
+    "client": "VS Code / Copilot app | /security-review + TDD",
+    "title": "Review inputs with /security-review. Test and verify.",
+    "commands": [
+      "security-review",
+      "test-driven-development",
+      "verification-before-completion"
+    ],
+    "takeaway": "Use the installed security-review skill to trace inputs with evidence, distinguish a contract defect from an exploit claim, then test and verify the smallest repair.",
+    "steps": [
+      {
+        "heading": "Use the installed security-review skill",
+        "prompt": "/security-review Read BRIEF.md and src/cart.mjs. Perform a read-only input-boundary review with file:line evidence. Distinguish contract defects from exploitable paths. Do not edit.",
+        "answer": "The caller controls lines and line fields. The function does not validate them or multiply qty. No network, SQL or persistence sink exists here, so do not claim injection or a demonstrated exploit.",
+        "artifact": "src/cart.mjs:1-3\nsubtotal(lines)\n  -> lines.reduce(...)\nTrust boundary: caller -> lines -> arithmetic\nMissing: input checks, qty multiplication,\n         safe product and total checks\nNo network, SQL, auth or storage sink",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Turn confirmed boundaries into red tests",
+        "prompt": "Use /test-driven-development to add boundary regressions for missing, negative, fractional, NaN and unsafe values. Keep cart.mjs unchanged, run npm test, and report intended assertion failures.",
+        "answer": "A useful red run fails on the original behavior while preserving valid empty-cart and quantity-one cases. Reject syntax or import failures as evidence.",
+        "artifact": "src/cart.test.mjs\n\nReject invalid arrays and lines\nReject negative and fractional values\nReject unsafe products and totals\nKeep valid empty cart behavior\n\nRed on the original implementation",
+        "evidence": "red"
+      },
+      {
+        "heading": "Approve the smallest contract repair",
+        "prompt": "After I review the red output, repair only src/cart.mjs under BRIEF.md. Preserve subtotal(lines), do not mutate inputs, add no dependencies, and leave the tests unchanged.",
+        "answer": "The bounded repair validates input and safe integer arithmetic, multiplies priceCents by qty, and does not add a sanitizer, wrapper, dependency or unrelated API.",
+        "artifact": "Preserve subtotal(lines)\nValidate line fields and safe integers\nMultiply cents by quantity\nReject invalid and unsafe totals\nNo API or dependency changes",
+        "evidence": "final"
+      },
+      {
+        "heading": "Verify without overstating the result",
+        "prompt": "Use /verification-before-completion, then freshly run npm test and npm run check; report exit codes and counts, inspect git diff/status. State what the tests prove and what they do not prove about production security.",
+        "answer": "Reference acceptance reaches 7/7. This establishes the fixture's input contract and regression behavior; it does not prove a real attack path, coverage completeness or production security.",
+        "artifact": "npm test -> exit 0\nnpm run check -> 7/7, exit 0\nProved: fixture contract + regressions\nNot proved: a real exploit or\n            production security",
+        "evidence": "final"
+      }
+    ]
   }
 ]

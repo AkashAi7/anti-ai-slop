@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { ROOT, command, runChecks, seed, specifyVersion, track, validateSpecKit, verifyBaseline, workspace } from './lab.mjs';
-import { publicSkillNames, skillSources } from './public-skills.mjs';
+import { engineeringSkillNames, publicSkillNames, skillSources } from './public-skills.mjs';
 
 try {
   const [id, ...args] = process.argv.slice(2);
@@ -32,7 +32,7 @@ try {
   } else {
     seed(id, destination);
   }
-  if (id === 'skills') console.log(`Installed ${publicSkillNames.length} pinned upstream skills from ${skillSources.length} public repositories in .github/skills. No plugin hooks, global installs or upstream scripts executed.`);
+  if (id === 'skills') console.log(`Installed ${publicSkillNames.length} pinned upstream skills from ${skillSources.length} public repositories and ${engineeringSkillNames.length} lab-authored engineering skills in .github/skills. No plugin hooks, global installs or upstream scripts executed.`);
   writeFileSync(join(destination, '.gitignore'), 'node_modules/\n*.log\n');
   command('git', ['init', '--quiet', '--initial-branch=lab'], destination);
   command('git', ['-c', 'core.autocrlf=false', 'add', '--', '.'], destination);

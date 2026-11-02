@@ -6,10 +6,11 @@ Two hands-on GitHub Copilot labs that you run locally in **VS Code** or the
 | Lab | What you practice | Guide | GIFs |
 | --- | --- | --- | --- |
 | **Lab 1: /commands + Spec Kit** | Built-in slash commands (`/explain`, `/plan`, `/tests`, `/fix`, `/review`, `/rubber-duck`, `/compact`), then spec-driven development with [GitHub Spec Kit](https://github.com/github/spec-kit) | [LAB-1-COMMANDS-SPECKIT.md](lab/LAB-1-COMMANDS-SPECKIT.md) | 6 |
-| **Lab 2: anti-slop skills** | Find skills with the built-in skill tools (`/skills`, `/af`, `/skills reload`), then load ten popular public skills from five repositories and use them from plan to handoff: `/grill-me` ([mattpocock/skills](https://github.com/mattpocock/skills)) before any code; `/systematic-debugging`, `/test-driven-development`, `/verification-before-completion` and `/receiving-code-review` ([obra/superpowers](https://github.com/obra/superpowers)); `/code-simplification` and `/source-driven-development` ([addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)); `/humanizer` ([blader/humanizer](https://github.com/blader/humanizer)); `/frontend-design` ([anthropics/skills](https://github.com/anthropics/skills)) | [LAB-2-ANTI-SLOP-SKILLS.md](lab/LAB-2-ANTI-SLOP-SKILLS.md) | 6 |
+| **Lab 2: anti-slop skills** | Load ten pinned public skills and six lab-authored software-development skills, then practice requirements, debugging, testing, verification, security review, API compatibility, dependency triage, migration safety, profiling and accessibility | [LAB-2-ANTI-SLOP-SKILLS.md](lab/LAB-2-ANTI-SLOP-SKILLS.md) | 7 |
 
-Every exercise starts from deliberately broken code and ends with an
-independent check that rejects plausible-but-wrong results.
+The core coding tracks start from deliberately broken code and end with an
+independent check. Lab 2 also includes focused engineering reviews and
+planning exercises with explicit evidence and scope limits.
 
 **[Open the workshop site](https://akashai7.github.io/anti-ai-slop/)**: the
 GIF walkthroughs, setup guide, both lab guides and the downloads, in one place.
@@ -45,11 +46,12 @@ In VS Code, start a **Local** chat. In the GitHub Copilot app, add the folder
 as a local repository and start an **Interactive** session. The full guide,
 with baselines and troubleshooting, is [lab/README.md](lab/README.md).
 
-### Load the public skills into your own project
+### Load the skills into your own project
 
 Download `anti-slop-public-skills.zip` from the site and copy its `.github`
-folder into your repository root, or install the latest upstream with the
-skills CLI, one repository at a time:
+folder into your repository root. The ZIP contains ten pinned upstream skills
+and six lab-authored engineering skills. To fetch upstream skills separately,
+use the skills CLI one repository at a time:
 
 ```powershell
 npx skills add mattpocock/skills --skill grill-me --skill grilling -a github-copilot
@@ -66,7 +68,7 @@ Then confirm they loaded: `/skills` in VS Code, or `/skills reload` then
 
 | Folder | Contents |
 | --- | --- |
-| [lab](lab/README.md) | The local lab environment for both labs: setup, broken starters, independent checks, the pinned public skills, lab guides, facilitator sheet, and the GIFs (`assets/`) with their maintainer recorder (`tools/`) |
+| [lab](lab/README.md) | The local lab environment for both labs: setup, broken starters, independent checks, ten pinned public skills, six lab-authored engineering skills, lab guides, facilitator sheet, and the GIFs (`assets/`) with their maintainer recorder (`tools/`) |
 | [site](site/README.md) | The GitHub Pages site generator and its checks |
 
 The [Pages workflow](.github/workflows/pages.yml) runs the lab tests, verifies

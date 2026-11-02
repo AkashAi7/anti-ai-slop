@@ -1,0 +1,19 @@
+{
+  "source": "Anti-Slop Labs",
+  "skills": [
+    "security-review",
+    "api-contracts",
+    "dependency-triage",
+    "data-migration-safety",
+    "performance-profiling",
+    "accessibility-review"
+  ],
+  "files": {
+    "accessibility-review/SKILL.md": "a24d900a20be4122cf53923c60c38e55353a4b49194179cbcf7a8b6f2838e206",
+    "api-contracts/SKILL.md": "b2c475d0bd2d59b484554db69ad2f90833f1e2c6269c61bd7952430ce4f50751",
+    "data-migration-safety/SKILL.md": "03ebcc81c7ecddeb76ffbf58aa2cc9bb45153f6586dfcb831fb9c9769a93d9cc",
+    "dependency-triage/SKILL.md": "3abce10704d796969f3e31a6a7766bdc0245c5c9ce4253246b5ff06f8c9c419f",
+    "performance-profiling/SKILL.md": "894f2fb9b6f5de467f7dca4a7115d25408a4c5b3690c4289e00cb4e065bee0a5",
+    "security-review/SKILL.md": "eab647f97cc491989e59b0782568ab23b95e4d8d5b0745abadd4ff1c6b42a08c"
+  }
+}
