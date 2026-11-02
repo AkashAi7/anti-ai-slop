@@ -12,7 +12,7 @@ export const specifyVersion = JSON.parse(readFileSync(join(ROOT, 'package.json')
 export function track(id) {
   const baseId = id === 'spec-kit-skills' ? 'spec-kit' : id;
   const item = catalog.tracks.find((entry) => entry.id === baseId);
-  if (!item) throw new Error(`Unknown track "${id}". Use builtins, spec-kit, spec-kit-skills, or superpowers.`);
+  if (!item) throw new Error(`Unknown track "${id}". Use builtins, spec-kit, spec-kit-skills, or skills.`);
   return { ...item, fixture: item.fixture ?? item.id, workspaceId: id };
 }
 
@@ -53,13 +53,14 @@ export function seed(id, destination, target = 'starter', existing = false) {
   copy(join(ROOT, 'fixtures', item.fixture, 'starter'));
   copy(join(ROOT, 'fixtures', 'common'));
   if (target === 'reference') copy(join(ROOT, 'fixtures', item.fixture, 'reference'), true);
-  if (id === 'superpowers') {
+  if (id === 'skills') {
     installPublicSkills(destination);
     const path = join(destination, 'package.json');
     const pkg = JSON.parse(readFileSync(path, 'utf8'));
-    pkg.scripts.check = 'node ../../scripts/check.mjs superpowers';
+    pkg.scripts.check = 'node ../../scripts/check.mjs skills';
     writeFileSync(path, `${JSON.stringify(pkg, null, 2)}\n`);
-    cpSync(join(ROOT, 'fixtures', 'superpowers', 'BRIEF.md'), join(destination, 'BRIEF.md'));
+    // The skills lab reuses the cart starter, with its own brief and practice files for the extra skills.
+    copy(join(ROOT, 'fixtures', 'skills'), true);
   }
   return destination;
 }

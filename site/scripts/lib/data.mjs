@@ -58,7 +58,7 @@ export function loadLab() {
     publicSkills: catalog.publicSkills,
     tracks: catalog.tracks,
     specifyVersion: json('package.json').config.specifyVersion,
-    publicSkillCommit: json('vendor', 'superpowers', 'manifest.json').commit,
+    skillPack: json('vendor', 'skill-pack', 'skills-manifest.json'),
     disclaimer: media.disclaimer,
     walkthroughs,
     labs: Object.entries(LABS).map(([id, lab]) => ({

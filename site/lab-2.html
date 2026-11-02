@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lab 2: anti-slop skills - Anti-Slop Labs</title>
-<meta name="description" content="Find skills with your client&#39;s built-in skill tools, load three popular public skills, then use them to stop guessed fixes, tests that prove nothing and &quot;done&quot; with no evidence.">
+<meta name="description" content="Find skills with your client&#39;s built-in skill tools, load ten pinned public skill folders, then practice grilling, evidence-led debugging, meaningful tests, verification and polish.">
 <meta name="generator" content="site/scripts/build.mjs">
 <link rel="stylesheet" href="assets/site.css">
 <script src="assets/site.js" defer></script>
@@ -21,13 +21,13 @@
 <main id="main" tabindex="-1">
 <div class="wrap">
 <header class="page-head">
-<p class="eyebrow">45-60 minutes · VS Code + GitHub Copilot app</p>
+<p class="eyebrow">60-75 minutes · VS Code + GitHub Copilot app</p>
 <h1>Lab 2: anti-slop skills</h1>
-<p class="lead">Find skills with your client&#39;s built-in skill tools, load three popular public skills, then use them to stop guessed fixes, tests that prove nothing and &quot;done&quot; with no evidence.</p>
+<p class="lead">Find skills with your client&#39;s built-in skill tools, load ten pinned public skill folders, then practice grilling, evidence-led debugging, meaningful tests, verification and polish.</p>
 <p class="actions"><a class="button primary" href="#watch">Watch the walkthroughs</a><a class="button" href="setup.html">Set up first</a><a class="button" href="assets/downloads/anti-slop-lab.zip" download>Download the lab (ZIP)</a></p>
 </header>
 <section class="section" id="watch" aria-labelledby="watch-title">
-<h2 id="watch-title">Watch first: 4 walkthroughs</h2>
+<h2 id="watch-title">Watch first: 6 walkthroughs</h2>
 <p class="note">Illustrative reenactment - not a recorded Copilot session. Test results are real fixture runs. Select a poster to play it full screen.</p>
 <article class="walk" id="walk-skills-find-load" aria-labelledby="walk-skills-find-load-title">
 <figure class="player">
@@ -44,6 +44,21 @@
 <p class="observed">Real starter check: 3/7. This flow stops before any code changes.</p>
 </div>
 </article>
+<article class="walk" id="walk-public-grill" aria-labelledby="walk-public-grill-title">
+<figure class="player">
+<div class="player-media">
+<img src="../lab/assets/posters/public-grill-before.png" data-poster="../lab/assets/posters/public-grill-before.png" data-gif="../lab/assets/gifs/public-grill.gif" alt="Illustrative walkthrough: Grill the plan before any code. Let the agent interview you until every decision is explicit, so it cannot fill the gaps with guesses." width="1280" height="720" loading="lazy" decoding="async">
+</div>
+<figcaption class="player-bar"><button type="button" class="player-toggle" hidden aria-haspopup="dialog" data-label="Grill the plan before any code." data-transcript="transcripts/public-grill.html">Play full screen<span class="sr-only">: Grill the plan before any code.</span></button><span class="player-links"><span class="tag">Illustrative</span> <a href="../lab/assets/gifs/public-grill.gif">GIF</a> · <a href="../lab/assets/posters/public-grill-before.png">Before</a> · <a href="../lab/assets/posters/public-grill-after.png">After</a> · <a href="transcripts/public-grill.html">Transcript</a></span></figcaption>
+</figure>
+<div class="walk-text">
+<p class="eyebrow">GIF 2 · VS Code / Copilot app | mattpocock/skills</p>
+<h3 id="walk-public-grill-title">Grill the plan before any code.</h3>
+<ol class="flow" aria-label="Commands in order"><li><code>/grill-me</code></li></ol>
+<p>Let the agent interview you until every decision is explicit, so it cannot fill the gaps with guesses.</p>
+<p class="observed">Real starter check: 3/7. This flow stops before any code changes.</p>
+</div>
+</article>
 <article class="walk" id="walk-public-debug" aria-labelledby="walk-public-debug-title">
 <figure class="player">
 <div class="player-media">
@@ -52,7 +67,7 @@
 <figcaption class="player-bar"><button type="button" class="player-toggle" hidden aria-haspopup="dialog" data-label="Stop guessing. Trace the defect." data-transcript="transcripts/public-debug.html">Play full screen<span class="sr-only">: Stop guessing. Trace the defect.</span></button><span class="player-links"><span class="tag">Illustrative</span> <a href="../lab/assets/gifs/public-debug.gif">GIF</a> · <a href="../lab/assets/posters/public-debug-before.png">Before</a> · <a href="../lab/assets/posters/public-debug-after.png">After</a> · <a href="transcripts/public-debug.html">Transcript</a></span></figcaption>
 </figure>
 <div class="walk-text">
-<p class="eyebrow">GIF 2 · VS Code / Copilot app | public Superpowers skill</p>
+<p class="eyebrow">GIF 3 · VS Code / Copilot app | obra/superpowers</p>
 <h3 id="walk-public-debug-title">Stop guessing. Trace the defect.</h3>
 <ol class="flow" aria-label="Commands in order"><li><code>/systematic-debugging</code></li></ol>
 <p>Load the actual upstream skill, reproduce the bug, then approve a bounded hypothesis.</p>
@@ -67,7 +82,7 @@
 <figcaption class="player-bar"><button type="button" class="player-toggle" hidden aria-haspopup="dialog" data-label="Make a useful test fail first." data-transcript="transcripts/public-tdd.html">Play full screen<span class="sr-only">: Make a useful test fail first.</span></button><span class="player-links"><span class="tag">Illustrative</span> <a href="../lab/assets/gifs/public-tdd.gif">GIF</a> · <a href="../lab/assets/posters/public-tdd-before.png">Before</a> · <a href="../lab/assets/posters/public-tdd-after.png">After</a> · <a href="transcripts/public-tdd.html">Transcript</a></span></figcaption>
 </figure>
 <div class="walk-text">
-<p class="eyebrow">GIF 3 · VS Code / Copilot app | public Superpowers skill</p>
+<p class="eyebrow">GIF 4 · VS Code / Copilot app | obra/superpowers</p>
 <h3 id="walk-public-tdd-title">Make a useful test fail first.</h3>
 <ol class="flow" aria-label="Commands in order"><li><code>/test-driven-development</code></li></ol>
 <p>A green suite is useful only if it also detects the original defect.</p>
@@ -82,20 +97,37 @@
 <figcaption class="player-bar"><button type="button" class="player-toggle" hidden aria-haspopup="dialog" data-label="Replace &#39;done&#39; with fresh evidence." data-transcript="transcripts/public-verify.html">Play full screen<span class="sr-only">: Replace &#39;done&#39; with fresh evidence.</span></button><span class="player-links"><span class="tag">Illustrative</span> <a href="../lab/assets/gifs/public-verify.gif">GIF</a> · <a href="../lab/assets/posters/public-verify-before.png">Before</a> · <a href="../lab/assets/posters/public-verify-after.png">After</a> · <a href="transcripts/public-verify.html">Transcript</a></span></figcaption>
 </figure>
 <div class="walk-text">
-<p class="eyebrow">GIF 4 · VS Code / Copilot app | public Superpowers skill</p>
+<p class="eyebrow">GIF 5 · VS Code / Copilot app | obra/superpowers</p>
 <h3 id="walk-public-verify-title">Replace &#39;done&#39; with fresh evidence.</h3>
 <ol class="flow" aria-label="Commands in order"><li><code>/verification-before-completion</code></li></ol>
 <p>Record real commands, exit codes and limitations; confidence is not verification.</p>
 <p class="observed">Real reference acceptance: 7/7 pass, exit 0.</p>
 </div>
 </article>
+<article class="walk" id="walk-public-review-polish" aria-labelledby="walk-public-review-polish-title">
+<figure class="player">
+<div class="player-media">
+<img src="../lab/assets/posters/public-review-polish-before.png" data-poster="../lab/assets/posters/public-review-polish-before.png" data-gif="../lab/assets/gifs/public-review-polish.gif" alt="Illustrative walkthrough: Push back, simplify, then write it plainly. Slop creeps back in at handoff: weigh each review comment, simplify without changing behavior, and describe only what you proved." width="1280" height="720" loading="lazy" decoding="async">
+</div>
+<figcaption class="player-bar"><button type="button" class="player-toggle" hidden aria-haspopup="dialog" data-label="Push back, simplify, then write it plainly." data-transcript="transcripts/public-review-polish.html">Play full screen<span class="sr-only">: Push back, simplify, then write it plainly.</span></button><span class="player-links"><span class="tag">Illustrative</span> <a href="../lab/assets/gifs/public-review-polish.gif">GIF</a> · <a href="../lab/assets/posters/public-review-polish-before.png">Before</a> · <a href="../lab/assets/posters/public-review-polish-after.png">After</a> · <a href="transcripts/public-review-polish.html">Transcript</a></span></figcaption>
+</figure>
+<div class="walk-text">
+<p class="eyebrow">GIF 6 · VS Code / Copilot app | superpowers, agent-skills, humanizer</p>
+<h3 id="walk-public-review-polish-title">Push back, simplify, then write it plainly.</h3>
+<ol class="flow" aria-label="Commands in order"><li><code>/receiving-code-review</code></li><li><code>/code-simplification</code></li><li><code>/humanizer</code></li></ol>
+<p>Slop creeps back in at handoff: weigh each review comment, simplify without changing behavior, and describe only what you proved.</p>
+<p class="observed">Real reference acceptance: 7/7 pass, exit 0.</p>
+</div>
+</article>
 </section>
 <div class="doc-layout">
 <article class="prose" aria-label="Lab 2: anti-slop skills guide">
-<p><strong>Goal:</strong> use skills to stop the most common kinds of AI slop: guessed fixes,
-tests that prove nothing, and &quot;done&quot; with no evidence. First you discover
-skills with your client&#39;s <strong>built-in skill tools</strong>. Then you load three popular
-<strong>public skills</strong> and apply them to a real bug.</p>
+<p><strong>Goal:</strong> use skills to stop the most common kinds of AI slop across a whole
+change: requirements the agent guessed, fixes that are guesses, tests that prove
+nothing, &quot;done&quot; with no evidence, review comments applied blindly, bloated code
+and AI-sounding prose. First you discover skills with your client&#39;s <strong>built-in
+skill tools</strong>. Then you load ten popular <strong>public skills</strong> from five
+repositories and use them on a real bug, from plan to handoff.</p>
 <div class="table-wrap" role="region" aria-label="Table: Part, Time, You invoke" tabindex="0"><table>
 <thead>
 <tr>
@@ -112,45 +144,112 @@ skills with your client&#39;s <strong>built-in skill tools</strong>. Then you lo
 <tr>
 <td><a href="#part-b-load-the-public-skills">B. Load the public skills</a></td>
 <td>5 min</td>
-<td><code>npm run setup -- superpowers</code>, <code>npm run skills</code></td>
+<td><code>npm run setup -- skills</code>, <code>npm run skills</code></td>
 </tr>
 <tr>
-<td><a href="#part-c-practice-debug-test-first-verify">C. Practice: debug, test first, verify</a></td>
+<td><a href="#part-c-grill-the-plan-before-any-code">C. Grill the plan before any code</a></td>
+<td>10 min</td>
+<td><code>/grill-me</code></td>
+</tr>
+<tr>
+<td><a href="#part-d-debug-test-first-verify">D. Debug, test first, verify</a></td>
 <td>25-35 min</td>
 <td><code>/systematic-debugging</code>, <code>/test-driven-development</code>, <code>/verification-before-completion</code></td>
 </tr>
+<tr>
+<td><a href="#part-e-polish-before-handoff">E. Polish before handoff</a></td>
+<td>15 min</td>
+<td><code>/receiving-code-review</code>, <code>/code-simplification</code>, <code>/humanizer</code></td>
+</tr>
+<tr>
+<td><a href="#part-f-take-the-skills-to-your-own-project">F. Take the skills to your own project</a></td>
+<td>optional</td>
+<td><code>/source-driven-development</code>, <code>/frontend-design</code>, and the rest</td>
+</tr>
 </tbody></table></div>
-<p>Set up first: follow the <a href="setup.html">environment guide</a>. Watch the four Lab 2
+<p>Set up first: follow the <a href="setup.html">environment guide</a>. Watch the six Lab 2
 GIFs on the <a href="#watch">workshop site</a>.</p>
-<h2 id="the-three-public-skills">The three public skills</h2>
-<p>From <a href="https://github.com/obra/superpowers">obra/superpowers</a>, one of the most
-installed skill collections on <a href="https://skills.sh/obra/superpowers">skills.sh</a>.
-They are public skills, not Copilot built-ins.</p>
-<div class="table-wrap" role="region" aria-label="Table: Skill, Slop it prevents, What you should see" tabindex="0"><table>
+<h2 id="the-skill-pack">The skill pack</h2>
+<p>Every skill below is an unmodified upstream folder, pinned to a commit and
+checked by SHA-256. They are public skills, not Copilot built-ins.</p>
+<div class="table-wrap" role="region" aria-label="Table: Skill, Source, Slop it prevents, What you should see, Part" tabindex="0"><table>
 <thead>
 <tr>
 <th>Skill</th>
+<th>Source</th>
 <th>Slop it prevents</th>
 <th>What you should see</th>
+<th>Part</th>
 </tr>
 </thead>
 <tbody><tr>
+<td><code>/grill-me</code></td>
+<td><a href="https://github.com/mattpocock/skills">mattpocock/skills</a></td>
+<td>The agent guesses your requirements and builds the wrong thing</td>
+<td>Numbered questions with a recommended answer each; no edits until you confirm</td>
+<td>C</td>
+</tr>
+<tr>
 <td><code>/systematic-debugging</code></td>
+<td><a href="https://github.com/obra/superpowers">obra/superpowers</a></td>
 <td>A fix that is a guess</td>
 <td>Reproduction, file:line evidence, one testable cause, no edits yet</td>
+<td>D</td>
 </tr>
 <tr>
 <td><code>/test-driven-development</code></td>
+<td>obra/superpowers</td>
 <td>Tests that pass on broken code</td>
 <td>A meaningful assertion failure before the repair, a pass after</td>
+<td>D</td>
 </tr>
 <tr>
 <td><code>/verification-before-completion</code></td>
+<td>obra/superpowers</td>
 <td>&quot;All done!&quot; with no proof</td>
 <td>Fresh command output, real exit codes, a reviewed diff</td>
+<td>D</td>
+</tr>
+<tr>
+<td><code>/receiving-code-review</code></td>
+<td>obra/superpowers</td>
+<td>&quot;Great point!&quot;, then every review comment applied without checking</td>
+<td>Each comment accepted, pushed back on or deferred, with evidence</td>
+<td>E</td>
+</tr>
+<tr>
+<td><code>/code-simplification</code></td>
+<td><a href="https://github.com/addyosmani/agent-skills">addyosmani/agent-skills</a></td>
+<td>Over-engineered, deeply nested, verbose code</td>
+<td>Smaller, clearer code with identical behavior and green checks</td>
+<td>E</td>
+</tr>
+<tr>
+<td><code>/humanizer</code></td>
+<td><a href="https://github.com/blader/humanizer">blader/humanizer</a></td>
+<td>AI-sounding PR descriptions, docs and comments</td>
+<td>Plain text that keeps every fact and drops filler and inflated claims</td>
+<td>E</td>
+</tr>
+<tr>
+<td><code>/source-driven-development</code></td>
+<td>addyosmani/agent-skills</td>
+<td>APIs and patterns invented from stale training data</td>
+<td>Decisions cited to official docs for your exact versions</td>
+<td>F</td>
+</tr>
+<tr>
+<td><code>/frontend-design</code></td>
+<td><a href="https://github.com/anthropics/skills">anthropics/skills</a></td>
+<td>Generic, templated &quot;AI look&quot; UI</td>
+<td>A deliberate design direction drawn from the real content</td>
+<td>F</td>
 </tr>
 </tbody></table></div>
-<p>Popular is not the same as correct. Read the skill files and check the results.</p>
+<p><code>grilling</code> ships next to <code>grill-me</code>. <code>/grill-me</code> is a slash-command-only entry
+point whose whole body is &quot;Call the Skill tool with &quot;grilling&quot;&quot;; the interview
+rules live in <code>grilling/SKILL.md</code>. Keep both folders together.</p>
+<p>Popular is not the same as correct. Read each <code>SKILL.md</code> and check the results.</p>
 <h2 id="part-a-discover-skills-with-built-in-tools">Part A: discover skills with built-in tools</h2>
 <p>A skill is a folder with a <code>SKILL.md</code> file. Clients find skills in these places:</p>
 <div class="table-wrap" role="region" aria-label="Table: Scope, Locations" tabindex="0"><table>
@@ -184,7 +283,7 @@ entries.</li>
 </li>
 <li><p>Use the built-in <strong>Agent Finder</strong> skill to search for anti-slop skills. Ask
 it to compare candidates. Do not install anything yet.</p>
-<pre><code class="language-text">/af Find popular public agent skills that stop guessed fixes, tests that prove nothing and unverified completion claims. Show source repository, license and install method for each. Do not install anything.
+<pre><code class="language-text">/af Find popular public agent skills that stop vague plans, guessed fixes, tests that prove nothing, unverified &quot;done&quot; claims and AI-sounding prose. Show source repository, license and install method for each. Do not install anything.
 </code></pre>
 </li>
 <li><p>After you add skill files during a session, run <code>/skills reload</code>.</p>
@@ -195,54 +294,115 @@ each one came from. A duplicate name in a personal folder is a warning sign.</p>
 <h2 id="part-b-load-the-public-skills">Part B: load the public skills</h2>
 <h3 id="option-1-bundled-pinned-copies-use-this-for-the-lab">Option 1: bundled, pinned copies (use this for the lab)</h3>
 <p>From the lab directory:</p>
-<pre><code class="language-powershell">npm.cmd run setup -- superpowers
+<pre><code class="language-powershell">npm.cmd run setup -- skills
 npm.cmd run skills
-code -n .\work\superpowers
+code -n .\work\skills
 </code></pre>
-<p>Setup copies the three complete upstream skill folders, their MIT license and a
-manifest into <code>work\superpowers\.github\skills</code>. <code>npm run skills</code> checks all 15
-files against SHA-256 hashes pinned to upstream commit
-<code>2ce8aa15d05bd57213e6f746f953aafb7ded7a8b</code>. No network, hooks or global install
-is needed.</p>
-<p>Then confirm loading in your client:</p>
+<p>Setup copies all ten complete upstream skill folders, their licenses and a
+manifest into <code>work\skills\.github</code>. <code>npm run skills</code> checks all 29 files
+against SHA-256 hashes pinned to these upstream commits:</p>
+<div class="table-wrap" role="region" aria-label="Table: Repository, Commit, License, Skills" tabindex="0"><table>
+<thead>
+<tr>
+<th>Repository</th>
+<th>Commit</th>
+<th>License</th>
+<th>Skills</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>obra/superpowers</td>
+<td><code>2ce8aa1</code></td>
+<td>MIT</td>
+<td>systematic-debugging, test-driven-development, verification-before-completion, receiving-code-review</td>
+</tr>
+<tr>
+<td>mattpocock/skills</td>
+<td><code>4ae2317</code></td>
+<td>MIT</td>
+<td>grill-me, grilling</td>
+</tr>
+<tr>
+<td>addyosmani/agent-skills</td>
+<td><code>8bfcc1f</code></td>
+<td>MIT</td>
+<td>code-simplification, source-driven-development</td>
+</tr>
+<tr>
+<td>blader/humanizer</td>
+<td><code>0ef9fe5</code></td>
+<td>MIT</td>
+<td>humanizer</td>
+</tr>
+<tr>
+<td>anthropics/skills</td>
+<td><code>ca45fc4</code></td>
+<td>Apache-2.0</td>
+<td>frontend-design</td>
+</tr>
+</tbody></table></div>
+<p>No network, hooks or global install is needed. Then confirm loading in your
+client:</p>
 <ul>
-<li><strong>VS Code:</strong> open <code>work\superpowers</code> itself, start a fresh Local chat, and
-type <code>/skills</code>. All three must point to this workspace&#39;s <code>.github/skills</code>.</li>
-<li><strong>Copilot app:</strong> add <code>work\superpowers</code> as a local repository, start an
+<li><strong>VS Code:</strong> open <code>work\skills</code> itself, start a fresh Local chat, and type
+<code>/skills</code>. Every skill must point to this workspace&#39;s <code>.github/skills</code>.</li>
+<li><strong>Copilot app:</strong> add <code>work\skills</code> as a local repository, start an
 Interactive session, and run <code>/skills reload</code> then <code>/skills</code>.</li>
 </ul>
 <p>Finally, ask the agent to name the skill path it would use:</p>
-<pre><code class="language-text">Which loaded skill applies to the quantity bug in BRIEF.md? Name the exact SKILL.md path you would load. Do not edit files.
+<pre><code class="language-text">Which loaded skill should I use first for the cart task in BRIEF.md, before any code is written? Name the exact SKILL.md path you would load. Do not edit files.
 </code></pre>
-<p>Check tool activity for <code>.github/skills/systematic-debugging/SKILL.md</code> in this
-workspace. A similar-sounding answer does not prove the skill loaded.</p>
+<p>Expect <code>grill-me</code>, then check tool activity for <code>.github/skills/grilling/SKILL.md</code>
+in this workspace. A similar-sounding answer does not prove the skill loaded.</p>
 <h3 id="option-2-add-them-to-your-own-project">Option 2: add them to your own project</h3>
 <ul>
 <li><p><strong>Skills-only ZIP:</strong> download <code>anti-slop-public-skills.zip</code> from the
-<a href="index.html">workshop site</a>. Copy the three
-<strong>whole</strong> folders (not just <code>SKILL.md</code>) into your project&#39;s <code>.github/skills/</code>.
-Keep <code>LICENSE</code> and <code>manifest.json</code> with them.</p>
+<a href="index.html">workshop site</a>. Copy the
+<strong>whole</strong> skill folders (not just <code>SKILL.md</code>) into your project&#39;s
+<code>.github/skills/</code>. Keep <code>skill-licenses/</code> and <code>skills-manifest.json</code> with
+them.</p>
 </li>
 <li><p><strong>Skills CLI:</strong> fetches the latest upstream version, not the pinned copy, so
 review what it installs.</p>
-<pre><code class="language-powershell">npx skills add https://github.com/obra/superpowers --skill systematic-debugging -a github-copilot
-npx skills add https://github.com/obra/superpowers --skill test-driven-development -a github-copilot
-npx skills add https://github.com/obra/superpowers --skill verification-before-completion -a github-copilot
+<pre><code class="language-powershell">npx skills add mattpocock/skills --skill grill-me --skill grilling -a github-copilot
+npx skills add obra/superpowers --skill systematic-debugging --skill test-driven-development --skill verification-before-completion --skill receiving-code-review -a github-copilot
+npx skills add addyosmani/agent-skills --skill code-simplification --skill source-driven-development -a github-copilot
+npx skills add blader/humanizer -a github-copilot
+npx skills add anthropics/skills --skill frontend-design -a github-copilot
 </code></pre>
 <p>It installs into <code>.agents/skills/</code> in the project, or into
 <code>~/.copilot/skills/</code> with <code>-g</code>. Confirm the result with <code>/skills</code>.</p>
 </li>
 </ul>
 <p>Never overwrite an existing skill with the same name. Do not install these
-again inside <code>work\superpowers</code>, which already has them, because duplicate
-names make it unclear which copy ran.</p>
-<h2 id="part-c-practice-debug-test-first-verify">Part C: practice: debug, test first, verify</h2>
+again inside <code>work\skills</code>, which already has them, because duplicate names
+make it unclear which copy ran.</p>
+<h2 id="part-c-grill-the-plan-before-any-code">Part C: grill the plan before any code</h2>
 <p><strong>Scenario:</strong> the same cart bug as Lab 1 Part A (quantity is ignored), in a
-fresh workspace. Compare how skills shape the work.</p>
-<p>From the <code>work\superpowers</code> terminal:</p>
+fresh workspace. This time you start by making the agent interview you.</p>
+<p>From the <code>work\skills</code> terminal:</p>
 <pre><code class="language-powershell">npm.cmd run check -- --baseline
 </code></pre>
 <p>Expect <strong>3/7 pass, 4 intended failures, BASELINE CONFIRMED, not solved</strong>.</p>
+<pre><code class="language-text">/grill-me I want to fix the cart in this workspace. Read BRIEF.md and src/cart.mjs yourself for facts. Grill me on scope, the money representation, invalid-input behavior and which files may change. Do not edit anything until I confirm we share an understanding.
+</code></pre>
+<p>What good looks like:</p>
+<ul>
+<li>Questions arrive in numbered rounds, each with a recommended answer, so
+&quot;yes&quot; accepts it. Answer every one, for example
+<code>Q1 yes. Q2 yes, integer cents only. Q3 no: zero quantity is invalid.</code></li>
+<li>The agent looks facts up in <code>BRIEF.md</code> and the code itself instead of asking
+you what the reducer does.</li>
+<li>Later rounds depend on earlier answers. It stops when no branch is left open.</li>
+<li>No file changes until you write <code>Confirmed.</code></li>
+</ul>
+<p>Tool activity should show <code>.github/skills/grilling/SKILL.md</code> being read. If
+only <code>grill-me</code> loads and the agent does not interview you, send the same
+prompt with <code>/grilling</code> instead.</p>
+<p>Finish with:</p>
+<pre><code class="language-text">Confirmed. Summarize the agreed decisions as acceptance criteria, then use /systematic-debugging to reproduce the defect. Do not edit yet.
+</code></pre>
+<h2 id="part-d-debug-test-first-verify">Part D: debug, test first, verify</h2>
 <h3 id="1-debug-investigate-before-editing">1. Debug: investigate before editing</h3>
 <pre><code class="language-text">/systematic-debugging Read BRIEF.md and src/cart.mjs. Reproduce the quantity defect, cite file:line evidence, and state one testable cause. Do not edit yet. Keep investigation inside this disposable workspace.
 </code></pre>
@@ -269,13 +429,61 @@ git --no-pager status --short
 <p>You need <strong>VERIFIED: 7/7</strong>, exit 0. The checker also replays your tests
 against the original code: a suite that passes on both fails. The skill files
 must stay unchanged.</p>
+<h2 id="part-e-polish-before-handoff">Part E: polish before handoff</h2>
+<p>Slop often returns at the end: every review comment gets applied, working code
+gets &quot;improved&quot; until it breaks, and the PR description oversells it. The
+workspace includes two practice files for this part.</p>
+<h3 id="1-review-feedback-verify-then-decide">1. Review feedback: verify, then decide</h3>
+<p><code>REVIEW-FEEDBACK.md</code> has three comments. One is right, one contradicts the
+contract in <code>BRIEF.md</code>, one is out of scope.</p>
+<pre><code class="language-text">/receiving-code-review Evaluate every comment in REVIEW-FEEDBACK.md against BRIEF.md and the current code. For each one, say accept, push back or out of scope, with evidence. Apply only accepted changes inside src/cart.mjs or src/cart.test.mjs, then run npm test.
+</code></pre>
+<p>Expect: accept the clearer error message, push back on float dollars (the
+contract requires integer cents), defer the tax parameter (a new feature).
+Reject &quot;Great point!&quot; followed by all three changes.</p>
+<h3 id="2-simplify-without-changing-behavior">2. Simplify without changing behavior</h3>
+<pre><code class="language-text">/code-simplification Simplify src/cart.mjs for readability without changing behavior or its public API. Keep every guard required by BRIEF.md. Run npm test and npm run check before and after, and revert any change that turns a check red.
+</code></pre>
+<p>Fewer lines is not the goal. Each change should make the code easier to read,
+and <code>npm run check</code> must still show 7/7.</p>
+<h3 id="3-write-the-pr-description-like-an-engineer">3. Write the PR description like an engineer</h3>
+<p><code>PR-DESCRIPTION.md</code> is a typical AI-written description: emoji, &quot;robust,
+seamless and future-proof&quot;, and claims nobody measured.</p>
+<pre><code class="language-text">/humanizer Rewrite PR-DESCRIPTION.md so it reads like an engineer wrote it. Keep every fact, remove inflated claims, filler and stock AI phrasing, and only claim results that npm test and npm run check actually showed.
+</code></pre>
+<p>Check that &quot;100% coverage&quot; and &quot;production-ready&quot; are gone unless a command you
+ran showed them, and that the real result (7/7) is stated.</p>
+<p>Run the final check once more:</p>
+<pre><code class="language-powershell">npm.cmd run check
+</code></pre>
+<p>Editing <code>REVIEW-FEEDBACK.md</code> and <code>PR-DESCRIPTION.md</code> does not affect the check.
+Changing anything under <code>.github</code> does.</p>
+<h2 id="part-f-take-the-skills-to-your-own-project">Part F: take the skills to your own project</h2>
+<p>Install the pack with Part B Option 2, then try the two skills this lab does
+not exercise on the cart:</p>
+<pre><code class="language-text">/source-driven-development Before changing code that uses a framework or library in this project, find the official documentation for the exact version we use, cite it, and flag anything you could not verify.
+</code></pre>
+<pre><code class="language-text">/frontend-design Propose one deliberate visual direction for this page from its real content and audience. Name the palette, type and layout choices and why, then build it. Avoid default gradients, card grids and placeholder copy.
+</code></pre>
+<p>A workable order for any non-trivial change:</p>
+<ol>
+<li><code>/grill-me</code> until the plan has no open branches.</li>
+<li><code>/source-driven-development</code> when a framework or library is involved.</li>
+<li><code>/systematic-debugging</code> for bugs, <code>/test-driven-development</code> for every fix.</li>
+<li><code>/verification-before-completion</code> before you say &quot;done&quot;.</li>
+<li><code>/receiving-code-review</code>, <code>/code-simplification</code> and <code>/humanizer</code> before
+you hand it to someone else.</li>
+</ol>
 <h2 id="evidence-to-keep">Evidence to keep</h2>
 <ul>
 <li><input disabled="" type="checkbox"> The skills your client listed, and where each came from (Part A)</li>
-<li><input disabled="" type="checkbox"> The exact loaded <code>SKILL.md</code> path in this workspace (Part B)</li>
+<li><input disabled="" type="checkbox"> The exact loaded <code>SKILL.md</code> paths in this workspace (Part B)</li>
+<li><input disabled="" type="checkbox"> The grilling rounds and your answers, with no edits before you confirmed (Part C)</li>
 <li><input disabled="" type="checkbox"> Root cause with file:line before any edit</li>
 <li><input disabled="" type="checkbox"> A red test run before the repair</li>
 <li><input disabled="" type="checkbox"> Fresh <code>VERIFIED: 7/7</code>, exit 0, and a reviewed diff</li>
+<li><input disabled="" type="checkbox"> Your decision on each review comment, and the reason (Part E)</li>
+<li><input disabled="" type="checkbox"> The rewritten PR description, with only claims you can back up</li>
 <li><input disabled="" type="checkbox"> Anything still unverified, stated plainly</li>
 </ul>
 <h2 id="safety-notes">Safety notes</h2>
@@ -289,15 +497,15 @@ unrelated code to satisfy a skill.</li>
 </ul>
 <h2 id="sources">Sources</h2>
 <ul>
-<li>Pinned upstream: <a href="https://github.com/obra/superpowers/tree/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b">obra/superpowers @ 2ce8aa1</a>, MIT, Copyright (c) 2025 Jesse Vincent. See <a href="notices.html">THIRD-PARTY-NOTICES.md</a>.</li>
+<li>Pinned upstream skills, licenses and copyright notices: <a href="notices.html">THIRD-PARTY-NOTICES.md</a>.</li>
 <li><a href="https://code.visualstudio.com/docs/agent-customization/agent-skills">VS Code agent skills: locations and discovery</a></li>
 <li><a href="https://docs.github.com/en/copilot/reference/github-copilot-app-reference/slash-commands">Copilot app slash commands, including <code>/skills</code> and <code>/af</code></a></li>
-<li><a href="https://skills.sh/obra/superpowers">skills.sh directory</a> and <a href="https://github.com/vercel-labs/skills">Skills CLI</a></li>
+<li><a href="https://skills.sh/">skills.sh directory</a> and <a href="https://github.com/vercel-labs/skills">Skills CLI</a></li>
 </ul>
 <p>Previous: <a href="lab-1.html">Lab 1: /commands + Spec Kit</a>.</p>
 
 </article>
-<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#watch">Watch the walkthroughs</a></li><li><a href="#the-three-public-skills">The three public skills</a></li><li><a href="#part-a-discover-skills-with-built-in-tools">Part A: discover skills with built-in tools</a></li><li><a href="#part-b-load-the-public-skills">Part B: load the public skills</a></li><li><a href="#part-c-practice-debug-test-first-verify">Part C: practice: debug, test first, verify</a></li><li><a href="#evidence-to-keep">Evidence to keep</a></li><li><a href="#safety-notes">Safety notes</a></li><li><a href="#sources">Sources</a></li></ol></nav>
+<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#watch">Watch the walkthroughs</a></li><li><a href="#the-skill-pack">The skill pack</a></li><li><a href="#part-a-discover-skills-with-built-in-tools">Part A: discover skills with built-in tools</a></li><li><a href="#part-b-load-the-public-skills">Part B: load the public skills</a></li><li><a href="#part-c-grill-the-plan-before-any-code">Part C: grill the plan before any code</a></li><li><a href="#part-d-debug-test-first-verify">Part D: debug, test first, verify</a></li><li><a href="#part-e-polish-before-handoff">Part E: polish before handoff</a></li><li><a href="#part-f-take-the-skills-to-your-own-project">Part F: take the skills to your own project</a></li><li><a href="#evidence-to-keep">Evidence to keep</a></li><li><a href="#safety-notes">Safety notes</a></li><li><a href="#sources">Sources</a></li></ol></nav>
 </div>
 </div>
 </main>

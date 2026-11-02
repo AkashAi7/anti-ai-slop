@@ -252,7 +252,7 @@
   },
   {
     "id": "skills-find-load",
-    "track": "superpowers",
+    "track": "skills",
     "client": "VS Code + Copilot app | built-in skill tools",
     "title": "Find skills. Load reviewed copies. Prove the path.",
     "commands": [
@@ -271,31 +271,71 @@
       },
       {
         "heading": "Search with the built-in Agent Finder (app)",
-        "prompt": "/af Find popular public agent skills that stop guessed fixes, tests that prove nothing and unverified completion claims. Show source repository, license and install method for each. Do not install anything.",
+        "prompt": "/af Find popular public agent skills that stop vague plans, guessed fixes, tests that prove nothing, unverified \"done\" claims and AI-sounding prose. Show source repository, license and install method for each. Do not install anything.",
         "answer": "Treat search results as leads, not proof. Prefer a known source and license, then compare with the pinned copies already bundled in this lab instead of installing unreviewed files.",
-        "artifact": "Candidate (illustrative)\n\nobra/superpowers  MIT\n  systematic-debugging\n  test-driven-development\n  verification-before-completion\n\nLab copy pinned at 2ce8aa1",
+        "artifact": "Candidates (illustrative)\n\nmattpocock/skills        MIT  grill-me\nobra/superpowers         MIT  debugging, TDD,\n                              verification, review\naddyosmani/agent-skills  MIT  code-simplification\nblader/humanizer         MIT  humanizer\n\nLab copies: pinned and checksummed",
         "evidence": "baseline"
       },
       {
         "heading": "Load the reviewed copies, then reload",
-        "prompt": "From the lab directory: npm run setup -- superpowers, then npm run skills. Open work/superpowers itself. In the app type /skills reload; in VS Code start a fresh Local chat and type /skills.",
-        "answer": "Three complete upstream folders are copied with their license. The hash check covers every file. No network, hooks or global install are needed.",
-        "artifact": "npm run skills\n\nVERIFIED: 3 upstream skills, 15 files\n/systematic-debugging\n  -> .github/skills/systematic-debugging/SKILL.md\n/test-driven-development -> ...\n/verification-before-completion -> ...",
+        "prompt": "From the lab directory: npm run setup -- skills, then npm run skills. Open work/skills itself. In the app type /skills reload; in VS Code start a fresh Local chat and type /skills.",
+        "answer": "Ten complete upstream folders from five repositories are copied with their licenses. The hash check covers all 29 files. No network, hooks or global install are needed.",
+        "artifact": "npm run skills\n\nVERIFIED: 10 upstream skills, 29 files\nobra/superpowers        @ 2ce8aa1 MIT\nmattpocock/skills       @ 4ae2317 MIT\naddyosmani/agent-skills @ 8bfcc1f MIT\nblader/humanizer        @ 0ef9fe5 MIT\nanthropics/skills       @ ca45fc4 Apache-2.0",
         "evidence": "baseline"
       },
       {
         "heading": "Prove which skill the agent will use",
-        "prompt": "Which loaded skill applies to the quantity bug in BRIEF.md? Name the exact SKILL.md path you would load. Do not edit files.",
-        "answer": "Expected: systematic-debugging from this workspace's .github/skills. Confirm the path in tool activity. A plausible answer alone does not prove the skill loaded.",
-        "artifact": "Evidence to keep\n\nClient and session type\nSkills listed and their folders\nLoaded path:\n  .github/skills/systematic-debugging/SKILL.md\n\nBaseline still 3/7. Next: debug.",
+        "prompt": "Which loaded skill should I use first for the cart task in BRIEF.md, before any code is written? Name the exact SKILL.md path you would load. Do not edit files.",
+        "answer": "Expected: grill-me, which hands over to grilling, both from this workspace's .github/skills. Confirm the paths in tool activity. A plausible answer alone does not prove the skill loaded.",
+        "artifact": "Evidence to keep\n\nClient and session type\nSkills listed and their folders\nLoaded paths:\n  .github/skills/grill-me/SKILL.md\n  .github/skills/grilling/SKILL.md\n\nBaseline still 3/7. Next: grill the plan.",
+        "evidence": "baseline"
+      }
+    ]
+  },
+  {
+    "id": "public-grill",
+    "track": "skills",
+    "client": "VS Code / Copilot app | mattpocock/skills",
+    "title": "Grill the plan before any code.",
+    "commands": [
+      "grill-me"
+    ],
+    "takeaway": "Let the agent interview you until every decision is explicit, so it cannot fill the gaps with guesses.",
+    "steps": [
+      {
+        "heading": "Invoke /grill-me",
+        "recipe": "grill-me",
+        "answer": "grill-me is a thin entry point. Tool activity should show .github/skills/grilling/SKILL.md being read. If it does not, send the same prompt with /grilling.",
+        "artifact": ".github/skills/grill-me/SKILL.md\n\nname: grill-me\ndisable-model-invocation: true\n\nCall the Skill tool with \"grilling\".\n\nSlash command only. The interview\nrules live in grilling/SKILL.md.",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Answer one round of numbered questions",
+        "prompt": "Q1 yes. Q2 yes, integer cents only. Q3 no: zero quantity is invalid, throw RangeError. Q4 yes, only src/cart.mjs and src/cart.test.mjs.",
+        "answer": "Each question arrives with a recommended answer, so \"yes\" accepts it. Facts such as the current reducer are looked up in BRIEF.md and the code, not asked of you.",
+        "artifact": "Round 1 (illustrative)\n\nQ1 Fix subtotal only?           yes\nQ2 Integer cents, no floats?     yes\nQ3 Treat qty 0 as an empty line? no\nQ4 Touch only cart + its tests?  yes\n\nNext frontier: unsafe totals.",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Settle the last branch",
+        "prompt": "Q5 yes: throw RangeError when a line product or the running total is no longer a safe integer.",
+        "answer": "The session ends when every branch of the design tree has an answer. Nothing has been edited; the agent waits for you to confirm the shared understanding.",
+        "artifact": "Design tree (settled)\n\nscope     subtotal(lines) only\nmoney     integer cents\nqty       positive safe integer\ninvalid   TypeError or RangeError\noverflow  RangeError\nfiles     cart.mjs, cart.test.mjs",
+        "evidence": "baseline"
+      },
+      {
+        "heading": "Confirm, then hand over",
+        "prompt": "Confirmed. Summarize the agreed decisions as acceptance criteria, then use /systematic-debugging to reproduce the defect. Do not edit yet.",
+        "answer": "The decisions now match BRIEF.md, so later steps work from explicit criteria instead of guesses. Baseline is still 3/7: grilling changes the plan, not the code.",
+        "artifact": "Evidence to keep\n\nLoaded path: .github/skills/grilling\nQuestions asked and your answers\nAgreed decisions as criteria\nNo files edited\n\nStill 3/7. Next: debug.",
         "evidence": "baseline"
       }
     ]
   },
   {
     "id": "public-debug",
-    "track": "superpowers",
-    "client": "VS Code / Copilot app | public Superpowers skill",
+    "track": "skills",
+    "client": "VS Code / Copilot app | obra/superpowers",
     "title": "Stop guessing. Trace the defect.",
     "commands": [
       "systematic-debugging"
@@ -303,10 +343,10 @@
     "takeaway": "Load the actual upstream skill, reproduce the bug, then approve a bounded hypothesis.",
     "steps": [
       {
-        "heading": "Load the genuine public skill",
-        "prompt": "Run npm run setup -- superpowers from the lab folder. Open work/superpowers itself. Run npm run skills from the lab folder; inspect the client skill picker.",
-        "answer": "Three pinned skills are copied locally, including their support files and license. Check the loaded path, not just a familiar skill name.",
-        "artifact": ".github/skills/\n  systematic-debugging/SKILL.md\n  test-driven-development/SKILL.md\n  verification-before-completion/SKILL.md\n\nSource: obra/superpowers\nNo plugin hooks or global install.",
+        "heading": "Start from the agreed plan",
+        "prompt": "Stay in work/skills and keep the /grill-me decisions in this chat. Type /skills and confirm systematic-debugging is listed from .github/skills.",
+        "answer": "The grilled decisions give the investigation a fixed scope. Check the loaded path, not just a familiar skill name.",
+        "artifact": ".github/skills/systematic-debugging/\n  SKILL.md\n  root-cause-tracing.md\n  defense-in-depth.md\n  condition-based-waiting.md\n\nSource: obra/superpowers (MIT)\nNo plugin hooks or global install.",
         "evidence": "baseline"
       },
       {
@@ -334,8 +374,8 @@
   },
   {
     "id": "public-tdd",
-    "track": "superpowers",
-    "client": "VS Code / Copilot app | public Superpowers skill",
+    "track": "skills",
+    "client": "VS Code / Copilot app | obra/superpowers",
     "title": "Make a useful test fail first.",
     "commands": [
       "test-driven-development"
@@ -343,8 +383,8 @@
     "takeaway": "A green suite is useful only if it also detects the original defect.",
     "steps": [
       {
-        "heading": "Begin in the fresh public-skills cart",
-        "prompt": "Open work/superpowers. Read BRIEF.md and run npm run check -- --baseline. Confirm the installed test-driven-development skill in the picker.",
+        "heading": "Begin in the fresh skills cart",
+        "prompt": "Stay in work/skills. Read BRIEF.md and run npm run check -- --baseline. Confirm the installed test-driven-development skill in the picker.",
         "answer": "The same defect and checks make this comparable to built-ins. Do not copy the previous repair into this workspace.",
         "artifact": "Before repair\n\nsubtotal([{priceCents: 250, qty: 3}])\nExpected: 750\nActual: 250\n\nStarter acceptance: 3/7",
         "evidence": "baseline"
@@ -374,8 +414,8 @@
   },
   {
     "id": "public-verify",
-    "track": "superpowers",
-    "client": "VS Code / Copilot app | public Superpowers skill",
+    "track": "skills",
+    "client": "VS Code / Copilot app | obra/superpowers",
     "title": "Replace 'done' with fresh evidence.",
     "commands": [
       "verification-before-completion"
@@ -408,6 +448,48 @@
         "prompt": "Summarize the root cause, changed files, exact commands and outcomes, plus limitations. Do not commit or deploy.",
         "answer": "Keep the red output, fresh green output, loaded skill path and reviewed diff. GIF dialogue is illustrative; your live evidence is the deliverable.",
         "artifact": "Completion card\n\nCause and bounded repair\nObserved red then green\nAcceptance: 7/7, exit 0\nLoaded skill path\nReviewed diff and limitations",
+        "evidence": "final"
+      }
+    ]
+  },
+  {
+    "id": "public-review-polish",
+    "track": "skills",
+    "client": "VS Code / Copilot app | superpowers, agent-skills, humanizer",
+    "title": "Push back, simplify, then write it plainly.",
+    "commands": [
+      "receiving-code-review",
+      "code-simplification",
+      "humanizer"
+    ],
+    "takeaway": "Slop creeps back in at handoff: weigh each review comment, simplify without changing behavior, and describe only what you proved.",
+    "steps": [
+      {
+        "heading": "Invoke /receiving-code-review",
+        "recipe": "receiving-code-review",
+        "answer": "Expected: accept 1, a clearer error message. Push back on 2, because float dollars break the integer-cents contract. Defer 3: tax is a new feature, not this fix.",
+        "artifact": "REVIEW-FEEDBACK.md\n\n1 Name the error    accept, in scope\n2 Use float dollars push back: BRIEF\n                    requires integer cents\n3 Add taxRate       defer: new API\n\nNot \"Great point!\" and all three.",
+        "evidence": "final"
+      },
+      {
+        "heading": "Invoke /code-simplification",
+        "recipe": "code-simplification",
+        "answer": "Simplify for the reader, not for line count. Keep every guard BRIEF.md requires, rerun the checks and revert any change that turns them red.",
+        "artifact": "Before -> after (illustrative)\n\nnested if/else per field\n  -> one guard per rule\nrepeated Number.isSafeInteger calls\n  -> one named helper\n\nSame API, same errors,\nnpm run check still 7/7.",
+        "evidence": "final"
+      },
+      {
+        "heading": "Invoke /humanizer",
+        "recipe": "humanizer",
+        "answer": "The rewrite keeps every fact and drops the filler. Claims such as \"100% coverage\" and \"production-ready\" go, because no command showed them.",
+        "artifact": "PR-DESCRIPTION.md\n\nBefore: \"a robust, seamless and\nfuture-proof overhaul ... 100% coverage\"\n\nAfter: \"subtotal() ignored qty. It now\nmultiplies cents by quantity and\nrejects invalid or unsafe input.\nnpm test and npm run check: 7/7.\"",
+        "evidence": "final"
+      },
+      {
+        "heading": "Hand off only what you proved",
+        "prompt": "Run npm test and npm run check again and show git --no-pager status --short. Summarize which review comments you accepted, rejected and deferred, and why.",
+        "answer": "Acceptance stays at 7/7 after simplification. The handoff states what changed, what the checks showed and what was deferred, in plain language.",
+        "artifact": "Handoff card\n\nReview: 1 accepted, 1 rejected,\n        1 deferred with a reason\nSimplified, behavior unchanged\nAcceptance: 7/7, exit 0\nPR text: facts only, no filler",
         "evidence": "final"
       }
     ]

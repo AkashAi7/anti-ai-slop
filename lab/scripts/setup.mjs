@@ -1,10 +1,11 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { ROOT, command, runChecks, seed, specifyVersion, track, validateSpecKit, verifyBaseline, workspace } from './lab.mjs';
+import { publicSkillNames, skillSources } from './public-skills.mjs';
 
 try {
   const [id, ...args] = process.argv.slice(2);
-  if (args.length) throw new Error('Usage: npm run setup -- builtins|spec-kit|spec-kit-skills|superpowers');
+  if (args.length) throw new Error('Usage: npm run setup -- builtins|spec-kit|spec-kit-skills|skills');
   const item = track(id);
   const destination = workspace(id);
   if (existsSync(destination)) throw new Error(`Workspace already exists: ${destination}. Nothing overwritten. Keep or rename your learner folder before starting a new attempt.`);
@@ -31,7 +32,7 @@ try {
   } else {
     seed(id, destination);
   }
-  if (id === 'superpowers') console.log('Installed three authentic pinned Superpowers skills in .github/skills. No plugin hooks, global installs or upstream scripts executed.');
+  if (id === 'skills') console.log(`Installed ${publicSkillNames.length} pinned upstream skills from ${skillSources.length} public repositories in .github/skills. No plugin hooks, global installs or upstream scripts executed.`);
   writeFileSync(join(destination, '.gitignore'), 'node_modules/\n*.log\n');
   command('git', ['init', '--quiet', '--initial-branch=lab'], destination);
   command('git', ['-c', 'core.autocrlf=false', 'add', '--', '.'], destination);

@@ -2,18 +2,18 @@
 
 > Illustrative reenactment - not a recorded Copilot session. Test results are real fixture runs.
 
-Client: VS Code / Copilot app | public Superpowers skill. Track: superpowers.
+Client: VS Code / Copilot app | obra/superpowers. Track: skills.
 
 Commands: `/test-driven-development`.
 
 The dialogue and artifact snapshots below are authored examples. Test summaries are verbatim excerpts from real fixture runs; stack traces and machine-local paths are omitted.
 
-## Step 1: Begin in the fresh public-skills cart
+## Step 1: Begin in the fresh skills cart
 
 Participant:
 
 ```text
-Open work/superpowers. Read BRIEF.md and run npm run check -- --baseline. Confirm the installed test-driven-development skill in the picker.
+Stay in work/skills. Read BRIEF.md and run npm run check -- --baseline. Confirm the installed test-driven-development skill in the picker.
 ```
 
 Illustrative checkpoint:

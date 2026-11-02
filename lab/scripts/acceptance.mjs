@@ -31,7 +31,7 @@ function metadata() {
   const pkg = JSON.parse(text('package.json'));
   assert.equal(Object.keys(pkg.dependencies ?? {}).length, 0, 'No runtime dependencies.');
   assert.equal(Object.keys(pkg.devDependencies ?? {}).length, 0, 'Use the existing Node.js runner.');
-  assert.match(pkg.scripts.check, /^node \.\.\/\.\.\/scripts\/check\.mjs (builtins|spec-kit|spec-kit-skills|superpowers)$/);
+  assert.match(pkg.scripts.check, /^node \.\.\/\.\.\/scripts\/check\.mjs (builtins|spec-kit|spec-kit-skills|skills)$/);
   assert.equal(pkg.scripts.test, 'node --test src/*.test.mjs', 'Do not replace the learner test runner.');
 }
 
@@ -106,7 +106,7 @@ if (item.fixture === 'builtins') {
     assert.equal(mod.subtotal.length, 1);
     unchanged('src/legacy-pricing.mjs');
     metadata();
-    if (id === 'superpowers') verifyPublicSkills(plainPath(directory, '.github'));
+    if (id === 'skills') verifyPublicSkills(plainPath(directory, '.github'));
   });
   test('learner regressions catch the original bug', () => regressions('cart'));
 } else {

@@ -49,7 +49,7 @@ and its own GIF walkthroughs:</p>
 </tr>
 <tr>
 <td><strong>Lab 2: anti-slop skills</strong></td>
-<td>Discover skills with the client&#39;s built-in skill tools (<code>/skills</code>, <code>/af</code>, <code>/skills reload</code>), load three popular public skills, then use them: <code>/systematic-debugging</code>, <code>/test-driven-development</code>, <code>/verification-before-completion</code></td>
+<td>Discover skills with the client&#39;s built-in skill tools (<code>/skills</code>, <code>/af</code>, <code>/skills reload</code>), load ten popular public skills from five repositories, then use them from plan to handoff: <code>/grill-me</code>, <code>/systematic-debugging</code>, <code>/test-driven-development</code>, <code>/verification-before-completion</code>, <code>/receiving-code-review</code>, <code>/code-simplification</code>, <code>/humanizer</code> (plus <code>/source-driven-development</code> and <code>/frontend-design</code> for your own projects)</td>
 <td><a href="lab-2.html">LAB-2-ANTI-SLOP-SKILLS.md</a></td>
 </tr>
 </tbody></table></div>
@@ -94,14 +94,15 @@ cd anti-ai-slop\lab
 </code></pre>
 </li>
 </ul>
-<p>The ZIP already contains the three public skills for Lab 2, their MIT license
-and a SHA-256 inventory. Nothing else is downloaded for Lab 2.</p>
+<p>The ZIP already contains the ten public skills for Lab 2, their licenses and a
+SHA-256 inventory pinned to each upstream commit. Nothing else is downloaded
+for Lab 2.</p>
 <h2 id="3-check-your-machine">3. Check your machine</h2>
 <p>Run the doctor for the track you plan to use. It prints what is missing.</p>
 <pre><code class="language-powershell">npm.cmd run doctor -- builtins
 npm.cmd run doctor -- spec-kit
 npm.cmd run doctor -- spec-kit-skills
-npm.cmd run doctor -- superpowers
+npm.cmd run doctor -- skills
 </code></pre>
 <p>Windows examples use <code>npm.cmd</code> to avoid PowerShell&#39;s <code>npm.ps1</code> execution policy
 prompt. On macOS/Linux, use <code>npm</code>.</p>
@@ -140,11 +141,11 @@ code and a baseline commit, so you can review your diff later.</p>
 <td><code>work\spec-kit-skills</code></td>
 </tr>
 <tr>
-<td><code>superpowers</code></td>
+<td><code>skills</code></td>
 <td>Lab 2</td>
 <td>VS Code or app</td>
-<td><code>npm.cmd run setup -- superpowers</code> then <code>npm.cmd run skills</code></td>
-<td><code>work\superpowers</code></td>
+<td><code>npm.cmd run setup -- skills</code> then <code>npm.cmd run skills</code></td>
+<td><code>work\skills</code></td>
 </tr>
 </tbody></table></div>
 <p>Setup refuses to overwrite an existing workspace. To start again, rename that
@@ -179,7 +180,7 @@ part of the exercise.</p>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>builtins</code>, <code>superpowers</code></td>
+<td><code>builtins</code>, <code>skills</code></td>
 <td>3/7 pass, 4 intended failures</td>
 <td><code>VERIFIED: 7/7</code>, exit 0</td>
 </tr>
@@ -232,7 +233,7 @@ part of the exercise.</p>
 <ul>
 <li><a href="facilitator.html">Facilitator run sheet</a>: timings, stop conditions, completion card</li>
 <li><a href="verification.html">Verification and limitations</a>: what the checks prove and what they do not</li>
-<li><a href="notices.html">Third-party notices</a>: license for the bundled public skills</li>
+<li><a href="notices.html">Third-party notices</a>: sources, commits and licenses for the bundled public skills</li>
 </ul>
 <p>In the repository only (the lab ZIP leaves them out to stay small):</p>
 <ul>

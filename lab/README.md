@@ -6,7 +6,7 @@ and its own GIF walkthroughs:
 | Lab | What you practice | Guide |
 | --- | --- | --- |
 | **Lab 1: /commands + Spec Kit** | Built-in slash commands (`/explain`, `/plan`, `/tests`, `/fix`, `/review`, `/rubber-duck`, `/compact`) and spec-driven development with GitHub Spec Kit (`/speckit.*` or `/speckit-*`) | [LAB-1-COMMANDS-SPECKIT.md](LAB-1-COMMANDS-SPECKIT.md) |
-| **Lab 2: anti-slop skills** | Discover skills with the client's built-in skill tools (`/skills`, `/af`, `/skills reload`), load three popular public skills, then use them: `/systematic-debugging`, `/test-driven-development`, `/verification-before-completion` | [LAB-2-ANTI-SLOP-SKILLS.md](LAB-2-ANTI-SLOP-SKILLS.md) |
+| **Lab 2: anti-slop skills** | Discover skills with the client's built-in skill tools (`/skills`, `/af`, `/skills reload`), load ten popular public skills from five repositories, then use them from plan to handoff: `/grill-me`, `/systematic-debugging`, `/test-driven-development`, `/verification-before-completion`, `/receiving-code-review`, `/code-simplification`, `/humanizer` (plus `/source-driven-development` and `/frontend-design` for your own projects) | [LAB-2-ANTI-SLOP-SKILLS.md](LAB-2-ANTI-SLOP-SKILLS.md) |
 
 Both labs work in **VS Code** (Copilot Chat, Local session) and in the
 **GitHub Copilot app** (desktop, local repository, Interactive session).
@@ -39,8 +39,9 @@ Pick one:
   cd anti-ai-slop\lab
   ```
 
-The ZIP already contains the three public skills for Lab 2, their MIT license
-and a SHA-256 inventory. Nothing else is downloaded for Lab 2.
+The ZIP already contains the ten public skills for Lab 2, their licenses and a
+SHA-256 inventory pinned to each upstream commit. Nothing else is downloaded
+for Lab 2.
 
 ## 3. Check your machine
 
@@ -50,7 +51,7 @@ Run the doctor for the track you plan to use. It prints what is missing.
 npm.cmd run doctor -- builtins
 npm.cmd run doctor -- spec-kit
 npm.cmd run doctor -- spec-kit-skills
-npm.cmd run doctor -- superpowers
+npm.cmd run doctor -- skills
 ```
 
 Windows examples use `npm.cmd` to avoid PowerShell's `npm.ps1` execution policy
@@ -66,7 +67,7 @@ code and a baseline commit, so you can review your diff later.
 | `builtins` | Lab 1 | VS Code or app | `npm.cmd run setup -- builtins` | `work\builtins` |
 | `spec-kit` | Lab 1 | VS Code | `npm.cmd run setup -- spec-kit` | `work\spec-kit` |
 | `spec-kit-skills` | Lab 1 | Copilot app | `npm.cmd run setup -- spec-kit-skills` | `work\spec-kit-skills` |
-| `superpowers` | Lab 2 | VS Code or app | `npm.cmd run setup -- superpowers` then `npm.cmd run skills` | `work\superpowers` |
+| `skills` | Lab 2 | VS Code or app | `npm.cmd run setup -- skills` then `npm.cmd run skills` | `work\skills` |
 
 Setup refuses to overwrite an existing workspace. To start again, rename that
 one `work\<track>` folder and rerun setup. Keep the `work` folder beside
@@ -104,7 +105,7 @@ npm.cmd run check -- --baseline
 
 | Track | Expected baseline | Finished |
 | --- | --- | --- |
-| `builtins`, `superpowers` | 3/7 pass, 4 intended failures | `VERIFIED: 7/7`, exit 0 |
+| `builtins`, `skills` | 3/7 pass, 4 intended failures | `VERIFIED: 7/7`, exit 0 |
 | `spec-kit`, `spec-kit-skills` | 2/10 pass, 8 intended failures | `VERIFIED: 10/10`, exit 0 |
 
 Red is intentional. Now open your lab guide:
@@ -126,7 +127,7 @@ Red is intentional. Now open your lab guide:
 
 - [Facilitator run sheet](FACILITATOR.md): timings, stop conditions, completion card
 - [Verification and limitations](VERIFICATION.md): what the checks prove and what they do not
-- [Third-party notices](THIRD-PARTY-NOTICES.md): license for the bundled public skills
+- [Third-party notices](THIRD-PARTY-NOTICES.md): sources, commits and licenses for the bundled public skills
 
 In the repository only (the lab ZIP leaves them out to stay small):
 

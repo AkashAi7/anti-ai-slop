@@ -2,7 +2,7 @@
 
 > Illustrative reenactment - not a recorded Copilot session. Test results are real fixture runs.
 
-Client: VS Code / Copilot app | public Superpowers skill. Track: superpowers.
+Client: VS Code / Copilot app | obra/superpowers. Track: skills.
 
 Commands: `/verification-before-completion`.
 

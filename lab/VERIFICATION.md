@@ -14,12 +14,18 @@
 - Setup refuses existing learner work. The built-ins starter contains no
   `.github/prompts` or substitute slash commands.
 - The Spec Kit installer verifies nine official command or skill entries.
-- Public Superpowers setup installs three complete upstream skill folders,
-  license and inventory without running upstream scripts or installing hooks.
-  All 15 files are checked against the pinned SHA-256 inventory.
+- Public-skills setup installs ten complete upstream skill folders from five
+  pinned repositories (obra/superpowers, mattpocock/skills,
+  addyosmani/agent-skills, blader/humanizer, anthropics/skills), with their
+  licenses and inventory, without running upstream scripts or installing hooks.
+  All 29 files are checked against the pinned SHA-256 inventory, and each
+  `SKILL.md` must keep its upstream `name` and `description`.
 - The public-skills track deliberately reuses the cart fixture in a fresh
   workspace: 3/7 baseline, 7/7 reference. It adds skill-integrity checks to the
   existing scope gate, not a new set of seven distinct business requirements.
+  The review-feedback and PR-description practice files can be edited freely;
+  the checks do not grade how well `/receiving-code-review`, `/humanizer` or
+  `/grill-me` were followed.
 
 ## Media provenance
 
@@ -43,6 +49,20 @@ from exercise checks.
 
 Commands and skills guide an agent. Independent tests and human review decide
 whether the work is complete.
+
+## Expanded anti-slop skills: observed validation, 2026-11-02
+
+| Check | Observed result |
+| --- | --- |
+| Lab tests (`npm test` in `lab`) | 16 passed, including the 3/7 learner baseline, 7/7 reference, skill integrity and tamper checks |
+| Pinned skills | Ten skill folders from five repositories; all 29 redistributed files hash-checked |
+| GIF tooling (`lab/tools`) | Encoder tests 2 passed; all 12 GIFs verified with 12 distinct frames, 23.6-second loops, checksums, posters and transcripts |
+| Site build and check | 19 pages up to date; 575 links/assets and 88 anchors resolve |
+| Bundle tests | 3 passed: deterministic ZIPs, pinned skill hashes, and extracted `builtins` and `skills` setup/baseline/refusal/repair |
+| Browser smoke (Chromium) | 19 pages, 27 images and 25 players; no errors, network requests or overflow at 320/768/1024/1440 px; all 12 lab GIFs play and return focus |
+
+These are local results. The hosted Pages deployment is updated only after
+the changes are pushed and the workflow succeeds.
 
 ## Two-lab restructure: observed validation, 2026-11-01
 

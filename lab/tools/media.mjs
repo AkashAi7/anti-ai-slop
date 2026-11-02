@@ -16,7 +16,7 @@ export const LABS = {
     title: 'Lab 2: anti-slop skills',
     label: 'LAB 2 / ANTI-SLOP SKILLS',
     guide: 'LAB-2-ANTI-SLOP-SKILLS.md',
-    tracks: ['superpowers'],
+    tracks: ['skills'],
   },
 };
 

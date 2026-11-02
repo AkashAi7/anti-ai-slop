@@ -2,7 +2,7 @@
 
 > Illustrative reenactment - not a recorded Copilot session. Test results are real fixture runs.
 
-Client: VS Code + Copilot app | built-in skill tools. Track: superpowers.
+Client: VS Code + Copilot app | built-in skill tools. Track: skills.
 
 Commands: `/skills`, `/af`, `/skills reload`.
 
@@ -57,7 +57,7 @@ not ok 7 - learner regressions catch the original bug
 Participant:
 
 ```text
-/af Find popular public agent skills that stop guessed fixes, tests that prove nothing and unverified completion claims. Show source repository, license and install method for each. Do not install anything.
+/af Find popular public agent skills that stop vague plans, guessed fixes, tests that prove nothing, unverified "done" claims and AI-sounding prose. Show source repository, license and install method for each. Do not install anything.
 ```
 
 Illustrative checkpoint:
@@ -67,14 +67,15 @@ Treat search results as leads, not proof. Prefer a known source and license, the
 Source or artifact snapshot:
 
 ```text
-Candidate (illustrative)
+Candidates (illustrative)
 
-obra/superpowers  MIT
-  systematic-debugging
-  test-driven-development
-  verification-before-completion
+mattpocock/skills        MIT  grill-me
+obra/superpowers         MIT  debugging, TDD,
+                              verification, review
+addyosmani/agent-skills  MIT  code-simplification
+blader/humanizer         MIT  humanizer
 
-Lab copy pinned at 2ce8aa1
+Lab copies: pinned and checksummed
 ```
 
 Observed test summary:
@@ -101,23 +102,24 @@ not ok 7 - learner regressions catch the original bug
 Participant:
 
 ```text
-From the lab directory: npm run setup -- superpowers, then npm run skills. Open work/superpowers itself. In the app type /skills reload; in VS Code start a fresh Local chat and type /skills.
+From the lab directory: npm run setup -- skills, then npm run skills. Open work/skills itself. In the app type /skills reload; in VS Code start a fresh Local chat and type /skills.
 ```
 
 Illustrative checkpoint:
 
-Three complete upstream folders are copied with their license. The hash check covers every file. No network, hooks or global install are needed.
+Ten complete upstream folders from five repositories are copied with their licenses. The hash check covers all 29 files. No network, hooks or global install are needed.
 
 Source or artifact snapshot:
 
 ```text
 npm run skills
 
-VERIFIED: 3 upstream skills, 15 files
-/systematic-debugging
-  -> .github/skills/systematic-debugging/SKILL.md
-/test-driven-development -> ...
-/verification-before-completion -> ...
+VERIFIED: 10 upstream skills, 29 files
+obra/superpowers        @ 2ce8aa1 MIT
+mattpocock/skills       @ 4ae2317 MIT
+addyosmani/agent-skills @ 8bfcc1f MIT
+blader/humanizer        @ 0ef9fe5 MIT
+anthropics/skills       @ ca45fc4 Apache-2.0
 ```
 
 Observed test summary:
@@ -144,12 +146,12 @@ not ok 7 - learner regressions catch the original bug
 Participant:
 
 ```text
-Which loaded skill applies to the quantity bug in BRIEF.md? Name the exact SKILL.md path you would load. Do not edit files.
+Which loaded skill should I use first for the cart task in BRIEF.md, before any code is written? Name the exact SKILL.md path you would load. Do not edit files.
 ```
 
 Illustrative checkpoint:
 
-Expected: systematic-debugging from this workspace's .github/skills. Confirm the path in tool activity. A plausible answer alone does not prove the skill loaded.
+Expected: grill-me, which hands over to grilling, both from this workspace's .github/skills. Confirm the paths in tool activity. A plausible answer alone does not prove the skill loaded.
 
 Source or artifact snapshot:
 
@@ -158,10 +160,11 @@ Evidence to keep
 
 Client and session type
 Skills listed and their folders
-Loaded path:
-  .github/skills/systematic-debugging/SKILL.md
+Loaded paths:
+  .github/skills/grill-me/SKILL.md
+  .github/skills/grilling/SKILL.md
 
-Baseline still 3/7. Next: debug.
+Baseline still 3/7. Next: grill the plan.
 ```
 
 Observed test summary:

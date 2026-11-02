@@ -3,9 +3,13 @@ import { cpSync, existsSync, lstatSync, mkdirSync, readFileSync, readdirSync } f
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export const VENDOR = fileURLToPath(new URL('../vendor/superpowers/', import.meta.url));
-export const publicSkillNames = ['systematic-debugging', 'test-driven-development', 'verification-before-completion'];
-export const upstreamCommit = '2ce8aa15d05bd57213e6f746f953aafb7ded7a8b';
+// Pinned upstream skill folders from several public repositories. Copied as-is into a learner's .github folder.
+export const VENDOR = fileURLToPath(new URL('../vendor/skill-pack/', import.meta.url));
+export const MANIFEST = 'skills-manifest.json';
+const pinned = JSON.parse(readFileSync(join(VENDOR, MANIFEST), 'utf8'));
+export const skillSources = pinned.sources;
+export const publicSkillNames = skillSources.flatMap((source) => Object.keys(source.skills));
+export const skillFileCount = Object.keys(pinned.files).length;
 
 function files(directory, prefix = '') {
   if (lstatSync(directory).isSymbolicLink()) throw new Error(`Refusing linked skills: ${directory}`);
@@ -18,23 +22,22 @@ function files(directory, prefix = '') {
 }
 
 export function verifyPublicSkills(directory = VENDOR) {
-  const actual = files(directory).filter((name) => name !== 'manifest.json').sort();
-  const manifest = JSON.parse(readFileSync(join(directory, 'manifest.json'), 'utf8'));
-  const expected = JSON.parse(readFileSync(join(VENDOR, 'manifest.json'), 'utf8'));
-  if (manifest.commit !== upstreamCommit || manifest.repository !== 'https://github.com/obra/superpowers'
-    || JSON.stringify(manifest) !== JSON.stringify(expected)
-    || JSON.stringify(actual) !== JSON.stringify(Object.keys(expected.files).sort())) {
-    throw new Error('Public skill inventory differs from the pinned upstream snapshot.');
+  const actual = files(directory).filter((name) => name !== MANIFEST).sort();
+  const manifest = JSON.parse(readFileSync(join(directory, MANIFEST), 'utf8'));
+  if (JSON.stringify(manifest) !== JSON.stringify(pinned)
+    || JSON.stringify(actual) !== JSON.stringify(Object.keys(pinned.files).sort())) {
+    throw new Error('Public skill inventory differs from the pinned upstream snapshots.');
   }
   for (const name of actual) {
     const bytes = readFileSync(join(directory, ...name.split('/')));
-    if (createHash('sha256').update(bytes).digest('hex') !== expected.files[name]) {
+    if (createHash('sha256').update(bytes).digest('hex') !== pinned.files[name]) {
       throw new Error(`Public skill checksum mismatch: ${name}. Restore the original download.`);
     }
   }
   for (const name of publicSkillNames) {
     const text = readFileSync(join(directory, 'skills', name, 'SKILL.md'), 'utf8');
-    if (!text.startsWith(`---\nname: ${name}\ndescription: `) || !text.includes('\n---\n')) {
+    const frontmatter = text.match(/^---\n([\s\S]*?)\n---\n/);
+    if (!frontmatter || !frontmatter[1].startsWith(`name: ${name}\n`) || !/^description: /m.test(frontmatter[1])) {
       throw new Error(`Missing skill name or description: ${name}`);
     }
   }

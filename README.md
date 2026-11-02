@@ -6,7 +6,7 @@ Two hands-on GitHub Copilot labs that you run locally in **VS Code** or the
 | Lab | What you practice | Guide | GIFs |
 | --- | --- | --- | --- |
 | **Lab 1: /commands + Spec Kit** | Built-in slash commands (`/explain`, `/plan`, `/tests`, `/fix`, `/review`, `/rubber-duck`, `/compact`), then spec-driven development with [GitHub Spec Kit](https://github.com/github/spec-kit) | [LAB-1-COMMANDS-SPECKIT.md](lab/LAB-1-COMMANDS-SPECKIT.md) | 6 |
-| **Lab 2: anti-slop skills** | Find skills with the built-in skill tools (`/skills`, `/af`, `/skills reload`), load three popular public skills from [obra/superpowers](https://github.com/obra/superpowers), then use them to stop guessed fixes, weak tests and unverified "done" claims | [LAB-2-ANTI-SLOP-SKILLS.md](lab/LAB-2-ANTI-SLOP-SKILLS.md) | 4 |
+| **Lab 2: anti-slop skills** | Find skills with the built-in skill tools (`/skills`, `/af`, `/skills reload`), then load ten popular public skills from five repositories and use them from plan to handoff: `/grill-me` ([mattpocock/skills](https://github.com/mattpocock/skills)) before any code; `/systematic-debugging`, `/test-driven-development`, `/verification-before-completion` and `/receiving-code-review` ([obra/superpowers](https://github.com/obra/superpowers)); `/code-simplification` and `/source-driven-development` ([addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)); `/humanizer` ([blader/humanizer](https://github.com/blader/humanizer)); `/frontend-design` ([anthropics/skills](https://github.com/anthropics/skills)) | [LAB-2-ANTI-SLOP-SKILLS.md](lab/LAB-2-ANTI-SLOP-SKILLS.md) | 6 |
 
 Every exercise starts from deliberately broken code and ends with an
 independent check that rejects plausible-but-wrong results.
@@ -39,7 +39,7 @@ extracted `anti-slop-lab` folder. On macOS or Linux, use `npm` instead of
 | `builtins` | Lab 1, part A | `npm.cmd run setup -- builtins` | `work\builtins` |
 | `spec-kit` | Lab 1, part B (VS Code) | `npm.cmd run setup -- spec-kit` | `work\spec-kit` |
 | `spec-kit-skills` | Lab 1, part B (Copilot app) | `npm.cmd run setup -- spec-kit-skills` | `work\spec-kit-skills` |
-| `superpowers` | Lab 2 | `npm.cmd run setup -- superpowers` then `npm.cmd run skills` | `work\superpowers` |
+| `skills` | Lab 2 | `npm.cmd run setup -- skills` then `npm.cmd run skills` | `work\skills` |
 
 In VS Code, start a **Local** chat. In the GitHub Copilot app, add the folder
 as a local repository and start an **Interactive** session. The full guide,
@@ -49,10 +49,14 @@ with baselines and troubleshooting, is [lab/README.md](lab/README.md).
 
 Download `anti-slop-public-skills.zip` from the site and copy its `.github`
 folder into your repository root, or install the latest upstream with the
-skills CLI:
+skills CLI, one repository at a time:
 
 ```powershell
-npx skills add https://github.com/obra/superpowers --skill systematic-debugging -a github-copilot
+npx skills add mattpocock/skills --skill grill-me --skill grilling -a github-copilot
+npx skills add obra/superpowers --skill systematic-debugging --skill test-driven-development --skill verification-before-completion --skill receiving-code-review -a github-copilot
+npx skills add addyosmani/agent-skills --skill code-simplification --skill source-driven-development -a github-copilot
+npx skills add blader/humanizer -a github-copilot
+npx skills add anthropics/skills --skill frontend-design -a github-copilot
 ```
 
 Then confirm they loaded: `/skills` in VS Code, or `/skills reload` then

@@ -10,7 +10,7 @@ loads nothing from other sites.
 | [Home](index.html) | generated | Both labs, setup in four steps, how to load the public skills, workshop resources |
 | [Setup](setup.html) | [lab/README.md](../lab/README.md) | Prerequisites, tracks, client setup, baselines, troubleshooting, all three downloads |
 | [Lab 1: /commands + Spec Kit](lab-1.html) | [lab/LAB-1-COMMANDS-SPECKIT.md](../lab/LAB-1-COMMANDS-SPECKIT.md) | 6 GIF walkthroughs, then the lab guide |
-| [Lab 2: anti-slop skills](lab-2.html) | [lab/LAB-2-ANTI-SLOP-SKILLS.md](../lab/LAB-2-ANTI-SLOP-SKILLS.md) | 4 GIF walkthroughs, then the lab guide |
+| [Lab 2: anti-slop skills](lab-2.html) | [lab/LAB-2-ANTI-SLOP-SKILLS.md](../lab/LAB-2-ANTI-SLOP-SKILLS.md) | 6 GIF walkthroughs, then the lab guide |
 | [Facilitator](facilitator.html) | [lab/FACILITATOR.md](../lab/FACILITATOR.md) | Run sheet for workshop leads |
 | [Verification](verification.html), [Notices](notices.html) | `lab/VERIFICATION.md`, `lab/THIRD-PARTY-NOTICES.md` | Evidence and licenses |
 | `transcripts/*.html` | `lab/assets/transcripts/*.md` | One page per GIF, with its player and transcript |
@@ -52,8 +52,8 @@ npm.cmd run smoke
 | Download | Contents |
 | --- | --- |
 | `anti-slop-lab.zip` | Everything a learner needs for both labs, without the GIF media and recorder |
-| `anti-slop-public-skills.zip` | The three pinned Superpowers skills as a `.github` folder, with license and SHA-256 manifest |
-| `anti-slop-walkthroughs.zip` | All 10 GIFs, posters and transcripts, for slides or offline demos |
+| `anti-slop-public-skills.zip` | Ten skill folders from five pinned repositories as a `.github` folder, with licenses and SHA-256 manifest |
+| `anti-slop-walkthroughs.zip` | All 12 GIFs, posters and transcripts, for slides or offline demos |
 
 `npm ci` installs `marked` (Markdown), `fflate` (ZIPs) and `playwright`
 (browser checks; run `npx.cmd playwright install chromium` once).

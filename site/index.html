@@ -35,8 +35,8 @@
 </figure>
 <ul class="facts">
 <li><strong>2</strong>hands-on labs</li>
-<li><strong>10</strong>GIF walkthroughs</li>
-<li><strong>3</strong>public skills, pinned and hash-checked</li>
+<li><strong>12</strong>GIF walkthroughs</li>
+<li><strong>10</strong>skill folders, pinned and hash-checked</li>
 <li><strong>0</strong>npm installs for learners</li>
 </ul>
 </section>
@@ -59,12 +59,12 @@
 <li class="lab-card">
 <a class="lab-card-media" href="lab-2.html" tabindex="-1" aria-hidden="true"><img src="../lab/assets/posters/public-tdd-after.png" alt="" width="1280" height="720" loading="lazy" decoding="async"></a>
 <div class="lab-card-body">
-<p class="eyebrow">Lab 2 · 45-60 minutes</p>
+<p class="eyebrow">Lab 2 · 60-75 minutes</p>
 <h3><a href="lab-2.html">anti-slop skills</a></h3>
-<p>Find skills with your client&#39;s built-in skill tools, load three popular public skills, then use them to stop guessed fixes, tests that prove nothing and &quot;done&quot; with no evidence.</p>
+<p>Find skills with your client&#39;s built-in skill tools, load ten pinned public skill folders, then practice grilling, evidence-led debugging, meaningful tests, verification and polish.</p>
 <p class="note">You invoke</p>
-<ul class="code-list"><li><code>/skills</code></li><li><code>/af</code></li><li><code>/skills reload</code></li><li><code>/systematic-debugging</code></li><li><code>/test-driven-development</code></li><li><code>/verification-before-completion</code></li></ul>
-<p class="actions"><a class="button primary" href="lab-2.html">Open Lab 2</a><a class="button" href="lab-2.html#watch">Watch 4 GIFs</a></p>
+<ul class="code-list"><li><code>/skills</code></li><li><code>/af</code></li><li><code>/skills reload</code></li><li><code>/grill-me</code></li><li><code>/systematic-debugging</code></li><li><code>/test-driven-development</code></li><li><code>/verification-before-completion</code></li></ul>
+<p class="actions"><a class="button primary" href="lab-2.html">Open Lab 2</a><a class="button" href="lab-2.html#watch">Watch 6 GIFs</a></p>
 </div>
 </li>
 </ul>
@@ -76,7 +76,7 @@
 <li><h3>Install the prerequisites</h3>
 <p><a href="https://nodejs.org/en/download">Node.js 22.20+</a> and <a href="https://git-scm.com/downloads">Git</a>, plus <a href="https://code.visualstudio.com/download">VS Code</a> signed in to GitHub Copilot <strong>or</strong> the GitHub Copilot app. Lab 1's Spec Kit part also needs <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a>.</p></li>
 <li><h3>Get the lab</h3>
-<p>The ZIP holds the broken starters, the independent checks and the three pinned public skills. Extract it and open a terminal in the <code>anti-slop-lab</code> folder.</p>
+<p>The ZIP holds the broken starters, the independent checks and ten pinned public skill folders. Extract it and open a terminal in the <code>anti-slop-lab</code> folder.</p>
 <p class="actions downloads">
 <a class="button primary" href="assets/downloads/anti-slop-lab.zip" download>Download the lab (ZIP)</a>
 <a class="button" href="assets/downloads/anti-slop-public-skills.zip" download>Public skills only (ZIP)</a>
@@ -89,7 +89,7 @@ cd anti-ai-slop/lab</code></pre></li>
 <p>Each track gets a fresh Git repository under <code>work/</code> with the broken starter and a baseline commit.</p>
 <pre class="cmd"><code>npm.cmd run doctor -- builtins
 npm.cmd run setup -- builtins</code></pre>
-<p class="note">Tracks: <code>builtins</code>, <code>spec-kit</code>, <code>spec-kit-skills</code> (Lab 1) and <code>superpowers</code> (Lab 2). On macOS or Linux, use <code>npm</code>.</p></li>
+<p class="note">Tracks: <code>builtins</code>, <code>spec-kit</code>, <code>spec-kit-skills</code> (Lab 1) and <code>skills</code> (Lab 2). On macOS or Linux, use <code>npm</code>.</p></li>
 <li><h3>Open the workspace in your client</h3>
 <div class="table-wrap" role="region" aria-label="Table: Client, Open the workspace, Then" tabindex="0"><table>
 <thead><tr><th>Client</th><th>Open the workspace</th><th>Then</th></tr></thead>
@@ -103,22 +103,29 @@ npm.cmd run setup -- builtins</code></pre>
 
 <section class="wrap section" id="load-skills" aria-labelledby="skills-title">
 <h2 id="skills-title">Load the anti-slop skills</h2>
-<p>Lab 2: anti-slop skills uses three public skills from <a href="https://github.com/obra/superpowers">obra/superpowers</a>, pinned to commit <code>2ce8aa1</code> (MIT). They are public skills, not Copilot built-ins.</p>
+<p>Lab 2: anti-slop skills bundles 10 public skill folders from five pinned repositories (29 SHA-256-checked files). Sources: <a href="https://github.com/obra/superpowers">obra/superpowers</a> @ <code>2ce8aa1</code> (MIT); <a href="https://github.com/mattpocock/skills">mattpocock/skills</a> @ <code>4ae2317</code> (MIT); <a href="https://github.com/addyosmani/agent-skills">addyosmani/agent-skills</a> @ <code>8bfcc1f</code> (MIT); <a href="https://github.com/blader/humanizer">blader/humanizer</a> @ <code>0ef9fe5</code> (MIT); <a href="https://github.com/anthropics/skills">anthropics/skills</a> @ <code>ca45fc4</code> (Apache-2.0). They are public skills, not Copilot built-ins.</p>
 <div class="table-wrap" role="region" aria-label="Table: Skill, Slop it prevents" tabindex="0"><table>
 <thead><tr><th>Skill</th><th>Slop it prevents</th></tr></thead>
 <tbody>
+<tr><th scope="row"><code>/grill-me</code></th><td>Turn a vague request into confirmed decisions before any code is written.</td></tr>
 <tr><th scope="row"><code>/systematic-debugging</code></th><td>Replace speculative fixes with a reproduced root cause.</td></tr>
 <tr><th scope="row"><code>/test-driven-development</code></th><td>Make a regression fail for the right reason before repairing code.</td></tr>
 <tr><th scope="row"><code>/verification-before-completion</code></th><td>Replace a confident completion claim with fresh terminal evidence.</td></tr>
+<tr><th scope="row"><code>/receiving-code-review</code></th><td>Verify each review comment against the code and brief instead of agreeing with all of them.</td></tr>
+<tr><th scope="row"><code>/code-simplification</code></th><td>Remove unnecessary complexity from working code without changing behavior.</td></tr>
+<tr><th scope="row"><code>/humanizer</code></th><td>Strip AI writing tells from the prose that ships with your change.</td></tr>
+<tr><th scope="row"><code>/source-driven-development</code></th><td>Ground framework-specific code in cited official documentation, not memory.</td></tr>
+<tr><th scope="row"><code>/frontend-design</code></th><td>Avoid templated, generic-looking UI by committing to a deliberate design direction.</td></tr>
+<tr><th scope="row"><code>/grilling</code></th><td>Provides the structured interview used by /grill-me.</td></tr>
 </tbody></table></div>
 <ol class="steps">
 <li><h3>Bundled with the lab (fastest)</h3>
-<p>Copies the pinned skill folders into <code>work/superpowers/.github/skills</code> and checks all 15 files against SHA-256 hashes. No network needed.</p>
-<pre class="cmd"><code>npm.cmd run setup -- superpowers
+<p>Copies the pinned skill folders into <code>work/skills/.github/skills</code> and checks all 29 files against SHA-256 hashes. No network needed.</p>
+<pre class="cmd"><code>npm.cmd run setup -- skills
 npm.cmd run skills</code></pre></li>
 <li><h3>Your own project</h3>
 <p>Download the <a href="assets/downloads/anti-slop-public-skills.zip" download>public skills ZIP</a> and copy its <code>.github</code> folder into your repository root. Or fetch the latest upstream with the skills CLI, then review what it installed:</p>
-<pre class="cmd"><code>npx skills add https://github.com/obra/superpowers --skill systematic-debugging -a github-copilot</code></pre></li>
+<pre class="cmd"><code>npx skills add mattpocock/skills --skill grill-me --skill grilling -a github-copilot</code></pre></li>
 <li><h3>Confirm the client loaded them</h3>
 <p>VS Code: <code>/skills</code> opens Configure Skills. GitHub Copilot app: <code>/skills reload</code>, then <code>/skills</code>. Every skill must point at the workspace copy.</p></li>
 </ol>
@@ -129,7 +136,7 @@ npm.cmd run skills</code></pre></li>
 <h2 id="workshop-title">Running it as a workshop</h2>
 <ul class="guides">
 <li><a href="facilitator.html">Facilitator run sheet</a><span>Timings for both labs, stop conditions and a learner completion card.</span></li>
-<li><a href="assets/downloads/anti-slop-walkthroughs.zip" download>All 10 walkthrough GIFs (ZIP)</a><span>GIFs, before and after posters, and transcripts for slides or offline demos.</span></li>
+<li><a href="assets/downloads/anti-slop-walkthroughs.zip" download>All 12 walkthrough GIFs (ZIP)</a><span>GIFs, before and after posters, and transcripts for slides or offline demos.</span></li>
 <li><a href="verification.html">Verification and limitations</a><span>What the automated checks prove, and what they do not.</span></li>
 </ul>
 </section>

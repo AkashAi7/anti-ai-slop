@@ -36,10 +36,11 @@ test('downloads are deterministic and contain no learner work or installed depen
   for (const name of publicSkillNames) {
     assert.ok(skills[`anti-slop-public-skills/.github/skills/${name}/SKILL.md`]);
   }
-  assert.ok(skills['anti-slop-public-skills/.github/LICENSE']);
-  assert.ok(skills['anti-slop-public-skills/.github/manifest.json']);
+  assert.ok(skills['anti-slop-public-skills/.github/skills-manifest.json']);
+  assert.ok(skills['anti-slop-public-skills/.github/skill-licenses/obra-superpowers-LICENSE']);
+  assert.ok(skills['anti-slop-public-skills/.github/skill-licenses/mattpocock-skills-LICENSE']);
   assert.ok(skills['anti-slop-public-skills/.github/skills/systematic-debugging/root-cause-tracing.md']);
-  const manifest = JSON.parse(readFileSync(join(ROOT, 'lab', 'vendor', 'superpowers', 'manifest.json'), 'utf8'));
+  const manifest = JSON.parse(readFileSync(join(ROOT, 'lab', 'vendor', 'skill-pack', 'skills-manifest.json'), 'utf8'));
   for (const [name, sha256] of Object.entries(manifest.files)) {
     const bytes = skills[`anti-slop-public-skills/.github/${name}`];
     assert.ok(bytes, `Skills-only download omitted upstream support file: ${name}`);
@@ -47,7 +48,7 @@ test('downloads are deterministic and contain no learner work or installed depen
   }
 });
 
-for (const id of ['builtins', 'superpowers']) test(`extracted lab: ${id} setup, baseline, refusal and verified repair`, () => {
+for (const id of ['builtins', 'skills']) test(`extracted lab: ${id} setup, baseline, refusal and verified repair`, () => {
   const temp = mkdtempSync(join(tmpdir(), 'anti-slop-zip-test-'));
   try {
     for (const [name, bytes] of Object.entries(unzipSync(bundles().get(LAB_BUNDLE)))) {
@@ -73,11 +74,11 @@ for (const id of ['builtins', 'superpowers']) test(`extracted lab: ${id} setup, 
     assert.equal(repeated.status, 1);
     assert.match(repeated.stderr, /Nothing overwritten/);
     const learner = join(directory, 'work', id);
-    if (id === 'superpowers') {
-      assert.equal(verifyPublicSkills(join(learner, '.github')), 15);
+    if (id === 'skills') {
+      assert.equal(verifyPublicSkills(join(learner, '.github')), 29);
       const discovery = spawnSync(process.execPath, ['scripts/skills.mjs'], { cwd: directory, encoding: 'utf8' });
       assert.equal(discovery.status, 0, discovery.stderr);
-      assert.match(discovery.stdout, /VERIFIED: 3 upstream skills/);
+      assert.match(discovery.stdout, /VERIFIED: 10 upstream skills/);
       assert.match(discovery.stdout, /No model invocation was tested/);
     }
     const before = spawnSync(process.execPath, ['scripts/check.mjs', id], { cwd: directory, encoding: 'utf8' });

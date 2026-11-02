@@ -22,7 +22,7 @@
 <div class="wrap">
 <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../lab-2.html#walk-public-debug">Lab 2: anti-slop skills</a></li><li aria-current="page">Transcript</li></ol></nav>
 <header class="page-head">
-<p class="eyebrow">Walkthrough transcript · VS Code / Copilot app | public Superpowers skill</p>
+<p class="eyebrow">Walkthrough transcript · VS Code / Copilot app | obra/superpowers</p>
 <h1>Stop guessing. Trace the defect.</h1>
 </header>
 <div class="transcript-player">
@@ -37,22 +37,23 @@
 <blockquote>
 <p>Illustrative reenactment - not a recorded Copilot session. Test results are real fixture runs.</p>
 </blockquote>
-<p>Client: VS Code / Copilot app | public Superpowers skill. Track: superpowers.</p>
+<p>Client: VS Code / Copilot app | obra/superpowers. Track: skills.</p>
 <p>Commands: <code>/systematic-debugging</code>.</p>
 <p>The dialogue and artifact snapshots below are authored examples. Test summaries are verbatim excerpts from real fixture runs; stack traces and machine-local paths are omitted.</p>
-<h2 id="step-1-load-the-genuine-public-skill">Step 1: Load the genuine public skill</h2>
+<h2 id="step-1-start-from-the-agreed-plan">Step 1: Start from the agreed plan</h2>
 <p>Participant:</p>
-<pre><code class="language-text">Run npm run setup -- superpowers from the lab folder. Open work/superpowers itself. Run npm run skills from the lab folder; inspect the client skill picker.
+<pre><code class="language-text">Stay in work/skills and keep the /grill-me decisions in this chat. Type /skills and confirm systematic-debugging is listed from .github/skills.
 </code></pre>
 <p>Illustrative checkpoint:</p>
-<p>Three pinned skills are copied locally, including their support files and license. Check the loaded path, not just a familiar skill name.</p>
+<p>The grilled decisions give the investigation a fixed scope. Check the loaded path, not just a familiar skill name.</p>
 <p>Source or artifact snapshot:</p>
-<pre><code class="language-text">.github/skills/
-  systematic-debugging/SKILL.md
-  test-driven-development/SKILL.md
-  verification-before-completion/SKILL.md
+<pre><code class="language-text">.github/skills/systematic-debugging/
+  SKILL.md
+  root-cause-tracing.md
+  defense-in-depth.md
+  condition-based-waiting.md
 
-Source: obra/superpowers
+Source: obra/superpowers (MIT)
 No plugin hooks or global install.
 </code></pre>
 <p>Observed test summary:</p>

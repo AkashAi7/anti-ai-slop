@@ -37,7 +37,7 @@
 <blockquote>
 <p>Illustrative reenactment - not a recorded Copilot session. Test results are real fixture runs.</p>
 </blockquote>
-<p>Client: VS Code + Copilot app | built-in skill tools. Track: superpowers.</p>
+<p>Client: VS Code + Copilot app | built-in skill tools. Track: skills.</p>
 <p>Commands: <code>/skills</code>, <code>/af</code>, <code>/skills reload</code>.</p>
 <p>The dialogue and artifact snapshots below are authored examples. Test summaries are verbatim excerpts from real fixture runs; stack traces and machine-local paths are omitted.</p>
 <h2 id="step-1-see-what-is-already-loaded">Step 1: See what is already loaded</h2>
@@ -74,19 +74,20 @@ not ok 7 - learner regressions catch the original bug
 </code></pre>
 <h2 id="step-2-search-with-the-built-in-agent-finder-app">Step 2: Search with the built-in Agent Finder (app)</h2>
 <p>Participant:</p>
-<pre><code class="language-text">/af Find popular public agent skills that stop guessed fixes, tests that prove nothing and unverified completion claims. Show source repository, license and install method for each. Do not install anything.
+<pre><code class="language-text">/af Find popular public agent skills that stop vague plans, guessed fixes, tests that prove nothing, unverified &quot;done&quot; claims and AI-sounding prose. Show source repository, license and install method for each. Do not install anything.
 </code></pre>
 <p>Illustrative checkpoint:</p>
 <p>Treat search results as leads, not proof. Prefer a known source and license, then compare with the pinned copies already bundled in this lab instead of installing unreviewed files.</p>
 <p>Source or artifact snapshot:</p>
-<pre><code class="language-text">Candidate (illustrative)
+<pre><code class="language-text">Candidates (illustrative)
 
-obra/superpowers  MIT
-  systematic-debugging
-  test-driven-development
-  verification-before-completion
+mattpocock/skills        MIT  grill-me
+obra/superpowers         MIT  debugging, TDD,
+                              verification, review
+addyosmani/agent-skills  MIT  code-simplification
+blader/humanizer         MIT  humanizer
 
-Lab copy pinned at 2ce8aa1
+Lab copies: pinned and checksummed
 </code></pre>
 <p>Observed test summary:</p>
 <pre><code class="language-text">ok 1 - existing cart behavior is preserved
@@ -106,18 +107,19 @@ not ok 7 - learner regressions catch the original bug
 </code></pre>
 <h2 id="step-3-load-the-reviewed-copies-then-reload">Step 3: Load the reviewed copies, then reload</h2>
 <p>Participant:</p>
-<pre><code class="language-text">From the lab directory: npm run setup -- superpowers, then npm run skills. Open work/superpowers itself. In the app type /skills reload; in VS Code start a fresh Local chat and type /skills.
+<pre><code class="language-text">From the lab directory: npm run setup -- skills, then npm run skills. Open work/skills itself. In the app type /skills reload; in VS Code start a fresh Local chat and type /skills.
 </code></pre>
 <p>Illustrative checkpoint:</p>
-<p>Three complete upstream folders are copied with their license. The hash check covers every file. No network, hooks or global install are needed.</p>
+<p>Ten complete upstream folders from five repositories are copied with their licenses. The hash check covers all 29 files. No network, hooks or global install are needed.</p>
 <p>Source or artifact snapshot:</p>
 <pre><code class="language-text">npm run skills
 
-VERIFIED: 3 upstream skills, 15 files
-/systematic-debugging
-  -&gt; .github/skills/systematic-debugging/SKILL.md
-/test-driven-development -&gt; ...
-/verification-before-completion -&gt; ...
+VERIFIED: 10 upstream skills, 29 files
+obra/superpowers        @ 2ce8aa1 MIT
+mattpocock/skills       @ 4ae2317 MIT
+addyosmani/agent-skills @ 8bfcc1f MIT
+blader/humanizer        @ 0ef9fe5 MIT
+anthropics/skills       @ ca45fc4 Apache-2.0
 </code></pre>
 <p>Observed test summary:</p>
 <pre><code class="language-text">ok 1 - existing cart behavior is preserved
@@ -137,19 +139,20 @@ not ok 7 - learner regressions catch the original bug
 </code></pre>
 <h2 id="step-4-prove-which-skill-the-agent-will-use">Step 4: Prove which skill the agent will use</h2>
 <p>Participant:</p>
-<pre><code class="language-text">Which loaded skill applies to the quantity bug in BRIEF.md? Name the exact SKILL.md path you would load. Do not edit files.
+<pre><code class="language-text">Which loaded skill should I use first for the cart task in BRIEF.md, before any code is written? Name the exact SKILL.md path you would load. Do not edit files.
 </code></pre>
 <p>Illustrative checkpoint:</p>
-<p>Expected: systematic-debugging from this workspace&#39;s .github/skills. Confirm the path in tool activity. A plausible answer alone does not prove the skill loaded.</p>
+<p>Expected: grill-me, which hands over to grilling, both from this workspace&#39;s .github/skills. Confirm the paths in tool activity. A plausible answer alone does not prove the skill loaded.</p>
 <p>Source or artifact snapshot:</p>
 <pre><code class="language-text">Evidence to keep
 
 Client and session type
 Skills listed and their folders
-Loaded path:
-  .github/skills/systematic-debugging/SKILL.md
+Loaded paths:
+  .github/skills/grill-me/SKILL.md
+  .github/skills/grilling/SKILL.md
 
-Baseline still 3/7. Next: debug.
+Baseline still 3/7. Next: grill the plan.
 </code></pre>
 <p>Observed test summary:</p>
 <pre><code class="language-text">ok 1 - existing cart behavior is preserved

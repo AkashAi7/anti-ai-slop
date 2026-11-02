@@ -2,33 +2,34 @@
 
 > Illustrative reenactment - not a recorded Copilot session. Test results are real fixture runs.
 
-Client: VS Code / Copilot app | public Superpowers skill. Track: superpowers.
+Client: VS Code / Copilot app | obra/superpowers. Track: skills.
 
 Commands: `/systematic-debugging`.
 
 The dialogue and artifact snapshots below are authored examples. Test summaries are verbatim excerpts from real fixture runs; stack traces and machine-local paths are omitted.
 
-## Step 1: Load the genuine public skill
+## Step 1: Start from the agreed plan
 
 Participant:
 
 ```text
-Run npm run setup -- superpowers from the lab folder. Open work/superpowers itself. Run npm run skills from the lab folder; inspect the client skill picker.
+Stay in work/skills and keep the /grill-me decisions in this chat. Type /skills and confirm systematic-debugging is listed from .github/skills.
 ```
 
 Illustrative checkpoint:
 
-Three pinned skills are copied locally, including their support files and license. Check the loaded path, not just a familiar skill name.
+The grilled decisions give the investigation a fixed scope. Check the loaded path, not just a familiar skill name.
 
 Source or artifact snapshot:
 
 ```text
-.github/skills/
-  systematic-debugging/SKILL.md
-  test-driven-development/SKILL.md
-  verification-before-completion/SKILL.md
+.github/skills/systematic-debugging/
+  SKILL.md
+  root-cause-tracing.md
+  defense-in-depth.md
+  condition-based-waiting.md
 
-Source: obra/superpowers
+Source: obra/superpowers (MIT)
 No plugin hooks or global install.
 ```
 

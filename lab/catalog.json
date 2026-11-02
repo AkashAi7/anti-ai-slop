@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-01",
+  "asOf": "2026-11-02",
   "sources": {
     "vscode": "https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet#slash-commands",
     "app": "https://docs.github.com/en/copilot/reference/github-copilot-app-reference/slash-commands",
@@ -7,7 +7,11 @@
     "workflow": "https://github.github.io/spec-kit/quickstart.html",
     "skills": "https://code.visualstudio.com/docs/agent-customization/agent-skills",
     "superpowers": "https://github.com/obra/superpowers",
-    "directory": "https://skills.sh/obra/superpowers"
+    "mattpocock": "https://github.com/mattpocock/skills",
+    "addyosmani": "https://github.com/addyosmani/agent-skills",
+    "humanizer": "https://github.com/blader/humanizer",
+    "anthropics": "https://github.com/anthropics/skills",
+    "directory": "https://skills.sh/"
   },
   "specKitSteps": ["constitution", "specify", "clarify", "plan", "checklist", "tasks", "analyze", "implement", "converge"],
   "tracks": [
@@ -40,10 +44,10 @@
       ]
     },
     {
-      "id": "superpowers",
+      "id": "skills",
       "fixture": "builtins",
-      "title": "Public skills: investigate, test first, verify",
-      "minutes": "25-35",
+      "title": "Anti-slop skills: grill, debug, test first, verify, polish",
+      "minutes": "60-75",
       "testCount": 7,
       "expectedFailures": [
         "quantities are applied",
@@ -55,19 +59,67 @@
   ],
   "publicSkills": [
     {
+      "name": "grill-me",
+      "source": "mattpocock/skills",
+      "stage": "plan",
+      "job": "Turn a vague request into confirmed decisions before any code is written.",
+      "prompt": "/grill-me I want to fix the cart in this workspace. Read BRIEF.md and src/cart.mjs yourself for facts. Grill me on scope, the money representation, invalid-input behavior and which files may change. Do not edit anything until I confirm we share an understanding."
+    },
+    {
       "name": "systematic-debugging",
+      "source": "obra/superpowers",
+      "stage": "core",
       "job": "Replace speculative fixes with a reproduced root cause.",
       "prompt": "/systematic-debugging Read BRIEF.md and src/cart.mjs. Reproduce the quantity defect, cite file:line evidence, and state one testable cause. Do not edit yet. Keep investigation inside this disposable workspace."
     },
     {
       "name": "test-driven-development",
+      "source": "obra/superpowers",
+      "stage": "core",
       "job": "Make a regression fail for the right reason before repairing code.",
       "prompt": "/test-driven-development Follow BRIEF.md. Add at least four node:test cases to src/cart.test.mjs. Preserve existing behavior and cover quantity, invalid input and overflow. Run npm test with cart.mjs unchanged; stop for review of the red output. Do not delete existing starter or learner work."
     },
     {
       "name": "verification-before-completion",
+      "source": "obra/superpowers",
+      "stage": "core",
       "job": "Replace a confident completion claim with fresh terminal evidence.",
       "prompt": "/verification-before-completion Run npm test and npm run check now. Report actual exit codes, passed/failed counts and unresolved issues. Inspect git diff and git status --short, including untracked tests. Do not commit or change acceptance tooling."
+    },
+    {
+      "name": "receiving-code-review",
+      "source": "obra/superpowers",
+      "stage": "polish",
+      "job": "Verify each review comment against the code and brief instead of agreeing with all of them.",
+      "prompt": "/receiving-code-review Evaluate every comment in REVIEW-FEEDBACK.md against BRIEF.md and the current code. For each one, say accept, push back or out of scope, with evidence. Apply only accepted changes inside src/cart.mjs or src/cart.test.mjs, then run npm test."
+    },
+    {
+      "name": "code-simplification",
+      "source": "addyosmani/agent-skills",
+      "stage": "polish",
+      "job": "Remove unnecessary complexity from working code without changing behavior.",
+      "prompt": "/code-simplification Simplify src/cart.mjs for readability without changing behavior or its public API. Keep every guard required by BRIEF.md. Run npm test and npm run check before and after, and revert any change that turns a check red."
+    },
+    {
+      "name": "humanizer",
+      "source": "blader/humanizer",
+      "stage": "polish",
+      "job": "Strip AI writing tells from the prose that ships with your change.",
+      "prompt": "/humanizer Rewrite PR-DESCRIPTION.md so it reads like an engineer wrote it. Keep every fact, remove inflated claims, filler and stock AI phrasing, and only claim results that npm test and npm run check actually showed."
+    },
+    {
+      "name": "source-driven-development",
+      "source": "addyosmani/agent-skills",
+      "stage": "own-project",
+      "job": "Ground framework-specific code in cited official documentation, not memory.",
+      "prompt": "/source-driven-development Before changing code that uses a framework or library in this project, find the official documentation for the exact version we use, cite it, and flag anything you could not verify."
+    },
+    {
+      "name": "frontend-design",
+      "source": "anthropics/skills",
+      "stage": "own-project",
+      "job": "Avoid templated, generic-looking UI by committing to a deliberate design direction.",
+      "prompt": "/frontend-design Propose one deliberate visual direction for this page from its real content and audience. Name the palette, type and layout choices and why, then build it. Avoid default gradients, card grids and placeholder copy."
     }
   ],
   "recipes": [

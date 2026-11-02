@@ -15,7 +15,7 @@ try {
     console.log(`OK ${result.stdout.trim()}`);
   }
   if (item.id === 'spec-kit') console.log(`Spec Kit setup will use isolated specify-cli==${specifyVersion}; it does not upgrade your global CLI.`);
-  if (id === 'superpowers') console.log(`OK bundled upstream snapshot: ${verifyPublicSkills()} checksummed files; setup needs no network.`);
+  if (id === 'skills') console.log(`OK bundled upstream skill pack: ${verifyPublicSkills()} checksummed files; setup needs no network.`);
   console.log('MANUAL CHECK: open this workspace in signed-in VS Code Local chat, or a Copilot app local session. Type / to confirm available commands.');
   console.log('Copilot entitlement, organization policy and sign-in cannot be verified by this script.');
 } catch (error) {

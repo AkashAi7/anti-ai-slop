@@ -44,16 +44,17 @@ To do the exercises yourself, download anti-slop-lab.zip from ${PAGES_URL}
 
 const SKILLS_README = (names) => `# Public anti-slop skills (pinned copies)
 
-Three skills from https://github.com/obra/superpowers, pinned to one upstream
-commit, with their MIT license and a SHA-256 manifest:
+Ten skill folders from five pinned public repositories, with their licenses
+and a SHA-256 manifest:
 
 ${names.map((name) => `- \`${name}\``).join('\n')}
 
 ## Add them to your own project
 
 1. Copy the \`.github\` folder from this ZIP into your repository root. If you
-   already have a \`.github\` folder, merge it: the skills land in
-   \`.github/skills/<name>/\`. Copy whole folders, not just \`SKILL.md\`.
+   already have a \`.github\` folder, merge it without overwriting existing
+   files. The skills land in \`.github/skills/<name>/\`. Copy whole folders,
+   not just \`SKILL.md\`.
 2. Do not overwrite an existing skill with the same name.
 3. Confirm your client loaded them:
    - VS Code: open the repository, start a Local chat, type \`/skills\`.
@@ -77,7 +78,7 @@ export function bundles() {
   gifs['anti-slop-walkthroughs/README.md'] = text(GIFS_README(count));
 
   const skills = {};
-  addTree(skills, join(LAB, 'vendor', 'superpowers'), 'anti-slop-public-skills/.github');
+  addTree(skills, join(LAB, 'vendor', 'skill-pack'), 'anti-slop-public-skills/.github');
   skills['anti-slop-public-skills/README.md'] = text(SKILLS_README(publicSkillNames));
   skills['anti-slop-public-skills/THIRD-PARTY-NOTICES.md'] = file(join(LAB, 'THIRD-PARTY-NOTICES.md'));
 

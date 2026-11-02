@@ -31,7 +31,7 @@
 <ol>
 <li>Download <code>anti-slop-lab.zip</code> (or clone the repo and <code>cd lab</code>). Follow the
 <a href="setup.html">environment guide</a> and run <code>npm run doctor</code> for each track.</li>
-<li>Run setup for <code>builtins</code>, <code>superpowers</code>, and either <code>spec-kit</code> (VS Code) or
+<li>Run setup for <code>builtins</code>, <code>skills</code>, and either <code>spec-kit</code> (VS Code) or
 <code>spec-kit-skills</code> (Copilot app). For Lab 2 also run <code>npm run skills</code>.</li>
 <li>Confirm the baselines: cart 3/7, discount 2/10. Red is intentional.</li>
 <li>In the real client, confirm sign-in, organization policy, network and
@@ -96,7 +96,7 @@ animation.</li>
 </tbody></table></div>
 <p>Short on time? Run Part A only and schedule Spec Kit separately. Do not rush
 clarification or the red-test checkpoint.</p>
-<h2 id="lab-2-anti-slop-skills-45-60-minutes">Lab 2: anti-slop skills (45-60 minutes)</h2>
+<h2 id="lab-2-anti-slop-skills-60-75-minutes">Lab 2: anti-slop skills (60-75 minutes)</h2>
 <div class="table-wrap" role="region" aria-label="Table: Time, Show (GIF), Participants do, Evidence (2)" tabindex="0"><table>
 <thead>
 <tr>
@@ -108,36 +108,53 @@ clarification or the red-test checkpoint.</p>
 </thead>
 <tbody><tr>
 <td>0-10</td>
-<td>Find, load and confirm skills</td>
+<td>Find skills. Load reviewed copies. Prove the path.</td>
 <td><code>/skills</code> in VS Code or app; <code>/af</code> in the app</td>
 <td>Loaded skills and their source folders</td>
 </tr>
 <tr>
 <td>10-15</td>
 <td>(same)</td>
-<td><code>npm run setup -- superpowers</code>, <code>npm run skills</code>, <code>/skills reload</code></td>
-<td>Three workspace entries, exact SKILL.md path</td>
+<td><code>npm run setup -- skills</code>, <code>npm run skills</code>, <code>/skills reload</code></td>
+<td>Ten workspace entries from five sources, exact SKILL.md path</td>
 </tr>
 <tr>
 <td>15-25</td>
+<td>Grill the plan before any code</td>
+<td><code>/grill-me</code>, answer each round, then confirm</td>
+<td>Agreed decisions; no edits before &quot;Confirmed&quot;</td>
+</tr>
+<tr>
+<td>25-35</td>
 <td>Stop guessing, trace the defect</td>
 <td><code>/systematic-debugging</code>, no edits</td>
 <td>Reproduction and root-cause citation</td>
 </tr>
 <tr>
-<td>25-40</td>
+<td>35-50</td>
 <td>Make a useful test fail first</td>
 <td><code>/test-driven-development</code>, then approve the repair</td>
 <td>Meaningful red run, then green</td>
 </tr>
 <tr>
-<td>40-50</td>
+<td>50-60</td>
 <td>Replace &quot;done&quot; with fresh evidence</td>
 <td><code>/verification-before-completion</code>, run checks yourself</td>
 <td>Fresh <code>VERIFIED: 7/7</code>, reviewed diff</td>
 </tr>
+<tr>
+<td>60-75</td>
+<td>Push back, simplify, then write it plainly</td>
+<td><code>/receiving-code-review</code>, <code>/code-simplification</code>, <code>/humanizer</code></td>
+<td>A decision per review comment, still 7/7, PR text with only proven claims</td>
+</tr>
 </tbody></table></div>
-<p><code>superpowers:&lt;name&gt;</code> in upstream text is plugin notation, not a slash command
+<p>Short on time? Skip Part E and assign it, with Part F, as take-home practice.
+Do not skip the grilling confirmation or the red-test checkpoint.</p>
+<p><code>/grill-me</code> hands over to the <code>grilling</code> skill. If the agent starts editing
+instead of asking questions, check tool activity for
+<code>.github/skills/grilling/SKILL.md</code> and resend the prompt with <code>/grilling</code>.
+<code>superpowers:&lt;name&gt;</code> in upstream text is plugin notation, not a slash command
 here. Use the plain name from the picker. Do not let participants delete
 existing work or run upstream example scripts.</p>
 <p>These are suggested timings, not measured productivity claims.</p>
@@ -163,7 +180,9 @@ files: reject it.</li>
 <li><input disabled="" type="checkbox"> Reviewed changed and untracked files.</li>
 <li><input disabled="" type="checkbox"> Lab 1: reviewed constitution, spec, plan, tasks and analysis findings.</li>
 <li><input disabled="" type="checkbox"> Lab 2: confirmed the exact workspace skill path, not a same-named
-personal copy.</li>
+personal copy, and answered the grilling rounds before any edit.</li>
+<li><input disabled="" type="checkbox"> Lab 2: decided each review comment with evidence and kept only claims
+the checks proved in the PR description.</li>
 <li><input disabled="" type="checkbox"> Recorded remaining limitations; did not treat a GIF as proof.</li>
 </ul>
 <h2 id="reference-solutions">Reference solutions</h2>
@@ -175,7 +194,7 @@ non-overwriting setup, weak-test and scope rejection, and skill integrity. It
 does not call Copilot.</p>
 
 </article>
-<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#preflight-before-participants-arrive">Preflight, before participants arrive</a></li><li><a href="#lab-1-commands--spec-kit-75-minutes">Lab 1: /commands + Spec Kit (75 minutes)</a></li><li><a href="#lab-2-anti-slop-skills-45-60-minutes">Lab 2: anti-slop skills (45-60 minutes)</a></li><li><a href="#stop-conditions">Stop conditions</a></li><li><a href="#learner-completion-card">Learner completion card</a></li><li><a href="#reference-solutions">Reference solutions</a></li></ol></nav>
+<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#preflight-before-participants-arrive">Preflight, before participants arrive</a></li><li><a href="#lab-1-commands--spec-kit-75-minutes">Lab 1: /commands + Spec Kit (75 minutes)</a></li><li><a href="#lab-2-anti-slop-skills-60-75-minutes">Lab 2: anti-slop skills (60-75 minutes)</a></li><li><a href="#stop-conditions">Stop conditions</a></li><li><a href="#learner-completion-card">Learner completion card</a></li><li><a href="#reference-solutions">Reference solutions</a></li></ol></nav>
 </div>
 </div>
 </main>

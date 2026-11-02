@@ -3,7 +3,7 @@
   "width": 1280,
   "height": 720,
   "maxBytes": 8388608,
-  "sourceSha256": "4f6cb2339face69305868c72844f128a1a5bc8c081b22904451c34c59116e846",
+  "sourceSha256": "76977008a017272c69e650687f7d1b4bf60cdc7a192fdc2c04ec2243c19fd88b",
   "assets": [
     {
       "id": "builtin-plan",
@@ -164,9 +164,35 @@
     {
       "id": "skills-find-load",
       "frames": 12,
-      "bytes": 121127,
+      "bytes": 129895,
       "durationMs": 23600,
-      "sha256": "c145bab00ed43d4b5731cae3917f71b3640ba62d57d08a54002d580b8d5299b1",
+      "sha256": "96153a00b1403e0508717048e7400e25d8e97b0a7a23f7379ab880efa6b347a2",
+      "baseline": {
+        "total": 7,
+        "passed": 3,
+        "failed": 4,
+        "status": 1
+      },
+      "red": {
+        "total": 5,
+        "passed": 1,
+        "failed": 4,
+        "status": 1
+      },
+      "final": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "status": 0
+      },
+      "displayedFinal": "baseline"
+    },
+    {
+      "id": "public-grill",
+      "frames": 12,
+      "bytes": 124150,
+      "durationMs": 23600,
+      "sha256": "a210cb6fdcb211f25b14102e1c9d0b66622d5bd0f88e27e09303aea26408a0ef",
       "baseline": {
         "total": 7,
         "passed": 3,
@@ -190,9 +216,9 @@
     {
       "id": "public-debug",
       "frames": 12,
-      "bytes": 117464,
+      "bytes": 116227,
       "durationMs": 23600,
-      "sha256": "81bf462cda757acfad06811f35bdf9bd4c0ba6634227da00fd996a15cb2e7551",
+      "sha256": "76e2f208d46d3418f43024a113e8bf1f94a84c8322ce7803ea0dede36e8af48b",
       "baseline": {
         "total": 7,
         "passed": 3,
@@ -216,9 +242,9 @@
     {
       "id": "public-tdd",
       "frames": 12,
-      "bytes": 125812,
+      "bytes": 125191,
       "durationMs": 23600,
-      "sha256": "f63cf07d6d5d399131611b3933ea8f2a3f08bc1f3e6d8458084e196bfac460d8",
+      "sha256": "f18334e66bc83ce9b7b7209458fcb04507c7bbab1359c6fc825b1bc627de06fa",
       "baseline": {
         "total": 7,
         "passed": 3,
@@ -242,9 +268,35 @@
     {
       "id": "public-verify",
       "frames": 12,
-      "bytes": 122421,
+      "bytes": 122286,
       "durationMs": 23600,
-      "sha256": "c6665d35c6fe0da06b04df33a902f278d3853b7355b4e2400b030fd08ab178b0",
+      "sha256": "7dcd7e9b25b33d8fda7c2b5f71f331364dd266b74f1ca73e2bc5d856090881e4",
+      "baseline": {
+        "total": 7,
+        "passed": 3,
+        "failed": 4,
+        "status": 1
+      },
+      "red": {
+        "total": 5,
+        "passed": 1,
+        "failed": 4,
+        "status": 1
+      },
+      "final": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "status": 0
+      },
+      "displayedFinal": "final"
+    },
+    {
+      "id": "public-review-polish",
+      "frames": 12,
+      "bytes": 139654,
+      "durationMs": 23600,
+      "sha256": "be8f07473bba1518a4e95c6f45d007cf7495b7f4429a48571214943e2a412429",
       "baseline": {
         "total": 7,
         "passed": 3,

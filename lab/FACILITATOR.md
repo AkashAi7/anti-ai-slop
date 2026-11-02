@@ -4,7 +4,7 @@
 
 1. Download `anti-slop-lab.zip` (or clone the repo and `cd lab`). Follow the
    [environment guide](README.md) and run `npm run doctor` for each track.
-2. Run setup for `builtins`, `superpowers`, and either `spec-kit` (VS Code) or
+2. Run setup for `builtins`, `skills`, and either `spec-kit` (VS Code) or
    `spec-kit-skills` (Copilot app). For Lab 2 also run `npm run skills`.
 3. Confirm the baselines: cart 3/7, discount 2/10. Red is intentional.
 4. In the real client, confirm sign-in, organization policy, network and
@@ -29,16 +29,24 @@
 Short on time? Run Part A only and schedule Spec Kit separately. Do not rush
 clarification or the red-test checkpoint.
 
-## Lab 2: anti-slop skills (45-60 minutes)
+## Lab 2: anti-slop skills (60-75 minutes)
 
 | Time | Show (GIF) | Participants do | Evidence |
 | --- | --- | --- | --- |
-| 0-10 | Find, load and confirm skills | `/skills` in VS Code or app; `/af` in the app | Loaded skills and their source folders |
-| 10-15 | (same) | `npm run setup -- superpowers`, `npm run skills`, `/skills reload` | Three workspace entries, exact SKILL.md path |
-| 15-25 | Stop guessing, trace the defect | `/systematic-debugging`, no edits | Reproduction and root-cause citation |
-| 25-40 | Make a useful test fail first | `/test-driven-development`, then approve the repair | Meaningful red run, then green |
-| 40-50 | Replace "done" with fresh evidence | `/verification-before-completion`, run checks yourself | Fresh `VERIFIED: 7/7`, reviewed diff |
+| 0-10 | Find skills. Load reviewed copies. Prove the path. | `/skills` in VS Code or app; `/af` in the app | Loaded skills and their source folders |
+| 10-15 | (same) | `npm run setup -- skills`, `npm run skills`, `/skills reload` | Ten workspace entries from five sources, exact SKILL.md path |
+| 15-25 | Grill the plan before any code | `/grill-me`, answer each round, then confirm | Agreed decisions; no edits before "Confirmed" |
+| 25-35 | Stop guessing, trace the defect | `/systematic-debugging`, no edits | Reproduction and root-cause citation |
+| 35-50 | Make a useful test fail first | `/test-driven-development`, then approve the repair | Meaningful red run, then green |
+| 50-60 | Replace "done" with fresh evidence | `/verification-before-completion`, run checks yourself | Fresh `VERIFIED: 7/7`, reviewed diff |
+| 60-75 | Push back, simplify, then write it plainly | `/receiving-code-review`, `/code-simplification`, `/humanizer` | A decision per review comment, still 7/7, PR text with only proven claims |
 
+Short on time? Skip Part E and assign it, with Part F, as take-home practice.
+Do not skip the grilling confirmation or the red-test checkpoint.
+
+`/grill-me` hands over to the `grilling` skill. If the agent starts editing
+instead of asking questions, check tool activity for
+`.github/skills/grilling/SKILL.md` and resend the prompt with `/grilling`.
 `superpowers:<name>` in upstream text is plugin notation, not a slash command
 here. Use the plain name from the picker. Do not let participants delete
 existing work or run upstream example scripts.
@@ -67,7 +75,9 @@ These are suggested timings, not measured productivity claims.
 - [ ] Reviewed changed and untracked files.
 - [ ] Lab 1: reviewed constitution, spec, plan, tasks and analysis findings.
 - [ ] Lab 2: confirmed the exact workspace skill path, not a same-named
-      personal copy.
+      personal copy, and answered the grilling rounds before any edit.
+- [ ] Lab 2: decided each review comment with evidence and kept only claims
+      the checks proved in the PR description.
 - [ ] Recorded remaining limitations; did not treat a GIF as proof.
 
 ## Reference solutions

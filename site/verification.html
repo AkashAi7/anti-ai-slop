@@ -41,12 +41,18 @@ are checked deterministically, without a model or network.</li>
 <li>Setup refuses existing learner work. The built-ins starter contains no
 <code>.github/prompts</code> or substitute slash commands.</li>
 <li>The Spec Kit installer verifies nine official command or skill entries.</li>
-<li>Public Superpowers setup installs three complete upstream skill folders,
-license and inventory without running upstream scripts or installing hooks.
-All 15 files are checked against the pinned SHA-256 inventory.</li>
+<li>Public-skills setup installs ten complete upstream skill folders from five
+pinned repositories (obra/superpowers, mattpocock/skills,
+addyosmani/agent-skills, blader/humanizer, anthropics/skills), with their
+licenses and inventory, without running upstream scripts or installing hooks.
+All 29 files are checked against the pinned SHA-256 inventory, and each
+<code>SKILL.md</code> must keep its upstream <code>name</code> and <code>description</code>.</li>
 <li>The public-skills track deliberately reuses the cart fixture in a fresh
 workspace: 3/7 baseline, 7/7 reference. It adds skill-integrity checks to the
-existing scope gate, not a new set of seven distinct business requirements.</li>
+existing scope gate, not a new set of seven distinct business requirements.
+The review-feedback and PR-description practice files can be edited freely;
+the checks do not grade how well <code>/receiving-code-review</code>, <code>/humanizer</code> or
+<code>/grill-me</code> were followed.</li>
 </ul>
 <h2 id="media-provenance">Media provenance</h2>
 <p>The recorder reruns starter and reference checks before generating each GIF.
@@ -67,12 +73,47 @@ participant&#39;s client; verify these in its <code>/</code> picker during prefl
 </ul>
 <p>Commands and skills guide an agent. Independent tests and human review decide
 whether the work is complete.</p>
+<h2 id="expanded-anti-slop-skills-observed-validation-2026-11-02">Expanded anti-slop skills: observed validation, 2026-11-02</h2>
+<div class="table-wrap" role="region" aria-label="Table: Check, Observed result" tabindex="0"><table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Observed result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Lab tests (<code>npm test</code> in <code>lab</code>)</td>
+<td>16 passed, including the 3/7 learner baseline, 7/7 reference, skill integrity and tamper checks</td>
+</tr>
+<tr>
+<td>Pinned skills</td>
+<td>Ten skill folders from five repositories; all 29 redistributed files hash-checked</td>
+</tr>
+<tr>
+<td>GIF tooling (<code>lab/tools</code>)</td>
+<td>Encoder tests 2 passed; all 12 GIFs verified with 12 distinct frames, 23.6-second loops, checksums, posters and transcripts</td>
+</tr>
+<tr>
+<td>Site build and check</td>
+<td>19 pages up to date; 575 links/assets and 88 anchors resolve</td>
+</tr>
+<tr>
+<td>Bundle tests</td>
+<td>3 passed: deterministic ZIPs, pinned skill hashes, and extracted <code>builtins</code> and <code>skills</code> setup/baseline/refusal/repair</td>
+</tr>
+<tr>
+<td>Browser smoke (Chromium)</td>
+<td>19 pages, 27 images and 25 players; no errors, network requests or overflow at 320/768/1024/1440 px; all 12 lab GIFs play and return focus</td>
+</tr>
+</tbody></table></div>
+<p>These are local results. The hosted Pages deployment is updated only after
+the changes are pushed and the workflow succeeds.</p>
 <h2 id="two-lab-restructure-observed-validation-2026-11-01">Two-lab restructure: observed validation, 2026-11-01</h2>
 <p>The workshop was reorganized into one <code>lab/</code> environment with two labs:
 Lab 1 (/commands + Spec Kit, 6 GIFs) and Lab 2 (anti-slop skills, 4 GIFs,
 including a new built-in skill discovery scene). The older optional
 <code>commands/</code>, <code>skills/</code> and <code>practice/</code> trees were removed.</p>
-<div class="table-wrap" role="region" aria-label="Table: Check, Observed result" tabindex="0"><table>
+<div class="table-wrap" role="region" aria-label="Table: Check, Observed result (2)" tabindex="0"><table>
 <thead>
 <tr>
 <th>Check</th>
@@ -106,7 +147,7 @@ and the hosted site is only updated when these changes are pushed to <code>main<
 <h2 id="public-skills-extension-observed-validation-2026-11-01">Public-skills extension: observed validation, 2026-11-01</h2>
 <p>Recorded before the two-lab restructure, when this environment lived in
 <code>practice/</code> and the site still carried the older optional tracks.</p>
-<div class="table-wrap" role="region" aria-label="Table: Check, Observed result (2)" tabindex="0"><table>
+<div class="table-wrap" role="region" aria-label="Table: Check, Observed result (3)" tabindex="0"><table>
 <thead>
 <tr>
 <th>Check</th>
@@ -150,7 +191,7 @@ or measured reduction in AI slop is claimed.</p>
 <h2 id="earlier-built-ins--spec-kit-validation-record">Earlier built-ins / Spec Kit validation record</h2>
 <p>The following results were recorded before the public-skills extension. Toolkit
 installation and the hosted site were not rerun as part of that extension.</p>
-<div class="table-wrap" role="region" aria-label="Table: Check, Observed result (3)" tabindex="0"><table>
+<div class="table-wrap" role="region" aria-label="Table: Check, Observed result (4)" tabindex="0"><table>
 <thead>
 <tr>
 <th>Check</th>
@@ -200,7 +241,7 @@ or send a prompt to a live Copilot model. The website was updated locally;
 these checks do not claim that the hosted deployment has changed.</p>
 
 </article>
-<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#what-the-checks-establish">What the checks establish</a></li><li><a href="#media-provenance">Media provenance</a></li><li><a href="#not-established-by-automation">Not established by automation</a></li><li><a href="#two-lab-restructure-observed-validation-2026-11-01">Two-lab restructure: observed validation, 2026-11-01</a></li><li><a href="#public-skills-extension-observed-validation-2026-11-01">Public-skills extension: observed validation, 2026-11-01</a></li><li><a href="#earlier-built-ins--spec-kit-validation-record">Earlier built-ins / Spec Kit validation record</a></li></ol></nav>
+<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#what-the-checks-establish">What the checks establish</a></li><li><a href="#media-provenance">Media provenance</a></li><li><a href="#not-established-by-automation">Not established by automation</a></li><li><a href="#expanded-anti-slop-skills-observed-validation-2026-11-02">Expanded anti-slop skills: observed validation, 2026-11-02</a></li><li><a href="#two-lab-restructure-observed-validation-2026-11-01">Two-lab restructure: observed validation, 2026-11-01</a></li><li><a href="#public-skills-extension-observed-validation-2026-11-01">Public-skills extension: observed validation, 2026-11-01</a></li><li><a href="#earlier-built-ins--spec-kit-validation-record">Earlier built-ins / Spec Kit validation record</a></li></ol></nav>
 </div>
 </div>
 </main>

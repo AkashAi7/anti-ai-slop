@@ -11,9 +11,9 @@ const LAB_INTRO = {
   },
   'lab-2': {
     short: 'anti-slop skills',
-    minutes: '45-60 minutes',
-    summary: 'Find skills with your client\'s built-in skill tools, load three popular public skills, then use them to stop guessed fixes, tests that prove nothing and "done" with no evidence.',
-    invoke: ['/skills', '/af', '/skills reload', '/systematic-debugging', '/test-driven-development', '/verification-before-completion'],
+    minutes: '60-75 minutes',
+    summary: 'Find skills with your client\'s built-in skill tools, load ten pinned public skill folders, then practice grilling, evidence-led debugging, meaningful tests, verification and polish.',
+    invoke: ['/skills', '/af', '/skills reload', '/grill-me', '/systematic-debugging', '/test-driven-development', '/verification-before-completion'],
   },
 };
 
@@ -55,8 +55,16 @@ ${codes(intro.invoke)}
 </li>`;
   }).join('\n');
 
-  const skills = lab.publicSkills.map((skill) =>
+  const skills = [
+    ...lab.publicSkills,
+    { name: 'grilling', job: 'Provides the structured interview used by /grill-me.' },
+  ].map((skill) =>
     `<tr><th scope="row"><code>/${esc(skill.name)}</code></th><td>${inline(skill.job)}</td></tr>`).join('\n');
+  const skillCount = lab.skillPack.sources.reduce((total, source) => total + Object.keys(source.skills).length, 0);
+  const skillSources = lab.skillPack.sources.map((source) => {
+    const repository = source.repository.replace('https://github.com/', '');
+    return `<a href="${esc(source.repository)}">${esc(repository)}</a> @ <code>${esc(source.commit.slice(0, 7))}</code> (${esc(source.license)})`;
+  }).join('; ');
 
   const body = `<section class="wrap intro" aria-labelledby="intro-title">
 <div>
@@ -70,7 +78,7 @@ ${player(file, hero, { eager: true })}
 <ul class="facts">
 <li><strong>${lab.labs.length}</strong>hands-on labs</li>
 <li><strong>${lab.walkthroughs.length}</strong>GIF walkthroughs</li>
-<li><strong>${lab.publicSkills.length}</strong>public skills, pinned and hash-checked</li>
+<li><strong>${skillCount}</strong>skill folders, pinned and hash-checked</li>
 <li><strong>0</strong>npm installs for learners</li>
 </ul>
 </section>
@@ -89,14 +97,14 @@ ${cards}
 <li><h3>Install the prerequisites</h3>
 <p><a href="https://nodejs.org/en/download">Node.js 22.20+</a> and <a href="https://git-scm.com/downloads">Git</a>, plus <a href="https://code.visualstudio.com/download">VS Code</a> signed in to GitHub Copilot <strong>or</strong> the GitHub Copilot app. Lab 1's Spec Kit part also needs <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a>.</p></li>
 <li><h3>Get the lab</h3>
-<p>The ZIP holds the broken starters, the independent checks and the three pinned public skills. Extract it and open a terminal in the <code>anti-slop-lab</code> folder.</p>
+<p>The ZIP holds the broken starters, the independent checks and ten pinned public skill folders. Extract it and open a terminal in the <code>anti-slop-lab</code> folder.</p>
 ${downloadButtons(file)}
 <p class="note">Or clone it:</p>
 ${command(`git clone ${REPOSITORY}.git\ncd anti-ai-slop/lab`)}</li>
 <li><h3>Check your machine and create a workspace</h3>
 <p>Each track gets a fresh Git repository under <code>work/</code> with the broken starter and a baseline commit.</p>
 ${command('npm.cmd run doctor -- builtins\nnpm.cmd run setup -- builtins')}
-<p class="note">Tracks: <code>builtins</code>, <code>spec-kit</code>, <code>spec-kit-skills</code> (Lab 1) and <code>superpowers</code> (Lab 2). On macOS or Linux, use <code>npm</code>.</p></li>
+<p class="note">Tracks: <code>builtins</code>, <code>spec-kit</code>, <code>spec-kit-skills</code> (Lab 1) and <code>skills</code> (Lab 2). On macOS or Linux, use <code>npm</code>.</p></li>
 <li><h3>Open the workspace in your client</h3>
 <div class="table-wrap" role="region" aria-label="Table: Client, Open the workspace, Then" tabindex="0"><table>
 <thead><tr><th>Client</th><th>Open the workspace</th><th>Then</th></tr></thead>
@@ -110,7 +118,7 @@ ${command('npm.cmd run doctor -- builtins\nnpm.cmd run setup -- builtins')}
 
 <section class="wrap section" id="load-skills" aria-labelledby="skills-title">
 <h2 id="skills-title">Load the anti-slop skills</h2>
-<p>${esc(skillsLab.title)} uses three public skills from <a href="https://github.com/obra/superpowers">obra/superpowers</a>, pinned to commit <code>${esc(lab.publicSkillCommit.slice(0, 7))}</code> (MIT). They are public skills, not Copilot built-ins.</p>
+<p>${esc(skillsLab.title)} bundles ${skillCount} public skill folders from five pinned repositories (${Object.keys(lab.skillPack.files).length} SHA-256-checked files). Sources: ${skillSources}. They are public skills, not Copilot built-ins.</p>
 <div class="table-wrap" role="region" aria-label="Table: Skill, Slop it prevents" tabindex="0"><table>
 <thead><tr><th>Skill</th><th>Slop it prevents</th></tr></thead>
 <tbody>
@@ -118,11 +126,11 @@ ${skills}
 </tbody></table></div>
 <ol class="steps">
 <li><h3>Bundled with the lab (fastest)</h3>
-<p>Copies the pinned skill folders into <code>work/superpowers/.github/skills</code> and checks all 15 files against SHA-256 hashes. No network needed.</p>
-${command('npm.cmd run setup -- superpowers\nnpm.cmd run skills')}</li>
+<p>Copies the pinned skill folders into <code>work/skills/.github/skills</code> and checks all ${Object.keys(lab.skillPack.files).length} files against SHA-256 hashes. No network needed.</p>
+${command('npm.cmd run setup -- skills\nnpm.cmd run skills')}</li>
 <li><h3>Your own project</h3>
 <p>Download the <a href="${to(DOWNLOADS.skills)}" download>public skills ZIP</a> and copy its <code>.github</code> folder into your repository root. Or fetch the latest upstream with the skills CLI, then review what it installed:</p>
-${command('npx skills add https://github.com/obra/superpowers --skill systematic-debugging -a github-copilot')}</li>
+${command('npx skills add mattpocock/skills --skill grill-me --skill grilling -a github-copilot')}</li>
 <li><h3>Confirm the client loaded them</h3>
 <p>VS Code: <code>/skills</code> opens Configure Skills. GitHub Copilot app: <code>/skills reload</code>, then <code>/skills</code>. Every skill must point at the workspace copy.</p></li>
 </ol>
