@@ -34,7 +34,7 @@ clarification or the red-test checkpoint.
 | Time | Show (GIF) | Participants do | Evidence |
 | --- | --- | --- | --- |
 | 0-10 | Find skills. Load reviewed copies. Prove the path. | `/skills` in VS Code or app; `/af` in the app | Loaded skills and their source folders |
-| 10-15 | (same) | `npm run setup -- skills`, `npm run skills`, `/skills reload` | Ten workspace entries from five sources, exact SKILL.md path |
+| 10-15 | (same) | `npm run setup -- skills`, `npm run skills`, `/skills reload` | Sixteen workspace entries: ten pinned upstream and six lab-authored |
 | 15-25 | Grill the plan before any code | `/grill-me`, answer each round, then confirm | Agreed decisions; no edits before "Confirmed" |
 | 25-35 | Stop guessing, trace the defect | `/systematic-debugging`, no edits | Reproduction and root-cause citation |
 | 35-50 | Make a useful test fail first | `/test-driven-development`, then approve the repair | Meaningful red run, then green |
@@ -43,6 +43,14 @@ clarification or the red-test checkpoint.
 
 Short on time? Skip Part E and assign it, with Part F, as take-home practice.
 Do not skip the grilling confirmation or the red-test checkpoint.
+
+Optional 30-45 minute extension: use the six engineering skills in Part G for
+security review, API compatibility, dependency triage, migration planning,
+performance measurement and accessibility review. The GIF demonstrates the
+installed `/security-review` skill before test-first repair. Keep security and
+accessibility checks read-only; the migration case is hypothetical, and the
+performance result is synthetic. Use a fresh extracted lab copy if the original
+`work\skills` has already been repaired; never overwrite learner work.
 
 `/grill-me` hands over to the `grilling` skill. If the agent starts editing
 instead of asking questions, check tool activity for
@@ -78,6 +86,8 @@ These are suggested timings, not measured productivity claims.
       personal copy, and answered the grilling rounds before any edit.
 - [ ] Lab 2: decided each review comment with evidence and kept only claims
       the checks proved in the PR description.
+- [ ] Lab 2 optional extension: recorded results and limitations for each of the
+      six engineering skills.
 - [ ] Recorded remaining limitations; did not treat a GIF as proof.
 
 ## Reference solutions

@@ -12,7 +12,7 @@ const LAB_INTRO = {
   'lab-2': {
     short: 'anti-slop skills',
     minutes: '60-75 minutes',
-    summary: 'Find skills with your client\'s built-in skill tools, load ten pinned public skill folders, then practice grilling, evidence-led debugging, meaningful tests, verification and polish.',
+    summary: 'Find skills with your client\'s built-in skill tools, load ten pinned public skills and six lab-authored engineering skills, then practice requirements, debugging, tests, verification, security, compatibility and more.',
     invoke: ['/skills', '/af', '/skills reload', '/grill-me', '/systematic-debugging', '/test-driven-development', '/verification-before-completion'],
   },
 };
@@ -26,7 +26,7 @@ function downloadButtons(file, { gifs = false } = {}) {
   const to = (target) => urlFrom(file, target);
   return `<p class="actions downloads">
 <a class="button primary" href="${to(DOWNLOADS.lab)}" download>Download the lab (ZIP)</a>
-<a class="button" href="${to(DOWNLOADS.skills)}" download>Public skills only (ZIP)</a>${gifs ? `
+<a class="button" href="${to(DOWNLOADS.skills)}" download>Skills pack (ZIP)</a>${gifs ? `
 <a class="button" href="${to(DOWNLOADS.gifs)}" download>All GIFs (ZIP)</a>` : ''}
 <a class="button ghost" href="${REPOSITORY}">GitHub repository</a>
 </p>`;
@@ -58,19 +58,23 @@ ${codes(intro.invoke)}
   const skills = [
     ...lab.publicSkills,
     { name: 'grilling', job: 'Provides the structured interview used by /grill-me.' },
+    ...lab.softwareDevelopmentSkills.map((skill) => ({ name: skill.command, job: skill.focus })),
   ].map((skill) =>
     `<tr><th scope="row"><code>/${esc(skill.name)}</code></th><td>${inline(skill.job)}</td></tr>`).join('\n');
   const skillCount = lab.skillPack.sources.reduce((total, source) => total + Object.keys(source.skills).length, 0);
+  const totalSkillCount = skillCount + lab.softwareDevelopmentSkills.length;
   const skillSources = lab.skillPack.sources.map((source) => {
     const repository = source.repository.replace('https://github.com/', '');
     return `<a href="${esc(source.repository)}">${esc(repository)}</a> @ <code>${esc(source.commit.slice(0, 7))}</code> (${esc(source.license)})`;
   }).join('; ');
+  const engineeringSkills = lab.softwareDevelopmentSkills.map((skill) =>
+    `<tr><th scope="row"><code>/${esc(skill.command)}</code><br>${esc(skill.name)}</th><td>${inline(skill.focus)}</td><td>${inline(skill.exercise)}</td></tr>`).join('\n');
 
   const body = `<section class="wrap intro" aria-labelledby="intro-title">
 <div>
 <p class="eyebrow">GitHub Copilot hands-on labs · ${esc(CLIENTS)}</p>
 <h1 id="intro-title">Less AI slop. More proof.</h1>
-<p class="lead">Two hands-on labs. Practice the built-in <code>/commands</code> and Spec Kit, then the skills that stop guessed fixes, tests that prove nothing and unverified "done" claims. Every exercise starts from broken code and ends with an independent check.</p>
+<p class="lead">Two hands-on labs. Practice the built-in <code>/commands</code> and Spec Kit, then the skills that stop guessed fixes, tests that prove nothing and unverified "done" claims. Lab 2 also installs six software-development skills with hands-on exercises.</p>
 <p class="actions"><a class="button primary" href="#setup">Set up the lab</a><a class="button" href="${to(PAGES['lab-1'])}">Lab 1</a><a class="button" href="${to(PAGES['lab-2'])}">Lab 2</a></p>
 <p class="note">Runs locally in VS Code or the GitHub Copilot desktop app. No npm install, API key or cloud resource.</p>
 </div>
@@ -78,7 +82,7 @@ ${player(file, hero, { eager: true })}
 <ul class="facts">
 <li><strong>${lab.labs.length}</strong>hands-on labs</li>
 <li><strong>${lab.walkthroughs.length}</strong>GIF walkthroughs</li>
-<li><strong>${skillCount}</strong>skill folders, pinned and hash-checked</li>
+<li><strong>${totalSkillCount}</strong>skills: ten upstream and six lab-authored</li>
 <li><strong>0</strong>npm installs for learners</li>
 </ul>
 </section>
@@ -97,7 +101,7 @@ ${cards}
 <li><h3>Install the prerequisites</h3>
 <p><a href="https://nodejs.org/en/download">Node.js 22.20+</a> and <a href="https://git-scm.com/downloads">Git</a>, plus <a href="https://code.visualstudio.com/download">VS Code</a> signed in to GitHub Copilot <strong>or</strong> the GitHub Copilot app. Lab 1's Spec Kit part also needs <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a>.</p></li>
 <li><h3>Get the lab</h3>
-<p>The ZIP holds the broken starters, the independent checks and ten pinned public skill folders. Extract it and open a terminal in the <code>anti-slop-lab</code> folder.</p>
+<p>The ZIP holds the broken starters, independent checks, ten pinned public skills and six lab-authored engineering skills. Extract it and open a terminal in the <code>anti-slop-lab</code> folder.</p>
 ${downloadButtons(file)}
 <p class="note">Or clone it:</p>
 ${command(`git clone ${REPOSITORY}.git\ncd anti-ai-slop/lab`)}</li>
@@ -117,8 +121,8 @@ ${command('npm.cmd run doctor -- builtins\nnpm.cmd run setup -- builtins')}
 </section>
 
 <section class="wrap section" id="load-skills" aria-labelledby="skills-title">
-<h2 id="skills-title">Load the anti-slop skills</h2>
-<p>${esc(skillsLab.title)} bundles ${skillCount} public skill folders from five pinned repositories (${Object.keys(lab.skillPack.files).length} SHA-256-checked files). Sources: ${skillSources}. They are public skills, not Copilot built-ins.</p>
+<h2 id="skills-title">Load the skills pack</h2>
+<p>${esc(skillsLab.title)} installs ${totalSkillCount} skills: ${skillCount} pinned upstream skills from five public repositories (${Object.keys(lab.skillPack.files).length} SHA-256-checked files) and ${lab.softwareDevelopmentSkills.length} lab-authored engineering skills checked against their own manifest. Sources: ${skillSources}. Skills are not Copilot built-ins.</p>
 <div class="table-wrap" role="region" aria-label="Table: Skill, Slop it prevents" tabindex="0"><table>
 <thead><tr><th>Skill</th><th>Slop it prevents</th></tr></thead>
 <tbody>
@@ -126,15 +130,27 @@ ${skills}
 </tbody></table></div>
 <ol class="steps">
 <li><h3>Bundled with the lab (fastest)</h3>
-<p>Copies the pinned skill folders into <code>work/skills/.github/skills</code> and checks all ${Object.keys(lab.skillPack.files).length} files against SHA-256 hashes. No network needed.</p>
+<p>Copies all ${totalSkillCount} skill folders into <code>work/skills/.github/skills</code>. It verifies the ${Object.keys(lab.skillPack.files).length} pinned upstream files and six lab-authored skill hashes. No network needed.</p>
 ${command('npm.cmd run setup -- skills\nnpm.cmd run skills')}</li>
 <li><h3>Your own project</h3>
-<p>Download the <a href="${to(DOWNLOADS.skills)}" download>public skills ZIP</a> and copy its <code>.github</code> folder into your repository root. Or fetch the latest upstream with the skills CLI, then review what it installed:</p>
+<p>Download the <a href="${to(DOWNLOADS.skills)}" download>skills pack ZIP</a> and copy its <code>.github</code> folder into your repository root. Or fetch upstream skills with the skills CLI, then review what it installed:</p>
 ${command('npx skills add mattpocock/skills --skill grill-me --skill grilling -a github-copilot')}</li>
 <li><h3>Confirm the client loaded them</h3>
 <p>VS Code: <code>/skills</code> opens Configure Skills. GitHub Copilot app: <code>/skills reload</code>, then <code>/skills</code>. Every skill must point at the workspace copy.</p></li>
 </ol>
-<p><a href="${to(PAGES['lab-2'])}#part-b-load-the-public-skills">Lab 2, Part B: all loading options and checks</a></p>
+<p><a href="${to(PAGES['lab-2'])}#part-b-load-the-skills-pack">Lab 2, Part B: all loading options and checks</a></p>
+</section>
+
+<section class="wrap section" id="engineering-skills" aria-labelledby="engineering-skills-title">
+<h2 id="engineering-skills-title">Software-development skills included in Lab 2</h2>
+<p>These six lab-authored skill folders are installed in the Lab 2 workspace and available as slash skills. Each includes focused instructions and a hands-on exercise in the guide.</p>
+<div class="table-wrap" role="region" aria-label="Table: Installed engineering skills, focus and lab exercise" tabindex="0"><table>
+<thead><tr><th>Skill</th><th>What it adds</th><th>Lab exercise</th></tr></thead>
+<tbody>
+${engineeringSkills}
+</tbody></table></div>
+<p class="note">These are original Lab 2 skills, not upstream imports. The security-review GIF is an illustrative walkthrough; its test summaries come from real fixture runs.</p>
+<p class="actions"><a class="button primary" href="${to(PAGES['lab-2'])}#part-g-software-development-skills">Try the engineering exercises</a><a class="button" href="${to(PAGES['lab-2'])}#walk-engineering-input-review">Watch the security-review GIF</a></p>
 </section>
 
 <section class="wrap section" id="workshop" aria-labelledby="workshop-title">

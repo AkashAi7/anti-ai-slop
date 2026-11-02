@@ -25,7 +25,7 @@
 <h1>Anti-slop labs: set up your local environment</h1>
 <p class="actions downloads">
 <a class="button primary" href="assets/downloads/anti-slop-lab.zip" download>Download the lab (ZIP)</a>
-<a class="button" href="assets/downloads/anti-slop-public-skills.zip" download>Public skills only (ZIP)</a>
+<a class="button" href="assets/downloads/anti-slop-public-skills.zip" download>Skills pack (ZIP)</a>
 <a class="button" href="assets/downloads/anti-slop-walkthroughs.zip" download>All GIFs (ZIP)</a>
 <a class="button ghost" href="https://github.com/AkashAi7/anti-ai-slop">GitHub repository</a>
 </p>
@@ -49,14 +49,15 @@ and its own GIF walkthroughs:</p>
 </tr>
 <tr>
 <td><strong>Lab 2: anti-slop skills</strong></td>
-<td>Discover skills with the client&#39;s built-in skill tools (<code>/skills</code>, <code>/af</code>, <code>/skills reload</code>), load ten popular public skills from five repositories, then use them from plan to handoff: <code>/grill-me</code>, <code>/systematic-debugging</code>, <code>/test-driven-development</code>, <code>/verification-before-completion</code>, <code>/receiving-code-review</code>, <code>/code-simplification</code>, <code>/humanizer</code> (plus <code>/source-driven-development</code> and <code>/frontend-design</code> for your own projects)</td>
+<td>Discover skills with the client&#39;s built-in skill tools (<code>/skills</code>, <code>/af</code>, <code>/skills reload</code>), load ten pinned public skills and six lab-authored engineering skills, then practice requirements, debugging, testing, verification, security, API compatibility, dependency triage, migrations, profiling and accessibility</td>
 <td><a href="lab-2.html">LAB-2-ANTI-SLOP-SKILLS.md</a></td>
 </tr>
 </tbody></table></div>
 <p>Both labs work in <strong>VS Code</strong> (Copilot Chat, Local session) and in the
 <strong>GitHub Copilot app</strong> (desktop, local repository, Interactive session).
-Every exercise starts from deliberately broken code and ends with an
-independent check that rejects plausible-but-wrong results.</p>
+The core coding tracks start from deliberately broken code and end with an
+independent check. Lab 2 also includes focused engineering reviews and
+planning exercises with explicit evidence and scope limits.</p>
 <h2 id="1-install-the-prerequisites">1. Install the prerequisites</h2>
 <div class="table-wrap" role="region" aria-label="Table: Needed for, Install" tabindex="0"><table>
 <thead>
@@ -94,9 +95,10 @@ cd anti-ai-slop\lab
 </code></pre>
 </li>
 </ul>
-<p>The ZIP already contains the ten public skills for Lab 2, their licenses and a
-SHA-256 inventory pinned to each upstream commit. Nothing else is downloaded
-for Lab 2.</p>
+<p>The ZIP already contains ten public skills and six lab-authored engineering
+skills for Lab 2. Upstream files include their licenses and pinned SHA-256
+inventory; the engineering skills have a separate checksum manifest. Nothing
+else is downloaded for Lab 2.</p>
 <h2 id="3-check-your-machine">3. Check your machine</h2>
 <p>Run the doctor for the track you plan to use. It prints what is missing.</p>
 <pre><code class="language-powershell">npm.cmd run doctor -- builtins
@@ -233,7 +235,7 @@ part of the exercise.</p>
 <ul>
 <li><a href="facilitator.html">Facilitator run sheet</a>: timings, stop conditions, completion card</li>
 <li><a href="verification.html">Verification and limitations</a>: what the checks prove and what they do not</li>
-<li><a href="notices.html">Third-party notices</a>: sources, commits and licenses for the bundled public skills</li>
+<li><a href="notices.html">Third-party notices</a>: sources, commits and licenses for the ten public skills; the six original engineering skills are also listed</li>
 </ul>
 <p>In the repository only (the lab ZIP leaves them out to stay small):</p>
 <ul>

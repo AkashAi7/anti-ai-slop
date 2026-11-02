@@ -1,12 +1,14 @@
 # Same cart, anti-slop skills
 
 Repair the same defective cart as the Lab 1 built-ins track, in a fresh
-workspace, but drive every step with a public skill. Compare the evidence you
-collect, not how confident the model sounds.
+workspace, using the public skills for the core plan-to-handoff workflow. The
+workspace also includes six lab-authored engineering skills for Part G.
+Compare the evidence you collect, not how confident the model sounds.
 
-The skills in `.github/skills` are unmodified upstream files from five public
-repositories, pinned and checksummed. They are not lab-authored imitations.
-Open each `SKILL.md` and read it before you use it.
+The ten upstream skills in `.github/skills` are unmodified files from five
+public repositories, pinned and checksummed. Six separate lab-authored
+engineering skills are also available for Part G. Open each relevant
+`SKILL.md` and read it before use.
 
 ## Contract
 

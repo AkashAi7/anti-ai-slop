@@ -41,12 +41,12 @@ are checked deterministically, without a model or network.</li>
 <li>Setup refuses existing learner work. The built-ins starter contains no
 <code>.github/prompts</code> or substitute slash commands.</li>
 <li>The Spec Kit installer verifies nine official command or skill entries.</li>
-<li>Public-skills setup installs ten complete upstream skill folders from five
-pinned repositories (obra/superpowers, mattpocock/skills,
-addyosmani/agent-skills, blader/humanizer, anthropics/skills), with their
-licenses and inventory, without running upstream scripts or installing hooks.
-All 29 files are checked against the pinned SHA-256 inventory, and each
-<code>SKILL.md</code> must keep its upstream <code>name</code> and <code>description</code>.</li>
+<li>Lab 2 setup installs ten complete upstream skill folders from five pinned
+repositories (obra/superpowers, mattpocock/skills, addyosmani/agent-skills,
+blader/humanizer, anthropics/skills) and six original engineering skills.
+The 29 upstream files and six lab-authored skill files are checked against
+separate SHA-256 manifests; upstream licenses are preserved, and no upstream
+scripts or hooks are installed.</li>
 <li>The public-skills track deliberately reuses the cart fixture in a fresh
 workspace: 3/7 baseline, 7/7 reference. It adds skill-integrity checks to the
 existing scope gate, not a new set of seven distinct business requirements.
@@ -67,14 +67,58 @@ from exercise checks.</p>
 <li>Live Copilot entitlement, sign-in, command discovery or behavior on a
 participant&#39;s client; verify these in its <code>/</code> picker during preflight.</li>
 <li>That a real agent will produce the reference solution or the same dialogue.</li>
+<li>That the <code>/security-review</code> exercise identifies real attack paths or
+establishes production security; it is a bounded fixture exercise with no
+network, database or authorization sink.</li>
+<li>That the dependency exercise audits a real vulnerable package; the learner
+workspace intentionally has no application dependencies or lockfile.</li>
+<li>That the migration scenario reflects a live database; it is hypothetical,
+and the profiling benchmark is synthetic.</li>
 <li>Semantic completeness merely because spec/plan/tasks files exist.</li>
 <li>Screen-reader output, real phones or browsers other than the tested browser.</li>
 <li>Hosted deployment of local edits, or any measured productivity improvement.</li>
 </ul>
 <p>Commands and skills guide an agent. Independent tests and human review decide
 whether the work is complete.</p>
-<h2 id="expanded-anti-slop-skills-observed-validation-2026-11-02">Expanded anti-slop skills: observed validation, 2026-11-02</h2>
+<h2 id="engineering-skills-extension-observed-validation-2026-11-02">Engineering skills extension: observed validation, 2026-11-02</h2>
 <div class="table-wrap" role="region" aria-label="Table: Check, Observed result" tabindex="0"><table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Observed result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Lab tests (<code>npm test</code> in <code>lab</code>)</td>
+<td>17 passed, including exact 3/7 and 2/10 baselines, references, scope checks and integrity checks for all six engineering skills</td>
+</tr>
+<tr>
+<td>GIF encoder (<code>lab/tools</code>)</td>
+<td>2 passed</td>
+</tr>
+<tr>
+<td>GIF verification (<code>lab/tools</code>)</td>
+<td>All 13 GIFs verified: 12 distinct frames, 23.6-second loops, checksums, posters and transcripts</td>
+</tr>
+<tr>
+<td>Site build and check</td>
+<td>20 pages up to date; 614 links/assets and 97 anchors resolve</td>
+</tr>
+<tr>
+<td>Bundle tests</td>
+<td>3 passed, including deterministic ZIPs and extracted setup/baseline/refusal/repair</td>
+</tr>
+<tr>
+<td>Browser smoke (Chromium)</td>
+<td>20 pages, 29 images and 27 players; no errors, network requests or overflow at 320/768/1024/1440 px; home routes to both labs, the engineering skills and all downloads; all 13 GIFs play and return focus</td>
+</tr>
+</tbody></table></div>
+<p>These local results cover the six lab-authored engineering skills, their
+focused exercises and bundle installation, and the security-review walkthrough
+GIF. The hosted Pages deployment is updated only after the changes are pushed
+and the workflow succeeds.</p>
+<h2 id="expanded-anti-slop-skills-prior-validation-2026-11-02">Expanded anti-slop skills: prior validation, 2026-11-02</h2>
+<div class="table-wrap" role="region" aria-label="Table: Check, Observed result (2)" tabindex="0"><table>
 <thead>
 <tr>
 <th>Check</th>
@@ -113,7 +157,7 @@ the changes are pushed and the workflow succeeds.</p>
 Lab 1 (/commands + Spec Kit, 6 GIFs) and Lab 2 (anti-slop skills, 4 GIFs,
 including a new built-in skill discovery scene). The older optional
 <code>commands/</code>, <code>skills/</code> and <code>practice/</code> trees were removed.</p>
-<div class="table-wrap" role="region" aria-label="Table: Check, Observed result (2)" tabindex="0"><table>
+<div class="table-wrap" role="region" aria-label="Table: Check, Observed result (3)" tabindex="0"><table>
 <thead>
 <tr>
 <th>Check</th>
@@ -147,7 +191,7 @@ and the hosted site is only updated when these changes are pushed to <code>main<
 <h2 id="public-skills-extension-observed-validation-2026-11-01">Public-skills extension: observed validation, 2026-11-01</h2>
 <p>Recorded before the two-lab restructure, when this environment lived in
 <code>practice/</code> and the site still carried the older optional tracks.</p>
-<div class="table-wrap" role="region" aria-label="Table: Check, Observed result (3)" tabindex="0"><table>
+<div class="table-wrap" role="region" aria-label="Table: Check, Observed result (4)" tabindex="0"><table>
 <thead>
 <tr>
 <th>Check</th>
@@ -191,7 +235,7 @@ or measured reduction in AI slop is claimed.</p>
 <h2 id="earlier-built-ins--spec-kit-validation-record">Earlier built-ins / Spec Kit validation record</h2>
 <p>The following results were recorded before the public-skills extension. Toolkit
 installation and the hosted site were not rerun as part of that extension.</p>
-<div class="table-wrap" role="region" aria-label="Table: Check, Observed result (4)" tabindex="0"><table>
+<div class="table-wrap" role="region" aria-label="Table: Check, Observed result (5)" tabindex="0"><table>
 <thead>
 <tr>
 <th>Check</th>
@@ -241,7 +285,7 @@ or send a prompt to a live Copilot model. The website was updated locally;
 these checks do not claim that the hosted deployment has changed.</p>
 
 </article>
-<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#what-the-checks-establish">What the checks establish</a></li><li><a href="#media-provenance">Media provenance</a></li><li><a href="#not-established-by-automation">Not established by automation</a></li><li><a href="#expanded-anti-slop-skills-observed-validation-2026-11-02">Expanded anti-slop skills: observed validation, 2026-11-02</a></li><li><a href="#two-lab-restructure-observed-validation-2026-11-01">Two-lab restructure: observed validation, 2026-11-01</a></li><li><a href="#public-skills-extension-observed-validation-2026-11-01">Public-skills extension: observed validation, 2026-11-01</a></li><li><a href="#earlier-built-ins--spec-kit-validation-record">Earlier built-ins / Spec Kit validation record</a></li></ol></nav>
+<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#what-the-checks-establish">What the checks establish</a></li><li><a href="#media-provenance">Media provenance</a></li><li><a href="#not-established-by-automation">Not established by automation</a></li><li><a href="#engineering-skills-extension-observed-validation-2026-11-02">Engineering skills extension: observed validation, 2026-11-02</a></li><li><a href="#expanded-anti-slop-skills-prior-validation-2026-11-02">Expanded anti-slop skills: prior validation, 2026-11-02</a></li><li><a href="#two-lab-restructure-observed-validation-2026-11-01">Two-lab restructure: observed validation, 2026-11-01</a></li><li><a href="#public-skills-extension-observed-validation-2026-11-01">Public-skills extension: observed validation, 2026-11-01</a></li><li><a href="#earlier-built-ins--spec-kit-validation-record">Earlier built-ins / Spec Kit validation record</a></li></ol></nav>
 </div>
 </div>
 </main>

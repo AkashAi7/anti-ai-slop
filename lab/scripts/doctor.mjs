@@ -1,6 +1,6 @@
 import { spawnSync } from 'node:child_process';
 import { track, specifyVersion } from './lab.mjs';
-import { verifyPublicSkills } from './public-skills.mjs';
+import { engineeringSkillNames, publicSkillNames, skillFileCount, verifyEngineeringSkills, verifyPublicSkills } from './public-skills.mjs';
 
 try {
   const id = process.argv[2] ?? 'builtins';
@@ -15,7 +15,11 @@ try {
     console.log(`OK ${result.stdout.trim()}`);
   }
   if (item.id === 'spec-kit') console.log(`Spec Kit setup will use isolated specify-cli==${specifyVersion}; it does not upgrade your global CLI.`);
-  if (id === 'skills') console.log(`OK bundled upstream skill pack: ${verifyPublicSkills()} checksummed files; setup needs no network.`);
+  if (id === 'skills') {
+    verifyPublicSkills();
+    verifyEngineeringSkills();
+    console.log(`OK bundled skills: ${publicSkillNames.length} pinned upstream skills (${skillFileCount} files) and ${engineeringSkillNames.length} lab-authored engineering skills; setup needs no network.`);
+  }
   console.log('MANUAL CHECK: open this workspace in signed-in VS Code Local chat, or a Copilot app local session. Type / to confirm available commands.');
   console.log('Copilot entitlement, organization policy and sign-in cannot be verified by this script.');
 } catch (error) {

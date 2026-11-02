@@ -4,6 +4,10 @@ The lab package redistributes ten skill folders from five public repositories.
 They are authentic upstream files, not rewritten or renamed lab skills. Each
 folder is copied complete, byte for byte, from the pinned commit below.
 
+The six additional software-development skills under `engineering-skills/`
+are original Lab 2 materials, not third-party imports. Their names and
+SHA-256 hashes are recorded in `engineering-skills/skills-manifest.json`.
+
 | Repository | Pinned commit | License | Copyright | Included skills |
 | --- | --- | --- | --- | --- |
 | [obra/superpowers](https://github.com/obra/superpowers/tree/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b) | `2ce8aa15d05bd57213e6f746f953aafb7ded7a8b` | MIT | (c) 2025 Jesse Vincent | `systematic-debugging`, `test-driven-development`, `verification-before-completion`, `receiving-code-review` |
@@ -27,6 +31,12 @@ commit, license and upstream path, plus SHA-256 hashes of all 29 redistributed
 files. Learner copies keep it as `.github/skills-manifest.json`, and
 `npm run skills` and `npm run check` fail if any file is missing, extra or
 changed.
+
+The six lab-authored skill files are checked against the separate
+`engineering-skills/skills-manifest.json` when the pack is installed and
+verified. Installed copies keep it as
+`.github/engineering-skills-manifest.json`, and the skills ZIP includes it
+beside the upstream manifest.
 
 ## Scope
 

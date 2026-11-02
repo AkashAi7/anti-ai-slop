@@ -38,6 +38,7 @@ export function sourceFingerprint() {
     }
   };
   collect(join(ROOT, 'fixtures'));
+  collect(join(ROOT, 'engineering-skills'));
   collect(join(ROOT, 'vendor'));
   const scripts = dirname(fileURLToPath(import.meta.url));
   files.push(join(scripts, 'record-gifs.mjs'), join(scripts, 'gif-encoder.mjs'), join(scripts, 'media.mjs'));

@@ -156,14 +156,22 @@ async function testSkipLink(page, file) {
   if (target !== 'main') fail(file, `skip link moved focus to "${target}"`);
 }
 
-// The home page must route people to both labs, setup, skill loading and all three downloads.
+// The home page must route people to both labs, setup, skill loading, engineering skills and all three downloads.
 async function testHome(page, file) {
   const cards = await page.locator('.lab-card h3 a').evaluateAll((links) => links.map((link) => link.getAttribute('href')));
   const expected = lab.labs.map(({ id }) => urlFrom(file, PAGES[id]));
   if (JSON.stringify(cards) !== JSON.stringify(expected)) fail(file, `lab cards link to ${cards.join(', ') || 'nothing'}, expected ${expected.join(', ')}`);
-  for (const id of ['labs', 'setup', 'load-skills', 'workshop']) {
+  for (const id of ['labs', 'setup', 'load-skills', 'engineering-skills', 'workshop']) {
     if (!(await page.locator(`#${id}`).count())) fail(file, `missing #${id} section`);
   }
+  const skillRows = await page.locator('#engineering-skills tbody tr').count();
+  if (skillRows !== lab.softwareDevelopmentSkills.length) fail(file, `engineering skills section has ${skillRows} rows, expected ${lab.softwareDevelopmentSkills.length}`);
+  const engineeringRows = await page.locator('#engineering-skills tbody tr').allTextContents();
+  for (const { command } of lab.softwareDevelopmentSkills) {
+    if (!engineeringRows.some((row) => row.includes(`/${command}`))) fail(file, `engineering skill /${command} is missing from the installed skills list`);
+  }
+  const demo = await page.locator('#engineering-skills a[href*="walk-engineering-input-review"]').count();
+  if (!demo) fail(file, 'engineering skills section does not link to its security-review GIF demo');
   const downloads = new Set(await page.locator('a[download]').evaluateAll((links) => links.map((link) => link.getAttribute('href'))));
   for (const target of Object.values(DOWNLOADS)) {
     const href = urlFrom(file, target);
@@ -352,7 +360,7 @@ try {
     process.exitCode = 1;
   } else {
     const hosted = base ? `; on ${base.href}, the root redirect works and ${hostedLinks.size} same-site links and assets return 2xx` : '';
-    console.log(`Site smoke passed: ${files.length} pages, ${images} images decoded, ${players} players, no errors or ${base ? 'off-site' : 'network'} requests, no overflow at ${WIDTHS.join('/')}px; home routes to both labs and all three downloads; all ${lab.walkthroughs.length} lab GIFs play full screen and return focus; copy, clipboard error, theater and skip link work${hosted}.${shots ? ` Screenshots: ${shots}` : ''}`);
+    console.log(`Site smoke passed: ${files.length} pages, ${images} images decoded, ${players} players, no errors or ${base ? 'off-site' : 'network'} requests, no overflow at ${WIDTHS.join('/')}px; home routes to both labs, the engineering skills and all three downloads; all ${lab.walkthroughs.length} lab GIFs play full screen and return focus; copy, clipboard error, theater and skip link work${hosted}.${shots ? ` Screenshots: ${shots}` : ''}`);
   }
 } finally {
   await browser.close();

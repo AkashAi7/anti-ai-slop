@@ -4,25 +4,32 @@
 change: requirements the agent guessed, fixes that are guesses, tests that prove
 nothing, "done" with no evidence, review comments applied blindly, bloated code
 and AI-sounding prose. First you discover skills with your client's **built-in
-skill tools**. Then you load ten popular **public skills** from five
-repositories and use them on a real bug, from plan to handoff.
+skill tools**. Then load ten pinned **public skills** and six
+**lab-authored software-development skills** into the workspace and practice
+them on a bug and focused engineering exercises.
 
 | Part | Time | You invoke |
 | --- | --- | --- |
 | [A. Discover skills with built-in tools](#part-a-discover-skills-with-built-in-tools) | 10 min | `/skills` (VS Code and app), `/af` and `/skills reload` (app) |
-| [B. Load the public skills](#part-b-load-the-public-skills) | 5 min | `npm run setup -- skills`, `npm run skills` |
+| [B. Load the skills pack](#part-b-load-the-skills-pack) | 5 min | `npm run setup -- skills`, `npm run skills` |
 | [C. Grill the plan before any code](#part-c-grill-the-plan-before-any-code) | 10 min | `/grill-me` |
 | [D. Debug, test first, verify](#part-d-debug-test-first-verify) | 25-35 min | `/systematic-debugging`, `/test-driven-development`, `/verification-before-completion` |
 | [E. Polish before handoff](#part-e-polish-before-handoff) | 15 min | `/receiving-code-review`, `/code-simplification`, `/humanizer` |
 | [F. Take the skills to your own project](#part-f-take-the-skills-to-your-own-project) | optional | `/source-driven-development`, `/frontend-design`, and the rest |
+| [G. Practice software-development skills](#part-g-software-development-skills) | optional, 30-45 min | Six installed skills with focused engineering exercises |
 
-Set up first: follow the [environment guide](README.md). Watch the six Lab 2
+Set up first: follow the [environment guide](README.md). Watch the six core Lab 2
 GIFs on the [workshop site](https://akashai7.github.io/anti-ai-slop/site/lab-2.html).
+The optional engineering exercises include a
+[`/security-review` walkthrough](https://akashai7.github.io/anti-ai-slop/site/lab-2.html#walk-engineering-input-review).
 
 ## The skill pack
 
-Every skill below is an unmodified upstream folder, pinned to a commit and
-checked by SHA-256. They are public skills, not Copilot built-ins.
+The first ten skills below are unmodified upstream folders, pinned to a commit
+and checked by SHA-256. They are public skills, not Copilot built-ins. Six
+additional engineering skills are authored for this lab, checked against
+`engineering-skills/skills-manifest.json`, and included in the same workspace
+and skills ZIP. See Part G for their exercises.
 
 | Skill | Source | Slop it prevents | What you should see | Part |
 | --- | --- | --- | --- | --- |
@@ -76,7 +83,7 @@ actually loaded. Do not rely on memory or a list from someone else.
 **Checkpoint:** you can name every skill your client has loaded and say where
 each one came from. A duplicate name in a personal folder is a warning sign.
 
-## Part B: load the public skills
+## Part B: load the skills pack
 
 ### Option 1: bundled, pinned copies (use this for the lab)
 
@@ -88,9 +95,10 @@ npm.cmd run skills
 code -n .\work\skills
 ```
 
-Setup copies all ten complete upstream skill folders, their licenses and a
-manifest into `work\skills\.github`. `npm run skills` checks all 29 files
-against SHA-256 hashes pinned to these upstream commits:
+Setup copies all ten complete upstream skill folders, their licenses, and six
+lab-authored engineering skills into `work\skills\.github`. `npm run skills`
+checks all 29 upstream files against pinned commits and the six engineering
+skills against their lab manifest:
 
 | Repository | Commit | License | Skills |
 | --- | --- | --- | --- |
@@ -119,11 +127,11 @@ in this workspace. A similar-sounding answer does not prove the skill loaded.
 
 ### Option 2: add them to your own project
 
-- **Skills-only ZIP:** download `anti-slop-public-skills.zip` from the
-  [workshop site](https://akashai7.github.io/anti-ai-slop/). Copy the
+- **Skills ZIP:** download `anti-slop-public-skills.zip` from the
+  [workshop site](https://akashai7.github.io/anti-ai-slop/). It contains ten
+  pinned public skills and six lab-authored engineering skills. Copy the
   **whole** skill folders (not just `SKILL.md`) into your project's
-  `.github/skills/`. Keep `skill-licenses/` and `skills-manifest.json` with
-  them.
+  `.github/skills/`. Keep the third-party licenses and manifests with them.
 - **Skills CLI:** fetches the latest upstream version, not the pinned copy, so
   review what it installs.
 
@@ -295,6 +303,68 @@ A workable order for any non-trivial change:
 5. `/receiving-code-review`, `/code-simplification` and `/humanizer` before
    you hand it to someone else.
 
+## Part G: software-development skills
+
+These six lab-authored skills are installed in
+`work/skills/.github/skills/<skill-name>/SKILL.md` and are available in the
+client's skill picker after Part B. They are actual skill folders, not roadmap
+items. Use one skill per message and keep the exercises read-only unless a step
+explicitly asks you to run the supplied benchmark.
+
+| Skill | Focus | Hands-on exercise |
+| --- | --- | --- |
+| `/security-review` | Trace trust boundaries to sensitive sinks and report only evidence-backed risks. | Review cart inputs and distinguish contract defects from unsupported exploit claims. |
+| `/api-contracts` | Map public inputs, outputs, errors, callers and compatibility expectations. | Write the cart API contract and boundary tests before changing the implementation. |
+| `/dependency-triage` | Verify exact resolved versions and advisory evidence before recommending a patch. | Inspect the intentionally dependency-free workspace; report why no CVE claim can be made. |
+| `/data-migration-safety` | Plan idempotent backfills, reconciliation and recovery before execution. | Plan the hypothetical order-total conversion in `MIGRATION-EXERCISE.md`; do not run SQL. |
+| `/performance-profiling` | Measure a baseline and identify a real bottleneck before optimizing. | After the cart repair, run `node benchmark.mjs`; treat its synthetic result as a fixture check only. |
+| `/accessibility-review` | Review semantics, names, keyboard use, focus, errors and contrast. | Audit `ACCESSIBILITY-EXERCISE.html` read-only and cite each observed barrier. |
+
+### Try the security-review walkthrough
+
+Do this after Part B and before Part D, while `work/skills` is still the
+unmodified starter. If you have already repaired it, keep your learner work and
+use a fresh extracted lab copy. Run `npm run check -- --baseline` and keep the
+observed 3/7 result, then invoke the installed skill:
+
+```text
+/security-review Read BRIEF.md and src/cart.mjs. Perform a read-only
+input-boundary review with file:line evidence. Distinguish contract defects
+from exploitable paths. Do not edit.
+```
+
+Check that the review sees caller-controlled cart lines and missing validation,
+but does not call the quantity bug an exploit. This fixture has no request
+parser, network, database or authorization layer. Continue with
+`/test-driven-development`, capture meaningful red tests, approve only the
+bounded cart repair, then freshly run `npm test` and `npm run check`.
+
+The [GIF walkthrough](https://akashai7.github.io/anti-ai-slop/site/lab-2.html#walk-engineering-input-review)
+illustrates `/security-review` followed by test-first repair and verification.
+It is not a recorded Copilot session or proof of a real-world exploit.
+
+### Try the other engineering skills
+
+1. `/api-contracts`: before editing the cart, read `BRIEF.md`,
+   `src/cart.mjs` and `src/legacy-pricing.mjs`. List the export, input and
+   output shape, errors, callers and compatibility tests. Separate observed
+   behavior from assumptions.
+2. `/dependency-triage`: follow `DEPENDENCY-EXERCISE.md`. Confirm the workspace
+   has no application dependencies or lockfile. Do not query a registry,
+   install packages or invent a vulnerability.
+3. `/data-migration-safety`: follow `MIGRATION-EXERCISE.md`. Ask about the
+   rounding and invalid-row policies, then propose an expand/backfill/verify/
+   contract plan with idempotency, reconciliation and rollback. Do not write
+   or run SQL.
+4. `/performance-profiling`: after the cart repair passes, run
+   `node benchmark.mjs`. Report the deterministic workload, warmups, nine
+   samples and median. This is a synthetic fixture measurement, not production
+   performance evidence; do not optimize without a measured reason.
+5. `/accessibility-review`: review `ACCESSIBILITY-EXERCISE.html` read-only.
+   Report the form-name, keyboard, focus, error-association and contrast
+   barriers with element or line evidence. State which manual checks you did
+   not perform.
+
 ## Evidence to keep
 
 - [ ] The skills your client listed, and where each came from (Part A)
@@ -305,6 +375,8 @@ A workable order for any non-trivial change:
 - [ ] Fresh `VERIFIED: 7/7`, exit 0, and a reviewed diff
 - [ ] Your decision on each review comment, and the reason (Part E)
 - [ ] The rewritten PR description, with only claims you can back up
+- [ ] Optional Part G: used all six engineering skills and recorded each
+      exercise result and unresolved limitation
 - [ ] Anything still unverified, stated plainly
 
 ## Safety notes

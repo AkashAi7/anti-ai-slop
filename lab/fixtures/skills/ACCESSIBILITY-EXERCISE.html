@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Email updates</title>
+  <style>
+    body { background: #fff; color: #999; font: 16px sans-serif; }
+    input:focus { outline: none; }
+    .continue { background: #fff; color: #aaa; cursor: pointer; padding: 12px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Get email updates</h1>
+    <p>Fields marked with * are required.</p>
+    <form>
+      <p>Email *</p>
+      <input id="email" type="email" placeholder="Email address" required>
+      <div class="continue" onclick="document.querySelector('form').requestSubmit()">Continue</div>
+      <p class="error">Enter a valid email address.</p>
+    </form>
+  </main>
+</body>
+</html>

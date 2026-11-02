@@ -7,7 +7,9 @@ import { dirname, join, resolve, sep } from 'node:path';
 import { test } from 'node:test';
 import { unzipSync } from 'fflate';
 import { bundles, LAB_BUNDLE, GIF_BUNDLE, SKILLS_BUNDLE } from '../scripts/bundles.mjs';
-import { publicSkillNames, verifyPublicSkills } from '../../lab/scripts/public-skills.mjs';
+import {
+  allSkillNames, engineeringSkillNames, verifyInstalledSkills,
+} from '../../lab/scripts/public-skills.mjs';
 import { ROOT } from '../scripts/lib/util.mjs';
 
 test('downloads are deterministic and contain no learner work or installed dependencies', () => {
@@ -39,17 +41,26 @@ test('downloads are deterministic and contain no learner work or installed depen
     assert.ok(gifs[`anti-slop-walkthroughs/assets/transcripts/${id}.md`]);
   }
   const skills = unzipSync(first.get(SKILLS_BUNDLE));
-  for (const name of publicSkillNames) {
-    assert.ok(skills[`anti-slop-public-skills/.github/skills/${name}/SKILL.md`]);
+  for (const name of allSkillNames) {
+    assert.ok(skills[`anti-slop-skills/.github/skills/${name}/SKILL.md`]);
   }
-  assert.ok(skills['anti-slop-public-skills/.github/skills-manifest.json']);
-  assert.ok(skills['anti-slop-public-skills/.github/skill-licenses/obra-superpowers-LICENSE']);
-  assert.ok(skills['anti-slop-public-skills/.github/skill-licenses/mattpocock-skills-LICENSE']);
-  assert.ok(skills['anti-slop-public-skills/.github/skills/systematic-debugging/root-cause-tracing.md']);
+  assert.ok(skills['anti-slop-skills/.github/skills-manifest.json']);
+  assert.ok(skills['anti-slop-skills/.github/skill-licenses/obra-superpowers-LICENSE']);
+  assert.ok(skills['anti-slop-skills/.github/skill-licenses/mattpocock-skills-LICENSE']);
+  assert.ok(skills['anti-slop-skills/.github/skills/systematic-debugging/root-cause-tracing.md']);
   const manifest = JSON.parse(readFileSync(join(ROOT, 'lab', 'vendor', 'skill-pack', 'skills-manifest.json'), 'utf8'));
   for (const [name, sha256] of Object.entries(manifest.files)) {
-    const bytes = skills[`anti-slop-public-skills/.github/${name}`];
+    const bytes = skills[`anti-slop-skills/.github/${name}`];
     assert.ok(bytes, `Skills-only download omitted upstream support file: ${name}`);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), sha256, `Skills-only download changed ${name}`);
+  }
+  const engineeringManifest = JSON.parse(readFileSync(join(ROOT, 'lab', 'engineering-skills', 'skills-manifest.json'), 'utf8'));
+  assert.deepEqual(engineeringManifest.skills, engineeringSkillNames);
+  assert.deepEqual(skills['anti-slop-skills/.github/engineering-skills-manifest.json'],
+    new Uint8Array(readFileSync(join(ROOT, 'lab', 'engineering-skills', 'skills-manifest.json'))));
+  for (const [name, sha256] of Object.entries(engineeringManifest.files)) {
+    const bytes = skills[`anti-slop-skills/.github/skills/${name}`];
+    assert.ok(bytes, `Skills-only download omitted engineering skill: ${name}`);
     assert.equal(createHash('sha256').update(bytes).digest('hex'), sha256, `Skills-only download changed ${name}`);
   }
 });
@@ -81,10 +92,10 @@ for (const id of ['builtins', 'skills']) test(`extracted lab: ${id} setup, basel
     assert.match(repeated.stderr, /Nothing overwritten/);
     const learner = join(directory, 'work', id);
     if (id === 'skills') {
-      assert.equal(verifyPublicSkills(join(learner, '.github')), 29);
+      assert.equal(verifyInstalledSkills(join(learner, '.github')).skillCount, allSkillNames.length);
       const discovery = spawnSync(process.execPath, ['scripts/skills.mjs'], { cwd: directory, encoding: 'utf8' });
       assert.equal(discovery.status, 0, discovery.stderr);
-      assert.match(discovery.stdout, /VERIFIED: 10 upstream skills/);
+      assert.match(discovery.stdout, /VERIFIED: 16 skills \(10 pinned upstream, 6 lab-authored\), 35 files/);
       assert.match(discovery.stdout, /No model invocation was tested/);
     }
     const before = spawnSync(process.execPath, ['scripts/check.mjs', id], { cwd: directory, encoding: 'utf8' });

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lab 2: anti-slop skills - Anti-Slop Labs</title>
-<meta name="description" content="Find skills with your client&#39;s built-in skill tools, load ten pinned public skill folders, then practice grilling, evidence-led debugging, meaningful tests, verification and polish.">
+<meta name="description" content="Find skills with your client&#39;s built-in skill tools, load ten pinned public skills and six lab-authored engineering skills, then practice requirements, debugging, tests, verification, security, compatibility and more.">
 <meta name="generator" content="site/scripts/build.mjs">
 <link rel="stylesheet" href="assets/site.css">
 <script src="assets/site.js" defer></script>
@@ -23,11 +23,11 @@
 <header class="page-head">
 <p class="eyebrow">60-75 minutes · VS Code + GitHub Copilot app</p>
 <h1>Lab 2: anti-slop skills</h1>
-<p class="lead">Find skills with your client&#39;s built-in skill tools, load ten pinned public skill folders, then practice grilling, evidence-led debugging, meaningful tests, verification and polish.</p>
+<p class="lead">Find skills with your client&#39;s built-in skill tools, load ten pinned public skills and six lab-authored engineering skills, then practice requirements, debugging, tests, verification, security, compatibility and more.</p>
 <p class="actions"><a class="button primary" href="#watch">Watch the walkthroughs</a><a class="button" href="setup.html">Set up first</a><a class="button" href="assets/downloads/anti-slop-lab.zip" download>Download the lab (ZIP)</a></p>
 </header>
 <section class="section" id="watch" aria-labelledby="watch-title">
-<h2 id="watch-title">Watch first: 6 walkthroughs</h2>
+<h2 id="watch-title">Watch first: 7 walkthroughs</h2>
 <p class="note">Illustrative reenactment - not a recorded Copilot session. Test results are real fixture runs. Select a poster to play it full screen.</p>
 <article class="walk" id="walk-skills-find-load" aria-labelledby="walk-skills-find-load-title">
 <figure class="player">
@@ -119,6 +119,21 @@
 <p class="observed">Real reference acceptance: 7/7 pass, exit 0.</p>
 </div>
 </article>
+<article class="walk" id="walk-engineering-input-review" aria-labelledby="walk-engineering-input-review-title">
+<figure class="player">
+<div class="player-media">
+<img src="../lab/assets/posters/engineering-input-review-before.png" data-poster="../lab/assets/posters/engineering-input-review-before.png" data-gif="../lab/assets/gifs/engineering-input-review.gif" alt="Illustrative walkthrough: Review inputs with /security-review. Test and verify. Use the installed security-review skill to trace inputs with evidence, distinguish a contract defect from an exploit claim, then test and verify the smallest repair." width="1280" height="720" loading="lazy" decoding="async">
+</div>
+<figcaption class="player-bar"><button type="button" class="player-toggle" hidden aria-haspopup="dialog" data-label="Review inputs with /security-review. Test and verify." data-transcript="transcripts/engineering-input-review.html">Play full screen<span class="sr-only">: Review inputs with /security-review. Test and verify.</span></button><span class="player-links"><span class="tag">Illustrative</span> <a href="../lab/assets/gifs/engineering-input-review.gif">GIF</a> · <a href="../lab/assets/posters/engineering-input-review-before.png">Before</a> · <a href="../lab/assets/posters/engineering-input-review-after.png">After</a> · <a href="transcripts/engineering-input-review.html">Transcript</a></span></figcaption>
+</figure>
+<div class="walk-text">
+<p class="eyebrow">GIF 7 · VS Code / Copilot app | /security-review + TDD</p>
+<h3 id="walk-engineering-input-review-title">Review inputs with /security-review. Test and verify.</h3>
+<ol class="flow" aria-label="Commands in order"><li><code>/security-review</code></li><li><code>/test-driven-development</code></li><li><code>/verification-before-completion</code></li></ol>
+<p>Use the installed security-review skill to trace inputs with evidence, distinguish a contract defect from an exploit claim, then test and verify the smallest repair.</p>
+<p class="observed">Real reference acceptance: 7/7 pass, exit 0.</p>
+</div>
+</article>
 </section>
 <div class="doc-layout">
 <article class="prose" aria-label="Lab 2: anti-slop skills guide">
@@ -126,8 +141,9 @@
 change: requirements the agent guessed, fixes that are guesses, tests that prove
 nothing, &quot;done&quot; with no evidence, review comments applied blindly, bloated code
 and AI-sounding prose. First you discover skills with your client&#39;s <strong>built-in
-skill tools</strong>. Then you load ten popular <strong>public skills</strong> from five
-repositories and use them on a real bug, from plan to handoff.</p>
+skill tools</strong>. Then load ten pinned <strong>public skills</strong> and six
+<strong>lab-authored software-development skills</strong> into the workspace and practice
+them on a bug and focused engineering exercises.</p>
 <div class="table-wrap" role="region" aria-label="Table: Part, Time, You invoke" tabindex="0"><table>
 <thead>
 <tr>
@@ -142,7 +158,7 @@ repositories and use them on a real bug, from plan to handoff.</p>
 <td><code>/skills</code> (VS Code and app), <code>/af</code> and <code>/skills reload</code> (app)</td>
 </tr>
 <tr>
-<td><a href="#part-b-load-the-public-skills">B. Load the public skills</a></td>
+<td><a href="#part-b-load-the-skills-pack">B. Load the skills pack</a></td>
 <td>5 min</td>
 <td><code>npm run setup -- skills</code>, <code>npm run skills</code></td>
 </tr>
@@ -166,12 +182,22 @@ repositories and use them on a real bug, from plan to handoff.</p>
 <td>optional</td>
 <td><code>/source-driven-development</code>, <code>/frontend-design</code>, and the rest</td>
 </tr>
+<tr>
+<td><a href="#part-g-software-development-skills">G. Practice software-development skills</a></td>
+<td>optional, 30-45 min</td>
+<td>Six installed skills with focused engineering exercises</td>
+</tr>
 </tbody></table></div>
-<p>Set up first: follow the <a href="setup.html">environment guide</a>. Watch the six Lab 2
-GIFs on the <a href="#watch">workshop site</a>.</p>
+<p>Set up first: follow the <a href="setup.html">environment guide</a>. Watch the six core Lab 2
+GIFs on the <a href="#watch">workshop site</a>.
+The optional engineering exercises include a
+<a href="#walk-engineering-input-review"><code>/security-review</code> walkthrough</a>.</p>
 <h2 id="the-skill-pack">The skill pack</h2>
-<p>Every skill below is an unmodified upstream folder, pinned to a commit and
-checked by SHA-256. They are public skills, not Copilot built-ins.</p>
+<p>The first ten skills below are unmodified upstream folders, pinned to a commit
+and checked by SHA-256. They are public skills, not Copilot built-ins. Six
+additional engineering skills are authored for this lab, checked against
+<code>engineering-skills/skills-manifest.json</code>, and included in the same workspace
+and skills ZIP. See Part G for their exercises.</p>
 <div class="table-wrap" role="region" aria-label="Table: Skill, Source, Slop it prevents, What you should see, Part" tabindex="0"><table>
 <thead>
 <tr>
@@ -291,16 +317,17 @@ it to compare candidates. Do not install anything yet.</p>
 </ol>
 <p><strong>Checkpoint:</strong> you can name every skill your client has loaded and say where
 each one came from. A duplicate name in a personal folder is a warning sign.</p>
-<h2 id="part-b-load-the-public-skills">Part B: load the public skills</h2>
+<h2 id="part-b-load-the-skills-pack">Part B: load the skills pack</h2>
 <h3 id="option-1-bundled-pinned-copies-use-this-for-the-lab">Option 1: bundled, pinned copies (use this for the lab)</h3>
 <p>From the lab directory:</p>
 <pre><code class="language-powershell">npm.cmd run setup -- skills
 npm.cmd run skills
 code -n .\work\skills
 </code></pre>
-<p>Setup copies all ten complete upstream skill folders, their licenses and a
-manifest into <code>work\skills\.github</code>. <code>npm run skills</code> checks all 29 files
-against SHA-256 hashes pinned to these upstream commits:</p>
+<p>Setup copies all ten complete upstream skill folders, their licenses, and six
+lab-authored engineering skills into <code>work\skills\.github</code>. <code>npm run skills</code>
+checks all 29 upstream files against pinned commits and the six engineering
+skills against their lab manifest:</p>
 <div class="table-wrap" role="region" aria-label="Table: Repository, Commit, License, Skills" tabindex="0"><table>
 <thead>
 <tr>
@@ -356,11 +383,11 @@ Interactive session, and run <code>/skills reload</code> then <code>/skills</cod
 in this workspace. A similar-sounding answer does not prove the skill loaded.</p>
 <h3 id="option-2-add-them-to-your-own-project">Option 2: add them to your own project</h3>
 <ul>
-<li><p><strong>Skills-only ZIP:</strong> download <code>anti-slop-public-skills.zip</code> from the
-<a href="index.html">workshop site</a>. Copy the
+<li><p><strong>Skills ZIP:</strong> download <code>anti-slop-public-skills.zip</code> from the
+<a href="index.html">workshop site</a>. It contains ten
+pinned public skills and six lab-authored engineering skills. Copy the
 <strong>whole</strong> skill folders (not just <code>SKILL.md</code>) into your project&#39;s
-<code>.github/skills/</code>. Keep <code>skill-licenses/</code> and <code>skills-manifest.json</code> with
-them.</p>
+<code>.github/skills/</code>. Keep the third-party licenses and manifests with them.</p>
 </li>
 <li><p><strong>Skills CLI:</strong> fetches the latest upstream version, not the pinned copy, so
 review what it installs.</p>
@@ -474,6 +501,90 @@ not exercise on the cart:</p>
 <li><code>/receiving-code-review</code>, <code>/code-simplification</code> and <code>/humanizer</code> before
 you hand it to someone else.</li>
 </ol>
+<h2 id="part-g-software-development-skills">Part G: software-development skills</h2>
+<p>These six lab-authored skills are installed in
+<code>work/skills/.github/skills/&lt;skill-name&gt;/SKILL.md</code> and are available in the
+client&#39;s skill picker after Part B. They are actual skill folders, not roadmap
+items. Use one skill per message and keep the exercises read-only unless a step
+explicitly asks you to run the supplied benchmark.</p>
+<div class="table-wrap" role="region" aria-label="Table: Skill, Focus, Hands-on exercise" tabindex="0"><table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Focus</th>
+<th>Hands-on exercise</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/security-review</code></td>
+<td>Trace trust boundaries to sensitive sinks and report only evidence-backed risks.</td>
+<td>Review cart inputs and distinguish contract defects from unsupported exploit claims.</td>
+</tr>
+<tr>
+<td><code>/api-contracts</code></td>
+<td>Map public inputs, outputs, errors, callers and compatibility expectations.</td>
+<td>Write the cart API contract and boundary tests before changing the implementation.</td>
+</tr>
+<tr>
+<td><code>/dependency-triage</code></td>
+<td>Verify exact resolved versions and advisory evidence before recommending a patch.</td>
+<td>Inspect the intentionally dependency-free workspace; report why no CVE claim can be made.</td>
+</tr>
+<tr>
+<td><code>/data-migration-safety</code></td>
+<td>Plan idempotent backfills, reconciliation and recovery before execution.</td>
+<td>Plan the hypothetical order-total conversion in <code>MIGRATION-EXERCISE.md</code>; do not run SQL.</td>
+</tr>
+<tr>
+<td><code>/performance-profiling</code></td>
+<td>Measure a baseline and identify a real bottleneck before optimizing.</td>
+<td>After the cart repair, run <code>node benchmark.mjs</code>; treat its synthetic result as a fixture check only.</td>
+</tr>
+<tr>
+<td><code>/accessibility-review</code></td>
+<td>Review semantics, names, keyboard use, focus, errors and contrast.</td>
+<td>Audit <code>ACCESSIBILITY-EXERCISE.html</code> read-only and cite each observed barrier.</td>
+</tr>
+</tbody></table></div>
+<h3 id="try-the-security-review-walkthrough">Try the security-review walkthrough</h3>
+<p>Do this after Part B and before Part D, while <code>work/skills</code> is still the
+unmodified starter. If you have already repaired it, keep your learner work and
+use a fresh extracted lab copy. Run <code>npm run check -- --baseline</code> and keep the
+observed 3/7 result, then invoke the installed skill:</p>
+<pre><code class="language-text">/security-review Read BRIEF.md and src/cart.mjs. Perform a read-only
+input-boundary review with file:line evidence. Distinguish contract defects
+from exploitable paths. Do not edit.
+</code></pre>
+<p>Check that the review sees caller-controlled cart lines and missing validation,
+but does not call the quantity bug an exploit. This fixture has no request
+parser, network, database or authorization layer. Continue with
+<code>/test-driven-development</code>, capture meaningful red tests, approve only the
+bounded cart repair, then freshly run <code>npm test</code> and <code>npm run check</code>.</p>
+<p>The <a href="#walk-engineering-input-review">GIF walkthrough</a>
+illustrates <code>/security-review</code> followed by test-first repair and verification.
+It is not a recorded Copilot session or proof of a real-world exploit.</p>
+<h3 id="try-the-other-engineering-skills">Try the other engineering skills</h3>
+<ol>
+<li><code>/api-contracts</code>: before editing the cart, read <code>BRIEF.md</code>,
+<code>src/cart.mjs</code> and <code>src/legacy-pricing.mjs</code>. List the export, input and
+output shape, errors, callers and compatibility tests. Separate observed
+behavior from assumptions.</li>
+<li><code>/dependency-triage</code>: follow <code>DEPENDENCY-EXERCISE.md</code>. Confirm the workspace
+has no application dependencies or lockfile. Do not query a registry,
+install packages or invent a vulnerability.</li>
+<li><code>/data-migration-safety</code>: follow <code>MIGRATION-EXERCISE.md</code>. Ask about the
+rounding and invalid-row policies, then propose an expand/backfill/verify/
+contract plan with idempotency, reconciliation and rollback. Do not write
+or run SQL.</li>
+<li><code>/performance-profiling</code>: after the cart repair passes, run
+<code>node benchmark.mjs</code>. Report the deterministic workload, warmups, nine
+samples and median. This is a synthetic fixture measurement, not production
+performance evidence; do not optimize without a measured reason.</li>
+<li><code>/accessibility-review</code>: review <code>ACCESSIBILITY-EXERCISE.html</code> read-only.
+Report the form-name, keyboard, focus, error-association and contrast
+barriers with element or line evidence. State which manual checks you did
+not perform.</li>
+</ol>
 <h2 id="evidence-to-keep">Evidence to keep</h2>
 <ul>
 <li><input disabled="" type="checkbox"> The skills your client listed, and where each came from (Part A)</li>
@@ -484,6 +595,8 @@ you hand it to someone else.</li>
 <li><input disabled="" type="checkbox"> Fresh <code>VERIFIED: 7/7</code>, exit 0, and a reviewed diff</li>
 <li><input disabled="" type="checkbox"> Your decision on each review comment, and the reason (Part E)</li>
 <li><input disabled="" type="checkbox"> The rewritten PR description, with only claims you can back up</li>
+<li><input disabled="" type="checkbox"> Optional Part G: used all six engineering skills and recorded each
+exercise result and unresolved limitation</li>
 <li><input disabled="" type="checkbox"> Anything still unverified, stated plainly</li>
 </ul>
 <h2 id="safety-notes">Safety notes</h2>
@@ -505,7 +618,7 @@ unrelated code to satisfy a skill.</li>
 <p>Previous: <a href="lab-1.html">Lab 1: /commands + Spec Kit</a>.</p>
 
 </article>
-<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#watch">Watch the walkthroughs</a></li><li><a href="#the-skill-pack">The skill pack</a></li><li><a href="#part-a-discover-skills-with-built-in-tools">Part A: discover skills with built-in tools</a></li><li><a href="#part-b-load-the-public-skills">Part B: load the public skills</a></li><li><a href="#part-c-grill-the-plan-before-any-code">Part C: grill the plan before any code</a></li><li><a href="#part-d-debug-test-first-verify">Part D: debug, test first, verify</a></li><li><a href="#part-e-polish-before-handoff">Part E: polish before handoff</a></li><li><a href="#part-f-take-the-skills-to-your-own-project">Part F: take the skills to your own project</a></li><li><a href="#evidence-to-keep">Evidence to keep</a></li><li><a href="#safety-notes">Safety notes</a></li><li><a href="#sources">Sources</a></li></ol></nav>
+<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#watch">Watch the walkthroughs</a></li><li><a href="#the-skill-pack">The skill pack</a></li><li><a href="#part-a-discover-skills-with-built-in-tools">Part A: discover skills with built-in tools</a></li><li><a href="#part-b-load-the-skills-pack">Part B: load the skills pack</a></li><li><a href="#part-c-grill-the-plan-before-any-code">Part C: grill the plan before any code</a></li><li><a href="#part-d-debug-test-first-verify">Part D: debug, test first, verify</a></li><li><a href="#part-e-polish-before-handoff">Part E: polish before handoff</a></li><li><a href="#part-f-take-the-skills-to-your-own-project">Part F: take the skills to your own project</a></li><li><a href="#part-g-software-development-skills">Part G: software-development skills</a></li><li><a href="#evidence-to-keep">Evidence to keep</a></li><li><a href="#safety-notes">Safety notes</a></li><li><a href="#sources">Sources</a></li></ol></nav>
 </div>
 </div>
 </main>

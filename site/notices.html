@@ -30,6 +30,9 @@
 <p>The lab package redistributes ten skill folders from five public repositories.
 They are authentic upstream files, not rewritten or renamed lab skills. Each
 folder is copied complete, byte for byte, from the pinned commit below.</p>
+<p>The six additional software-development skills under <code>engineering-skills/</code>
+are original Lab 2 materials, not third-party imports. Their names and
+SHA-256 hashes are recorded in <code>engineering-skills/skills-manifest.json</code>.</p>
 <div class="table-wrap" role="region" aria-label="Table: Repository, Pinned commit, License, Copyright, Included skills" tabindex="0"><table>
 <thead>
 <tr>
@@ -90,6 +93,11 @@ commit, license and upstream path, plus SHA-256 hashes of all 29 redistributed
 files. Learner copies keep it as <code>.github/skills-manifest.json</code>, and
 <code>npm run skills</code> and <code>npm run check</code> fail if any file is missing, extra or
 changed.</p>
+<p>The six lab-authored skill files are checked against the separate
+<code>engineering-skills/skills-manifest.json</code> when the pack is installed and
+verified. Installed copies keep it as
+<code>.github/engineering-skills-manifest.json</code>, and the skills ZIP includes it
+beside the upstream manifest.</p>
 <h2 id="scope">Scope</h2>
 <p>The portable installation does not install plugin hooks or bootstrap
 infrastructure. Some upstream skill folders include helper scripts as
