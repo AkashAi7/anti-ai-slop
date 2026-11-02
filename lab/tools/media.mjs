@@ -41,9 +41,19 @@ export function sourceFingerprint() {
   collect(join(ROOT, 'vendor'));
   const scripts = dirname(fileURLToPath(import.meta.url));
   files.push(join(scripts, 'record-gifs.mjs'), join(scripts, 'gif-encoder.mjs'), join(scripts, 'media.mjs'));
+  const relativePath = (path) => relative(ROOT, path).split(sep).join('/');
   const hash = createHash('sha256');
-  for (const path of files.sort()) {
-    hash.update(relative(ROOT, path).split(sep).join('/')).update('\0').update(readFileSync(path)).update('\0');
+  for (const path of files.sort((left, right) => {
+    const a = relativePath(left);
+    const b = relativePath(right);
+    return a < b ? -1 : a > b ? 1 : 0;
+  })) {
+    const name = relativePath(path);
+    const source = readFileSync(path);
+    const content = name.startsWith('vendor/skill-pack/')
+      ? source
+      : Buffer.from(source.toString('utf8').replace(/\r\n?/g, '\n'));
+    hash.update(name).update('\0').update(content).update('\0');
   }
   return hash.digest('hex');
 }
