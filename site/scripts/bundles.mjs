@@ -19,7 +19,14 @@ export const LAB_DIRS = ['scripts', 'tests', 'fixtures', 'vendor'];
 const SKIP = new Set(['work', 'node_modules', '.git']);
 const mtime = new Date(2026, 0, 1);
 const text = (value) => [new TextEncoder().encode(value), { mtime }];
-const file = (path) => [new Uint8Array(readFileSync(path)), { mtime }];
+const file = (path) => {
+  const bytes = readFileSync(path);
+  const name = relative(LAB, path).split(sep).join('/');
+  const content = name.startsWith('vendor/skill-pack/') || /\.(?:gif|png)$/i.test(name)
+    ? bytes
+    : Buffer.from(bytes.toString('utf8').replace(/\r\n?/g, '\n'));
+  return [new Uint8Array(content), { mtime }];
+};
 
 function addTree(entries, directory, prefix, base = directory) {
   for (const entry of readdirSync(directory, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name, 'en'))) {

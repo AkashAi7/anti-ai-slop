@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve, sep } from 'node:path';
 import { test } from 'node:test';
@@ -28,6 +28,12 @@ test('downloads are deterministic and contain no learner work or installed depen
   const gifs = unzipSync(first.get(GIF_BUNDLE));
   const scenes = JSON.parse(readFileSync(join(ROOT, 'lab', 'walkthroughs.json'), 'utf8'));
   assert.equal(Object.keys(gifs).filter((name) => name.endsWith('.gif')).length, scenes.length);
+  for (const directory of ['gifs', 'posters', 'transcripts']) {
+    for (const name of readdirSync(join(ROOT, 'lab', 'assets', directory))) {
+      const path = `anti-slop-walkthroughs/assets/${directory}/${name}`;
+      assert.deepEqual(gifs[path], new Uint8Array(readFileSync(join(ROOT, 'lab', 'assets', directory, name))), `${path} changed in ZIP`);
+    }
+  }
   for (const { id } of scenes) {
     assert.ok(gifs[`anti-slop-walkthroughs/assets/gifs/${id}.gif`]);
     assert.ok(gifs[`anti-slop-walkthroughs/assets/transcripts/${id}.md`]);
